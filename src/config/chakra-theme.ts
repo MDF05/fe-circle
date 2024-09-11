@@ -10,9 +10,17 @@ const BrandConfig: ThemeOverride = {
     },
   },
   borders: {
-    brand: {
-      color: "#1D1D1D",
-    }
+    border: {
+      grey: "1px solid grey",
+    },
+    profile: {
+      rightSide: "5px solid rgb(38, 38, 38)",
+      baseProfile: "5px solid rgb(29, 29, 29)",
+    },
+    active: {
+      color: "5px solid #04A51E",
+    },
+    notActive: "5px solid transparent"
   },
   fonts: {
     heading: `"Plus Jakarta Sans", sans-serif`,
