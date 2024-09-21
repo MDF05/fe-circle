@@ -3,7 +3,7 @@ import AuthForm from "../../features/auth/components/Auth-Form";
 import FormInputTypes from "../../types/form-input-type";
 import LoginTypes from "../../features/auth/types/login-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../../features/auth/schema/Login-Schema";
+import { loginSchema } from "../../features/auth/schema/login-schema";
 
 const ListLoginInput: FormInputTypes[] = [
   {
@@ -18,7 +18,7 @@ const ListLoginInput: FormInputTypes[] = [
   },
 ];
 
-export default function Register() {
+export default function Login() {
   const {
     register,
     handleSubmit,

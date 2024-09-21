@@ -47,7 +47,7 @@ export default function ProfileComponent({
         {page == "my-profile" ? (
           "My Profile"
         ) : (
-          <ChakraLink path="/">
+          <ChakraLink to="/">
             <Flex alignItems="center" gap="10px">
               <FaArrowLeftLong />
               {page}

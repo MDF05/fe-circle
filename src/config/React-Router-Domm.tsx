@@ -1,63 +1,72 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-//! auth Routes
-import LoginRoute from "../routes/Login";
-import RegisterRoutes from "../routes/Register-Routes";
-import ForgotPasswordRoutes from "../routes/Forgot-Password-Routes";
-import ResetPasswordRoutes from "../routes/Reset-Password-Routes";
-
-//! home routes
-import HomeRoutes from "../routes/Home-Routes";
-import DetailPostRoutes from "../routes/Detail-Post-Routes";
-import ProfileRoutes from "../routes/Profile-Routes";
-import MyProfileRoutes from "../routes/My-Profile";
-import FollowRoute from "../routes/Follow-Routes";
-import SearchRoute from "../routes/Search-Route";
-import { Box, Text } from "@chakra-ui/react";
-import { DetailImageRoutes } from "../routes/Detail-Image-Routes";
+import { Text } from "@chakra-ui/react";
+import TemplateLayout2 from "../layout/Base-Template";
+import Home from "../layout/home/Home";
+import DetailPost from "../layout/detail-post/detail-post";
+import ProfileView from "../layout/profile/Profile";
+import MyProfile from "../layout/my-profile/My-Profile";
+import Search from "../layout/search/search";
+import Follow from "../layout/follow/Follows";
+import DetailImagePage from "../layout/detail-image/Detail-Image-layout";
+import Login from "../layout/auth/Login";
+import Register from "../layout/auth/Register";
+import ForgotPassword from "../layout/auth/Forgot-Password";
+import ResetPassword from "../layout/auth/Reset-Password";
 
 export default function AppRouter() {
   const router = createBrowserRouter([
     {
-      path: "/detail-post",
-      element: <DetailPostRoutes />,
+      path: "/",
+      element: <TemplateLayout2></TemplateLayout2>,
+      children: [
+        {
+          path: "",
+          element: <Home></Home>,
+        },
+        {
+          path: "detail-post",
+          element: <DetailPost />,
+        },
+        {
+          path: "profile",
+          element: <ProfileView />,
+        },
+        {
+          path: "my-profile",
+          element: <MyProfile />,
+        },
+        {
+          path: "search",
+          element: <Search />,
+        },
+        {
+          path: "follow",
+          element: <Follow />,
+        },
+        {
+          path: "detail-image",
+          element: <DetailImagePage />,
+        },
+      ],
     },
     {
-      path: "/profile",
-      element: <ProfileRoutes />,
+      path: "login",
+      element: <Login />,
     },
     {
-      path: "/my-profile",
-      element: <MyProfileRoutes />,
+      path: "register",
+      element: <Register />,
     },
     {
-      path: "/search",
-      element: <SearchRoute />,
+      path: "forgot-password",
+      element: <ForgotPassword />,
     },
     {
-      path: "/follows",
-      element: <FollowRoute />,
+      path: "reset-password",
+      element: <ResetPassword />,
     },
-    {
-      path: "/login",
-      element: <LoginRoute />,
-    },
-    {
-      path: "/register",
-      element: <RegisterRoutes />,
-    },
-    {
-      path: "/forgot-password",
-      element: <ForgotPasswordRoutes />,
-    },
-    {
-      path: "/reset-password",
-      element: <ResetPasswordRoutes />,
-    },
-    {
-      path: "/detail-image",
-      element: <DetailImageRoutes />,
-    },
+
     {
       path: "*",
       element: (

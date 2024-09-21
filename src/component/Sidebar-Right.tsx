@@ -34,8 +34,8 @@ export default function SideBarRight({ page }: SideBarRightPops) {
         ""
       )}
 
-      {page != "follows" ? (
-        <FollowComponent page="sidebar"></FollowComponent>
+      {page != "follow" ? (
+        <FollowComponent location="sidebar"></FollowComponent>
       ) : (
         ""
       )}

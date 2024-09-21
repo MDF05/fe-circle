@@ -31,7 +31,7 @@ export default function ResetPassword() {
 
   return (
     <AuthForm
-      page="register"
+      page="reset password"
       handleSubmit={handleSubmit}
       submitData={submitData}
       hookForm={register}

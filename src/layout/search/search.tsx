@@ -1,7 +1,7 @@
 import { Box, Flex, Icon, Input, InputGroup, Text } from "@chakra-ui/react";
 import { MdPersonSearch } from "react-icons/md";
 
-export default function SearchComponent() {
+export default function Search() {
   return (
     <Box>
       <Flex

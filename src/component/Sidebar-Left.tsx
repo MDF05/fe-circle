@@ -35,7 +35,7 @@ interface NavItemProps extends FlexProps {
 const LinkItems: Array<LinkItemProps> = [
   { name: "Home", icon: RiHome7Fill, path: "/" },
   { name: "Search", icon: TbUserSearch, path: "/search" },
-  { name: "Follows", icon: FaRegHeart, path: "/follows" },
+  { name: "Follow", icon: FaRegHeart, path: "/follow" },
   { name: "Profile", icon: FaRegCircleUser, path: "/my-profile" },
 ];
 

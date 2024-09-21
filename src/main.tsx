@@ -11,11 +11,7 @@ import EditProfileProvider from "./context/Modal-Edit-Profile.tsx";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ChakraProvider theme={ThemeConfig}>
-      <ModalPostProvider stateClosure={useDisclosure()}>
-        <EditProfileProvider stateClosure={useDisclosure()}>
-          <AppRouter></AppRouter>
-        </EditProfileProvider>
-      </ModalPostProvider>
+      <AppRouter></AppRouter>
     </ChakraProvider>
   </React.StrictMode>,
 );

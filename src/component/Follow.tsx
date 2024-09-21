@@ -1,12 +1,14 @@
 import { Button, Flex, Image, Text } from "@chakra-ui/react";
 import avatar from "../../assets/image/avatar.png";
 
-export default function FollowComponent({ page }: { page: string }) {
+export default function FollowComponent({ location }: { location: string }) {
   return (
     <Flex
       flexDirection="column"
       gap="10px"
-      background={page != "follows" ? "brand.backgroundYoung" : "transparent"}
+      background={
+        location != "follows" ? "brand.backgroundYoung" : "transparent"
+      }
       padding="20px"
       color="white"
     >
