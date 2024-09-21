@@ -1,27 +1,28 @@
 import { useForm } from "react-hook-form";
 import AuthForm from "../../features/auth/components/Auth-Form";
-import RegisterProps from "../../features/auth/types/register-types";
-import FormInputTypes from "../../types/Form-Input-Types";
-import { RegisterSchema } from "../../features/auth/schema/register";
+import RegisterProps from "../../features/auth/types/Register-Types";
+import FormInputTypes from "../../types/form-input-type";
+import {
+  registerSchema,
+  RegisterSchema,
+} from "../../features/auth/schema/register-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ListRegisterInput: FormInputTypes[] = [
   {
     typeInput: "text",
     placeHolder: "Full Name ",
-    formName: "fullName",
-    message: "please enter your full name !",
+    inputName: "fullName",
   },
   {
     typeInput: "email",
     placeHolder: "email ",
-    formName: "email",
-    message: "please enter your email !",
+    inputName: "email",
   },
   {
     typeInput: "password",
     placeHolder: "password ",
-    formName: "password",
-    message: "please enter your password !",
+    inputName: "password",
   },
 ];
 
@@ -30,7 +31,7 @@ export default function Register() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterSchema>();
+  } = useForm<RegisterProps>({ resolver: zodResolver(registerSchema) });
 
   function submitData(data: RegisterSchema): void {
     console.log(data);

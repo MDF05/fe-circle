@@ -1,6 +1,6 @@
 import { Box, Grid, Image } from "@chakra-ui/react";
 import listProfile3 from "../../../../assets/image/list-profile-3.png";
-import ChakraLink from "./../../../component/chakra-link";
+import ChakraLink from "../../../component/Chakra-Link-Router";
 
 export default function ListImageComponent() {
   return (

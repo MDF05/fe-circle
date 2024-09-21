@@ -8,7 +8,7 @@ import { FaRegHeart } from "react-icons/fa6";
 import { ModalContext } from "../../../context/Modal-Post-Context";
 import ModalPost from "../../../component/Modal-Post";
 import { useContext } from "react";
-import ChakraLink from "./../../../component/chakra-link";
+import ChakraLink from "../../../component/Chakra-Link-Router";
 
 export default function Base() {
   const { onOpen } = useContext(ModalContext);

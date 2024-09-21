@@ -1,19 +1,12 @@
+import { FieldErrors, NonUndefined } from "react-hook-form";
+import FormInputTypes from "../../../types/form-input-type";
 
 
-// interface Errors {
-//     password: {
-//         message: string;
-//     };
-//     newPassword: {
-//         message: string;
-//     };
-//     email: {
-//         message: string;
-//     };
-//     fullName: {
-//         message: string;
-//     };
-// }
+type Errors = {
+    typeInput: string;
+    inputName: string;
+    placeHolder: string;
+}
 
 
 export default interface AuthFormProps {
@@ -21,6 +14,9 @@ export default interface AuthFormProps {
     handleSubmit: Function,
     submitData: Function,
     hookForm: Function,
-    errors: any,
-    datas: any
+    datas: FormInputTypes[],
+    errors: FieldErrors<Errors> | any,
+
 }
+
+

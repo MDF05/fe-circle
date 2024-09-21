@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Text, Button, ModalContent } from "@chakra-ui/react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import ChakraLink from "../../../component/chakra-link";
+import ChakraLink from "../../../component/Chakra-Link-Router";
 import ProfileComponentProps from "../types/Profile";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";

@@ -17,7 +17,7 @@ import { RiHome7Fill } from "react-icons/ri";
 
 import { IconType } from "react-icons";
 import { Link as RouterLink } from "react-router-dom";
-import LogoCircle from "./LogoCircle";
+import LogoCircle from "./Logo-Circle";
 import ButtonPost from "./Button-Post";
 
 interface LinkItemProps {

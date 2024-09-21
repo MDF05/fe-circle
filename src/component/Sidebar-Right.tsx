@@ -1,10 +1,10 @@
 import { Flex } from "@chakra-ui/react";
-import FollowComponent from "./FollowComponent";
+import FollowComponent from "./Follow";
 import avatar from "../../assets/image/avatar.png";
 
 import ProfileComponent from "../features/profile/components/Profile-Component";
 import cover from "../../assets/image/cover.png";
-import DevelopmentInfo from "./DevelopsBySideBarRight";
+import DevelopmentInfo from "./Develop-By";
 
 interface SideBarRightPops {
   page: string;

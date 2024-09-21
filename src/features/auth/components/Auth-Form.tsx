@@ -10,13 +10,12 @@ import {
   Box,
   Grid,
 } from "@chakra-ui/react";
-import LogoCircle from "../../../component/LogoCircle";
+import LogoCircle from "../../../component/Logo-Circle";
 
 import AuthFormProps from "../types/Auth-From-Props";
-import NavigationForm from "./Navigation-Form";
 import generateTextForm from "../utils/generate-Text-Form";
-import ListInputFromTypes from "../../../types/Form-Input-Types";
-import ChakraLink from "../../../component/chakra-link";
+import ListInputFromTypes from "../../../types/form-input-type";
+import ChakraLink from "../../../component/Chakra-Link-Router";
 
 function AuthForm({
   page,
@@ -50,25 +49,21 @@ function AuthForm({
               color="white"
             >
               {datas.map((data: ListInputFromTypes, index: number) => {
+                let inputName = data.inputName;
                 return (
                   <FormControl
                     color="white"
                     key={index}
-                    isInvalid={errors[data.formName]}
+                    isInvalid={errors[inputName] !== undefined}
                   >
                     <Input
                       type={data.typeInput}
                       placeholder={data.placeHolder}
-                      {...hookForm(data.formName, {
-                        required: {
-                          value: true,
-                          message: data.message,
-                        },
-                      })}
+                      {...hookForm(inputName)}
                     />
-                    {errors[data.formName] && (
+                    {errors[inputName] && (
                       <FormErrorMessage>
-                        {errors[data.formName].message}
+                        {errors[inputName].message}
                       </FormErrorMessage>
                     )}
                   </FormControl>
@@ -85,23 +80,33 @@ function AuthForm({
               </Button>
 
               {page == "login" && (
-                <ChakraLink path="/forgot-password">
-                  <Text textAlign={"end"}>Forgot Password ?</Text>
+                <ChakraLink
+                  to="/forgot-password"
+                  color={"brand.color"}
+                  textAlign={"end"}
+                >
+                  Forgot Password ?
                 </ChakraLink>
               )}
 
               {page != "reset password" && (
                 <Box>
                   {page == "login" ? (
-                    <NavigationForm
-                      path="register"
-                      text="Don't have an account yet ? "
-                    />
+                    <Box>
+                      Don't have an account yet ?
+                      <ChakraLink to="/register" color={"brand.color"}>
+                        {" "}
+                        Create Account
+                      </ChakraLink>
+                    </Box>
                   ) : (
-                    <NavigationForm
-                      path="login"
-                      text="Already have account ? "
-                    />
+                    <Box>
+                      Already have account ?
+                      <ChakraLink to="/login" color={"brand.color"}>
+                        {" "}
+                        Login
+                      </ChakraLink>
+                    </Box>
                   )}
                 </Box>
               )}
