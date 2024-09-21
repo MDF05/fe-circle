@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Text } from "@chakra-ui/react";
-import TemplateLayout2 from "../layout/Base-Template";
+import TemplateLayout from "../layout/template/Base-Template";
 import Home from "../layout/home/Home";
 import DetailPost from "../layout/detail-post/detail-post";
 import ProfileView from "../layout/profile/Profile";
@@ -12,13 +12,13 @@ import DetailImagePage from "../layout/detail-image/Detail-Image-layout";
 import Login from "../layout/auth/Login";
 import Register from "../layout/auth/Register";
 import ForgotPassword from "../layout/auth/Forgot-Password";
-import ResetPassword from "../layout/auth/Reset-Password";
+import ResetPassword from "../layout/auth/Reset-password";
 
 export default function AppRouter() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <TemplateLayout2></TemplateLayout2>,
+      element: <TemplateLayout></TemplateLayout>,
       children: [
         {
           path: "",
