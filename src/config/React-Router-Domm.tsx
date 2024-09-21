@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 //! auth Routes
 import LoginRoute from "../routes/Login";
@@ -13,15 +13,11 @@ import ProfileRoutes from "../routes/Profile-Routes";
 import MyProfileRoutes from "../routes/My-Profile";
 import FollowRoute from "../routes/Follow-Routes";
 import SearchRoute from "../routes/Search-Route";
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { DetailImageRoutes } from "../routes/Detail-Image-Routes";
 
 export default function AppRouter() {
   const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <HomeRoutes />,
-    },
     {
       path: "/detail-post",
       element: <DetailPostRoutes />,
