@@ -4,6 +4,12 @@ import FormInputTypes from "../../types/form-input-type";
 import LoginTypes from "../../features/auth/types/login-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../features/auth/schema/login-schema";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { ResponseUserDTO } from "../../dto/user-dto";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../stores/auth-slice";
+import { useNavigate } from "react-router-dom";
 
 const ListLoginInput: FormInputTypes[] = [
   {
@@ -25,8 +31,23 @@ export default function Login() {
     formState: { errors },
   } = useForm<LoginTypes>({ resolver: zodResolver(loginSchema) });
 
-  function submitData(data: LoginTypes): void {
-    console.log(data);
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
+
+  async function submitData(data: LoginTypes): Promise<void> {
+    const response = await axios.post<null, ResponseUserDTO, LoginTypes>(
+      "http://localhost:3000/api/v1/login",
+      {
+        email: data.email,
+        password: data.password,
+      },
+    );
+
+    const { user, token } = response.data.data;
+    Cookies.set("token", token);
+    dispatch(setUser(user));
+
+    if (response.data.success) Navigate("/");
   }
 
   return (

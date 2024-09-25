@@ -7,6 +7,10 @@ import {
   RegisterSchema,
 } from "../../features/auth/schema/register-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { AxiosError } from "axios";
+import { useState } from "react";
+import { ResponseUserDTO, UserDTO } from "../../dto/user-dto";
+import { useNavigate } from "react-router-dom";
 
 const ListRegisterInput: FormInputTypes[] = [
   {
@@ -32,11 +36,29 @@ export default function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterProps>({ resolver: zodResolver(registerSchema) });
+  const [succesMessage, setSuccesMessage] = useState<string | undefined>(
+    undefined,
+  );
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
+  const Navigate = useNavigate();
 
-  function submitData(data: RegisterSchema): void {
-    console.log(data);
+  async function submitData(data: RegisterSchema): Promise<void> {
+    try {
+      const responses = await axios.post<null, ResponseUserDTO, RegisterSchema>(
+        "http://localhost:3000/api/v1/register",
+        data,
+      );
+      console.log(responses.data.success);
+      setSuccesMessage(responses.data.message);
+      setTimeout(() => Navigate("/login"), 3000);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError)
+        setErrorMessage(err.response?.data.message);
+      else setErrorMessage("unknown error");
+    }
   }
-
   return (
     <AuthForm
       page="register"
@@ -45,6 +67,8 @@ export default function Register() {
       hookForm={register}
       errors={errors}
       datas={ListRegisterInput}
+      succesMessage={succesMessage}
+      errorMessage={errorMessage}
     ></AuthForm>
   );
 }

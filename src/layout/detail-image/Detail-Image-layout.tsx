@@ -19,6 +19,10 @@ export default function DetailImagePage() {
       gridTemplateColumns={fullScreenImage ? "100%" : "60% 40%"}
       p={"0px 5px"}
       color={"white"}
+      position={"fixed"}
+      bg={"brand.background"}
+      zIndex={100}
+      left={0}
     >
       <Grid
         p={"0px 10px"}

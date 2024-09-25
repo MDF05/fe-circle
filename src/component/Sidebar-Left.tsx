@@ -1,4 +1,5 @@
 "use client";
+import Cookie from "js-cookie";
 
 import {
   Box,
@@ -16,7 +17,7 @@ import { CiLogout } from "react-icons/ci";
 import { RiHome7Fill } from "react-icons/ri";
 
 import { IconType } from "react-icons";
-import { Link as RouterLink } from "react-router-dom";
+import { Navigate, Link as RouterLink, useNavigate } from "react-router-dom";
 import LogoCircle from "./Logo-Circle";
 import ButtonPost from "./Button-Post";
 
@@ -77,6 +78,12 @@ const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
 };
 
 const SidebarContent = ({ ...rest }) => {
+  const Navigate = useNavigate();
+  function logOut() {
+    Cookie.remove("token");
+    Navigate("/login");
+  }
+
   return (
     <Flex
       transition="3s ease"
@@ -110,6 +117,7 @@ const SidebarContent = ({ ...rest }) => {
         bottom="20px"
         position="absolute"
         colorScheme="transparent"
+        onClick={logOut}
       >
         <Box as="span">
           <CiLogout></CiLogout>

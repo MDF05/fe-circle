@@ -1,22 +1,40 @@
-import { Box, Text, Image, Button, Icon, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Image,
+  Button,
+  Icon,
+  Input,
+  FormControl,
+} from "@chakra-ui/react";
 
 import { LuImagePlus } from "react-icons/lu";
-import avatarImage from "../../../../assets/image/avatar.png";
-import { TbMessage2 } from "react-icons/tb";
-import { FaHeart } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa6";
 import { ModalContext } from "../../../context/Modal-Post-Context";
 import ModalPost from "../../../component/Modal-Post";
-import { useContext } from "react";
-import ChakraLink from "../../../component/Chakra-Link-Router";
+import { useContext, useEffect, useState } from "react";
+import ListThreads from "./List-Thread";
+import axios from "axios";
+import threadsEntity from "../../../entities/thread-entity";
+import usePostThreadText from "../hooks/use-thread-text-form";
+import { useAppSelector } from "../../../hooks/use-store";
 
 export default function Base() {
-  const { onOpen } = useContext(ModalContext);
+  const { onOpen, isOpen } = useContext(ModalContext);
+  const [threads, setThreads] = useState<threadsEntity[]>([]);
+  const { register, onSubmit, handleSubmit, errors, isSubmitted } =
+    usePostThreadText();
+  const user = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    const threadsData = axios.get("http://localhost:3000/api/v1/thread");
+    threadsData.then((response) => {
+      setThreads(response.data.data);
+    });
+  }, [isOpen, isSubmitted]);
 
   return (
     <Box position="relative">
-      <ModalPost avatarImage={avatarImage}></ModalPost>
-
+      <ModalPost></ModalPost>
       <Box>
         <Text
           as="h1"
@@ -31,10 +49,30 @@ export default function Base() {
         </Text>
       </Box>
       <Box px="10px" py="20px" borderBottom="1px solid grey" color="grey">
-        <Box display="flex" justifyContent="space-between" width="95%">
-          <Box display="flex" gap="20px" alignItems="center">
-            <Image src={avatarImage}></Image>
-            <Text>What Is Hapenning?!</Text>
+        <FormControl
+          as={"form"}
+          display="flex"
+          justifyContent="space-between"
+          width="95%"
+          onSubmit={handleSubmit(onSubmit)}
+          isInvalid={errors.text != undefined}
+        >
+          <Box
+            display="flex"
+            gap="20px"
+            alignItems="center"
+            width={"Calc(100% - 150px)"}
+          >
+            <Image src={user.profile.image} alt="user-profile"></Image>
+            <Input
+              color={"white"}
+              type={"text"}
+              placeholder="What Is Hapenning?"
+              {...register("text")}
+              border={"none"}
+              _focusVisible={{ border: "none" }}
+              width={"100%"}
+            ></Input>
           </Box>
           <Box display="flex" alignItems="center" gap="20px">
             <Icon
@@ -42,6 +80,8 @@ export default function Base() {
               color="brand.color"
               fontSize="2rem"
               rounded="full"
+              cursor={"pointer"}
+              onClick={onOpen}
             ></Icon>
             <Button
               bg="brand.background-disabled"
@@ -50,321 +90,14 @@ export default function Base() {
               py="0px"
               h="40px"
               color="white"
-              onClick={onOpen}
+              type="submit"
             >
               Post
             </Button>
           </Box>
-        </Box>
+        </FormControl>
       </Box>
-      <Box px="10px" py="20px" borderBottom="1px solid grey" color="white">
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaHeart}
-                  fontSize="1.5rem"
-                  color="red"
-                  cursor="pointer"
-                ></Icon>
-                {/* <Icon as={FaRegHeart} fontSize="1.5rem" color="grey" cursor="pointer"></Icon> */}
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaHeart}
-                  fontSize="1.5rem"
-                  color="red"
-                  cursor="pointer"
-                ></Icon>
-                {/* <Icon as={FaRegHeart} fontSize="1.5rem" color="grey" cursor="pointer"></Icon> */}
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaRegHeart}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaRegHeart}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaRegHeart}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaRegHeart}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaRegHeart}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-        <Box display="flex" gap="20px" alignItems="start">
-          <ChakraLink path="/profile">
-            <Image src={avatarImage} h={"40px"} w={"140px"} rounded={"full"} />
-          </ChakraLink>
-          <Box display="flex" flexDirection="column" gap="15px">
-            <Flex gap="10px">
-              <Text>Indah Pra Karya</Text>
-              <Text color="grey">@indahpra</Text>
-              <Text color="grey">4h</Text>
-            </Flex>
-            <Box>
-              <Text>
-                Kalian pernah ga sih bet on saving? Jadi by calculation
-                sebenernya kita ga survive sampe tanggal tertentu. Tapi entah
-                gimana bisa aja gitu. Ada aja jalannya augmented reality real
-                time puppet I made. You can try it now went below in the thread.
-              </Text>
-            </Box>
-            <Flex gap="20px">
-              <Box>
-                <Icon
-                  as={FaRegHeart}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-              <Box>
-                <Icon
-                  as={TbMessage2}
-                  fontSize="1.5rem"
-                  color="grey"
-                  cursor="pointer"
-                ></Icon>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-      </Box>
+      <ListThreads isOpenModal={isOpen} threads={threads}></ListThreads>
     </Box>
   );
 }

@@ -16,6 +16,8 @@ import AuthFormProps from "../types/Auth-From-Props";
 import generateTextForm from "../utils/generate-Text-Form";
 import ListInputFromTypes from "../../../types/form-input-type";
 import ChakraLink from "../../../component/Chakra-Link-Router";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AuthForm({
   page,
@@ -24,11 +26,39 @@ function AuthForm({
   submitData,
   errors,
   datas,
+  succesMessage,
+  errorMessage,
 }: AuthFormProps) {
   const textForm = generateTextForm(page);
 
   return (
     <Flex h="100vh" alignItems="center">
+      {succesMessage &&
+        toast.success(succesMessage, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        })}
+
+      {errorMessage &&
+        toast.error(errorMessage, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        })}
+      <ToastContainer position="top-center" autoClose={3000} draggable />
       <Container maxW="container.lg">
         <Center>
           <Flex direction="column" w={{ base: "100%", md: "60%", lg: "50%" }}>

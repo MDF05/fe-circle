@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Text } from "@chakra-ui/react";
-import TemplateLayout from "../layout/template/Base-Template";
+import TemplateLayout from "../layout/template/Protected-Route";
 import Home from "../layout/home/Home";
-import DetailPost from "../layout/detail-post/detail-post";
+import DetailThread from "../layout/detail-post/Detail-Thread";
 import ProfileView from "../layout/profile/Profile";
 import MyProfile from "../layout/my-profile/My-Profile";
 import Search from "../layout/search/search";
@@ -25,8 +25,8 @@ export default function AppRouter() {
           element: <Home></Home>,
         },
         {
-          path: "detail-post",
-          element: <DetailPost />,
+          path: "thread",
+          element: <DetailThread />,
         },
         {
           path: "profile",

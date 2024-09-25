@@ -1,4 +1,4 @@
-import { FieldErrors, NonUndefined } from "react-hook-form";
+import { FieldErrors } from "react-hook-form";
 import FormInputTypes from "../../../types/form-input-type";
 
 
@@ -16,6 +16,8 @@ export default interface AuthFormProps {
     hookForm: Function,
     datas: FormInputTypes[],
     errors: FieldErrors<Errors> | any,
+    succesMessage?: string,
+    errorMessage?: string
 
 }
 
