@@ -49,7 +49,10 @@ export default function Base(): ReactElement {
             alignItems="center"
             width={"Calc(100% - 150px)"}
           >
-            <Image src={user.profile.image} alt="user-profile"></Image>
+            <Image
+              src={user.profile.image as string}
+              alt="user-profile"
+            ></Image>
             <Input
               color={"white"}
               type={"text"}

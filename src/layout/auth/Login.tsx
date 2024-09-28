@@ -44,6 +44,7 @@ export default function Login() {
     );
 
     const { user, token } = response.data.data;
+    Cookies.remove("token");
     Cookies.set("token", token);
     dispatch(setUser(user));
 

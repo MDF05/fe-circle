@@ -25,7 +25,6 @@ function TemplateLayout() {
     });
 
     validateToken.then((res: any) => {
-      console.log(res);
       const user = res.data.data;
 
       dispatch(setUser(user));

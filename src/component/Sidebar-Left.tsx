@@ -81,9 +81,7 @@ const SidebarContent = ({ ...rest }) => {
   const Navigate = useNavigate();
   function logOut() {
     Cookies.remove("token");
-    Cookies.set("token", "");
-    console.log(Cookies.get("token"));
-    Navigate("/login");
+    window.location.reload();
   }
 
   return (

@@ -1,6 +1,6 @@
 import { Box, Button, Container } from "@chakra-ui/react";
 import ProfileComponent from "../../features/profile/components/Profile-Component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListImageComponent from "../../features/profile/components/List-Image-Component";
 import AllPostComponent from "../../features/profile/components/All-Post-Component";
 import coverGradient from "../../../assets/image/cover-gradient.png";
@@ -8,6 +8,7 @@ import profileAvatar from "../../../assets/image/profile-avatar.png";
 
 export default function ProfileView() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
+
   return (
     <Container p="0">
       <ProfileComponent

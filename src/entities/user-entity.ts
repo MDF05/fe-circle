@@ -1,11 +1,7 @@
 
+import ProfileConstUserEntity from './profile-entity-constraints-user';
 interface UserEntity {
-    profile: {
-        fullName: string;
-        id: string;
-        image: string;
-        username: string;
-    };
+    profile: ProfileConstUserEntity
     id: string,
     fullName: string,
     email: string,

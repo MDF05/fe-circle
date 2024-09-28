@@ -12,3 +12,5 @@ export default interface ProfileEntity {
     user: UserEntity,
     thread: threadsEntity[]
 }
+
+

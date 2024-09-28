@@ -6,9 +6,11 @@ import ListImageComponent from "../../features/profile/components/List-Image-Com
 import cover from "../../../assets/image/cover.png";
 import avatar from "../../../assets/image/avatar.png";
 import ModalEditProfile from "../../features/profile/components/Modal-Edit-Profile";
+import { useAppSelector } from "../../hooks/use-store";
 
 export default function MyProfile() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
+  const user = useAppSelector((state) => state.auth);
 
   return (
     <Container p="0">
@@ -22,6 +24,7 @@ export default function MyProfile() {
         username="@audhinafh"
         avatar={avatar}
         borderProfile="profile.rightSide"
+        Profile={user.profile}
         // background="transparent"
       ></ProfileComponent>
       <Box

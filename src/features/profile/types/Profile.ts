@@ -1,4 +1,5 @@
 import { BoxProps } from "@chakra-ui/react";
+import ProfileConstUserEntity from "../../../entities/profile-entity-constraints-user";
 
 export default interface ProfileComponentProps extends BoxProps {
     page: string;
@@ -8,4 +9,5 @@ export default interface ProfileComponentProps extends BoxProps {
     username: string;
     status: string;
     borderProfile: string;
+    Profile?: ProfileConstUserEntity
 }

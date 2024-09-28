@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text, Button, ModalContent } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, Button } from "@chakra-ui/react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import ProfileComponentProps from "../types/Profile";
@@ -14,6 +14,7 @@ export default function ProfileComponent({
   status,
   avatar,
   borderProfile,
+  Profile,
   ...rest
 }: ProfileComponentProps) {
   const { onOpen } = useContext(EditProfileContext);
@@ -57,7 +58,7 @@ export default function ProfileComponent({
       </Text>
       <Box>
         <Box height="80px" display="flex" rounded="10px">
-          <Image src={cover} width="100%"></Image>
+          <Image src={Profile?.cover as string} width="100%"></Image>
         </Box>
         <Flex
           position="relative"
@@ -66,7 +67,7 @@ export default function ProfileComponent({
           align="center"
         >
           <Image
-            src={avatar}
+            src={Profile?.image as string}
             position="absolute"
             left="10px"
             top="-25px"
@@ -94,18 +95,18 @@ export default function ProfileComponent({
           )}
         </Flex>
         <Flex gap="10px" flexDirection="column">
-          <Text as="h1">{name}</Text>
-          <Text color="grey">{username}</Text>
+          <Text as="h1">{Profile?.fullName}</Text>
+          <Text color="grey">{Profile?.username}</Text>
           <Text>{status}</Text>
           <Flex gap="20px">
             <Flex as="span" gap="5px">
-              <Text as="span">291</Text>
+              <Text as="span">{Profile?._count.following}</Text>
               <Text as="span" color="grey">
                 Following
               </Text>
             </Flex>
             <Flex as="span" gap="5px">
-              <Text as="span">23</Text>
+              <Text as="span">{Profile?._count.follower}</Text>
               <Text as="span" color="grey">
                 Followers
               </Text>
