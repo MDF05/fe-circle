@@ -12,7 +12,7 @@ interface EditProfProps {
 
 export const EditProfileContext = createContext({} as EditProfProps);
 
-export default function EditProfileProvider({
+export default function ModalEditProvileProvider({
   children,
   stateClosure,
 }: {

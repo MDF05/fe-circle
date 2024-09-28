@@ -14,38 +14,27 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { TbMessage2 } from "react-icons/tb";
 import { FaHeart } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
-import { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
+
 import detailDatePost from "../../utils/detail-date-post";
 import ModalPost from "../../component/Modal-Post";
-import { ModalContext } from "../../context/Modal-Post-Context";
 import ListThreads from "./../../features/base/components/List-Thread";
-import threadsEntity from "../../entities/thread-entity";
+import useDetailThreads from "./hooks/use-detail-thread";
 
 export default function DetailThread() {
-  const { onOpen, isOpen } = useContext(ModalContext);
-  const { state } = useLocation();
-  const [thread, setThread] = useState<threadsEntity>();
-  console.log(thread);
-
-  useEffect(() => {
-    const threadsData = axios.get(
-      `http://localhost:3000/api/v1/thread/${state.id}`,
-    );
-    threadsData.then((response) => {
-      setThread(response.data.data);
-    });
-  }, [isOpen, state]);
-
+  const { thread, onOpen, navigate } = useDetailThreads();
   return (
     <Container color="white" p="0 0 50px 0 ">
       <ModalPost></ModalPost>
 
       <Flex height="50px" width="100%" alignItems="end" ps="20px">
-        <Flex alignItems="center" gap="10px">
+        <Flex
+          as="button"
+          alignItems="center"
+          gap="10px"
+          onClick={() => navigate(-1)}
+        >
           <Icon as={FaArrowLeftLong} />
-          <Text textTransform="capitalize">Status</Text>
+          <Text textTransform="capitalize">back</Text>
         </Flex>
       </Flex>
       <Flex
@@ -145,12 +134,7 @@ export default function DetailThread() {
         </Flex>
       </Box>
 
-      {thread?.replies && (
-        <ListThreads
-          threads={thread?.replies}
-          isOpenModal={isOpen}
-        ></ListThreads>
-      )}
+      {thread?.replies && <ListThreads threads={thread?.replies}></ListThreads>}
     </Container>
   );
 }

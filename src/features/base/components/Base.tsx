@@ -9,28 +9,14 @@ import {
 } from "@chakra-ui/react";
 
 import { LuImagePlus } from "react-icons/lu";
-import { ModalContext } from "../../../context/Modal-Post-Context";
 import ModalPost from "../../../component/Modal-Post";
-import { useContext, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import ListThreads from "./List-Thread";
-import axios from "axios";
-import threadsEntity from "../../../entities/thread-entity";
-import usePostThreadText from "../hooks/use-thread-text-form";
-import { useAppSelector } from "../../../hooks/use-store";
+import useBase from "../hook/base-hook";
 
-export default function Base() {
-  const { onOpen, isOpen } = useContext(ModalContext);
-  const [threads, setThreads] = useState<threadsEntity[]>([]);
-  const { register, onSubmit, handleSubmit, errors, isSubmitted } =
-    usePostThreadText();
-  const user = useAppSelector((state) => state.auth);
-
-  useEffect(() => {
-    const threadsData = axios.get("http://localhost:3000/api/v1/thread");
-    threadsData.then((response) => {
-      setThreads(response.data.data);
-    });
-  }, [isOpen, isSubmitted]);
+export default function Base(): ReactElement {
+  const { threads, handleSubmit, register, errors, user, onSubmit, onOpen } =
+    useBase();
 
   return (
     <Box position="relative">
@@ -97,7 +83,7 @@ export default function Base() {
           </Box>
         </FormControl>
       </Box>
-      <ListThreads isOpenModal={isOpen} threads={threads}></ListThreads>
+      <ListThreads threads={threads}></ListThreads>
     </Box>
   );
 }

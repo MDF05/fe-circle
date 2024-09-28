@@ -1,5 +1,5 @@
 "use client";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 
 import {
   Box,
@@ -80,7 +80,9 @@ const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
 const SidebarContent = ({ ...rest }) => {
   const Navigate = useNavigate();
   function logOut() {
-    Cookie.remove("token");
+    Cookies.remove("token");
+    Cookies.set("token", "");
+    console.log(Cookies.get("token"));
     Navigate("/login");
   }
 

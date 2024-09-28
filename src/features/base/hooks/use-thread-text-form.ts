@@ -3,18 +3,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { threadSchema } from './../schema/thread-text-schema';
 import ThreadTextTypes from './../types/thread-text';
 import axios from "axios";
-import { useAppSelector } from "../../../hooks/use-store";
-import { useState } from "react";
+import { apiV1 } from "../../../lib/api-v1";
 
 
-export default function usePostThreadText() {
-    const { register, handleSubmit, formState: { errors, isSubmitted }, setError } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadSchema) });
-    const user = useAppSelector((state) => state.auth);
+export default function useFormModalPostText() {
+    const { register, handleSubmit, formState: { errors, isValid }, setError, reset } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadSchema) });
 
     const onSubmit: any = async (e: ThreadTextTypes) => {
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/thread", { ...e, profileId: user.profile.id })
-
+            const response = await apiV1.post("/thread", { ...e })
+            reset()
             return response
         } catch (err: unknown) {
             if (err instanceof axios.AxiosError) {
@@ -24,7 +22,7 @@ export default function usePostThreadText() {
     }
 
 
-    return { register, handleSubmit, onSubmit, errors, isSubmitted }
+    return { register, handleSubmit, onSubmit, errors, reset, isValid }
 
 
 }

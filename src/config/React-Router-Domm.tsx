@@ -25,7 +25,7 @@ export default function AppRouter() {
           element: <Home></Home>,
         },
         {
-          path: "thread",
+          path: "thread/:id",
           element: <DetailThread />,
         },
         {

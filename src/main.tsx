@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import AppRouter from "./config/React-Router-Domm.tsx";
@@ -7,6 +6,7 @@ import { Provider } from "react-redux";
 import "./assets/css/fonts.css";
 import "./assets/css/scrollbar.css";
 import { store } from "./stores/store.ts";
+import "../src/lib/api-v1.ts";
 
 createRoot(document.getElementById("root")!).render(
   // ! <React.StrictMode> twice re rendered
