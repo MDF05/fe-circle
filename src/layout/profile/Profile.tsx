@@ -1,6 +1,6 @@
 import { Box, Button, Container } from "@chakra-ui/react";
 import ProfileComponent from "../../features/profile/components/Profile-Component";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ListImageComponent from "../../features/profile/components/List-Image-Component";
 import AllPostComponent from "../../features/profile/components/All-Post-Component";
 import coverGradient from "../../../assets/image/cover-gradient.png";

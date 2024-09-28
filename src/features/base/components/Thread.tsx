@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Image, Input, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
 import threadsEntity from "../../../entities/thread-entity";
 import ChakraLink from "../../../component/Chakra-Link-Router";
