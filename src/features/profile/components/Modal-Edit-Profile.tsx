@@ -15,25 +15,72 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LuImagePlus } from "react-icons/lu";
 import ModalPostProps from "../../../types/modal-post";
 import { EditProfileContext } from "../../../context/Modal-Edit-Profile";
-import cover from "../../../../assets/image/cover.png";
+import { useForm } from "react-hook-form";
+import { apiV1 } from "../../../lib/api-v1";
 
-export default function EditProfileComp({ avatarImage }: ModalPostProps) {
+export default function EditProfileComp({ Profile }: ModalPostProps) {
   const { isOpen, onClose } = useContext(EditProfileContext);
 
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: {},
+  } = useForm({
+    defaultValues: {
+      fullName: Profile?.fullName,
+      bio: Profile?.bio,
+      username: Profile?.username,
+      image: Profile?.image,
+      cover: Profile?.cover,
+    },
+  });
+
+  const [image, setImage] = useState<string | undefined>();
+  const [cover, setCover] = useState<string | undefined>();
+
+  const watchImage = watch(["image", "cover"]);
+
+  useEffect(() => {
+    if (watchImage[0] && typeof watchImage[0] !== "string") {
+      const image: any = watchImage[0][0];
+      image && setImage(URL.createObjectURL(image));
+    } else {
+      setImage(undefined);
+    }
+    if (watchImage[1] && typeof watchImage[1] !== "string") {
+      const cover: any = watchImage[1][0];
+      cover && setCover(URL.createObjectURL(cover));
+    } else {
+      setCover(undefined);
+    }
+  }, [watchImage[0], watchImage[1], reset]);
+
+  async function submitProfile(event: any) {
+    try {
+      const formData = new FormData();
+      formData.append("fullName", event.fullName);
+      formData.append("bio", event.bio);
+      formData.append("username", event.username);
+      typeof event.image !== "string" &&
+        formData.append("image", event.image[0]);
+      typeof event.cover !== "string" &&
+        formData.append("cover", event.cover[0]);
+
+      const res = await apiV1.put("/profile", formData);
+      console.log(res);
+    } catch (err) {
+      console.error("Error saving profile: ", err);
+    }
+  }
 
   return (
-    <Modal
-      initialFocusRef={initialRef}
-      finalFocusRef={finalRef}
-      isOpen={isOpen}
-      onClose={onClose}
-    >
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay
         backdropFilter="blur(5px)"
         backgroundColor="rgba(128, 128, 128,0.1)"
@@ -45,6 +92,8 @@ export default function EditProfileComp({ avatarImage }: ModalPostProps) {
         minH="70vh"
         overflow="auto"
         rounded={"15px"}
+        as={"form"}
+        onSubmit={handleSubmit((data) => submitProfile(data))}
       >
         <ModalBody pb={6}>
           <Box display="flex" width="100%" mb="10px">
@@ -66,10 +115,11 @@ export default function EditProfileComp({ avatarImage }: ModalPostProps) {
             <FormControl>
               <FormLabel>
                 <Image
-                  src={cover}
+                  src={cover || (Profile?.cover as string)}
                   alt="cover"
                   rounded="15px"
                   width="100%"
+                  height="200px"
                 ></Image>
                 <Icon
                   as={LuImagePlus}
@@ -83,12 +133,12 @@ export default function EditProfileComp({ avatarImage }: ModalPostProps) {
                   fontSize={"50px"}
                 ></Icon>
               </FormLabel>
-              <Input type="file" hidden></Input>
+              <Input type="file" hidden {...register("cover")}></Input>
             </FormControl>
             <FormControl>
               <FormLabel>
                 <Image
-                  src={avatarImage}
+                  src={image || (Profile?.image as string)}
                   alt="cover"
                   rounded="full"
                   height={"90px"}
@@ -111,15 +161,15 @@ export default function EditProfileComp({ avatarImage }: ModalPostProps) {
                   fontSize={"30px"}
                 ></Icon>
               </FormLabel>
-              <Input type="file" hidden></Input>
+              <Input type="file" hidden {...register("image")}></Input>
             </FormControl>
             <FormControl>
               <Input
                 type="text"
-                value={"✨ Stella Audhina ✨"}
                 pt={"30px"}
                 pb={"10px"}
                 height={"50px"}
+                {...register("fullName")}
               ></Input>
               <Text
                 position={"absolute"}
@@ -133,10 +183,10 @@ export default function EditProfileComp({ avatarImage }: ModalPostProps) {
             <FormControl>
               <Input
                 type="text"
-                value={"audhinafh"}
                 pt={"30px"}
                 pb={"10px"}
                 height={"50px"}
+                {...register("username")}
               ></Input>
               <Text
                 position={"absolute"}
@@ -150,10 +200,10 @@ export default function EditProfileComp({ avatarImage }: ModalPostProps) {
             <FormControl>
               <Textarea
                 resize={"none"}
-                value={"picked over by the worms, and weird fishes"}
                 pt={"20px"}
                 pb={"10px"}
                 height={"50px"}
+                {...register("bio")}
               ></Textarea>
               <Text
                 position={"absolute"}
@@ -174,10 +224,20 @@ export default function EditProfileComp({ avatarImage }: ModalPostProps) {
           padding="20px 5px 20px 10px !important"
         >
           <Button
+            background="red"
+            mr={3}
+            rounded={"full"}
+            color={"white"}
+            onClick={() => reset()}
+          >
+            cancel
+          </Button>
+          <Button
             background="brand.color"
             mr={3}
             rounded={"full"}
             color={"white"}
+            type="submit"
           >
             save
           </Button>

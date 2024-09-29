@@ -1,20 +1,33 @@
 import { Box, Button, Container } from "@chakra-ui/react";
 import ProfileComponent from "../../features/profile/components/Profile-Component";
-import { useState } from "react";
-import AllPostComponent from "../../features/profile/components/All-Post-Component";
+import { useContext, useEffect, useState } from "react";
 import ListImageComponent from "../../features/profile/components/List-Image-Component";
 import cover from "../../../assets/image/cover.png";
 import avatar from "../../../assets/image/avatar.png";
 import ModalEditProfile from "../../features/profile/components/Modal-Edit-Profile";
+import { apiV1 } from "../../lib/api-v1";
+import ListThreads from "../../features/base/components/List-Thread";
+import { EditProfileContext } from "../../context/Modal-Edit-Profile";
 import { useAppSelector } from "../../hooks/use-store";
 
 export default function MyProfile() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
+  const { isOpen } = useContext(EditProfileContext);
+  const [thread, setThread] = useState<any>();
+  const [profile, setProfile] = useState<any>();
   const user = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    (async function () {
+      const res = await apiV1.get("/profile");
+      setProfile(res.data.data);
+      setThread(res.data.data.thread);
+    })();
+  }, [isOpen]);
 
   return (
     <Container p="0">
-      <ModalEditProfile avatarImage={avatar} />
+      <ModalEditProfile Profile={user.profile} />
 
       <ProfileComponent
         cover={cover}
@@ -24,7 +37,7 @@ export default function MyProfile() {
         username="@audhinafh"
         avatar={avatar}
         borderProfile="profile.rightSide"
-        Profile={user.profile}
+        Profile={profile}
         // background="transparent"
       ></ProfileComponent>
       <Box
@@ -52,7 +65,11 @@ export default function MyProfile() {
         </Button>
       </Box>
       <Box color="white" mt={"10px"}>
-        {postOrMedia ? <ListImageComponent /> : <AllPostComponent />}
+        {postOrMedia ? (
+          <ListImageComponent thread={thread} />
+        ) : (
+          thread && <ListThreads threads={thread} />
+        )}
       </Box>
     </Container>
   );

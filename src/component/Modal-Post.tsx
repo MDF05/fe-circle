@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Grid,
   Icon,
   Image,
   Input,
@@ -63,15 +64,21 @@ export default function ModalPost() {
           </Box>
           <FormControl display="flex">
             <FormLabel>
-              <Image src={user.profile.image} alt="user-profile"></Image>
+              <Image
+                src={user.profile.image as string}
+                alt="user-profile"
+              ></Image>
             </FormLabel>
             <Textarea
               placeholder="What Is Happening?!"
               border="1px solid transparent"
               width="100%"
-              minH="40vh"
+              height={"auto"}
+              minH="20vh"
+              maxH={"70vh"}
               resize="none"
               color="white"
+              id="TextArea"
               _focusVisible={{
                 borderColor: "transparent",
               }}
@@ -82,12 +89,9 @@ export default function ModalPost() {
             />
           </FormControl>
           {prevImage && (
-            <Image
-              src={prevImage}
-              alt="preview"
-              width="100%"
-              height="100%"
-            ></Image>
+            <Grid justifyItems={"center"} padding={"0px 20px 0px 60px"}>
+              <Image src={prevImage} alt="preview" width="100%"></Image>
+            </Grid>
           )}
         </ModalBody>
 

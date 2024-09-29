@@ -6,7 +6,7 @@ import { apiV1 } from "../../../lib/api-v1";
 
 export default function useDetailThreads() {
     const { onOpen, isOpen } = useContext(ModalContext);
-    const { state } = useLocation();
+    const { state, pathname } = useLocation();
     const [thread, setThread] = useState<threadsEntity>();
     const navigate = useNavigate();
 
@@ -22,7 +22,8 @@ export default function useDetailThreads() {
     return {
         thread,
         onOpen,
-        navigate
+        navigate,
+        pathname
     }
 
 }

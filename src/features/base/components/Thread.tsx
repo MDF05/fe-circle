@@ -56,7 +56,11 @@ export function Thread({ thread }: { thread: threadsEntity }): ReactNode {
         boxSizing="border-box"
         gridTemplateColumns={"40px Calc(100% - 60px)"}
       >
-        <ChakraLink to="/profile" rounded={"full"}>
+        <ChakraLink
+          to={`/profile/${thread.profile.id}`}
+          rounded={"full"}
+          state={{ profileId: thread.profile.id }}
+        >
           <Image
             src={thread.profile.image as string}
             h={"40px"}
@@ -85,23 +89,23 @@ export function Thread({ thread }: { thread: threadsEntity }): ReactNode {
               onSubmit={handleSubmit(() => handleLike())}
             >
               {like !== "" ? (
-                <Box as="button" type="submit">
+                <Flex as="button" type="submit">
                   <Icon
                     as={FaHeart}
                     fontSize="1.5rem"
                     color="red"
                     cursor="pointer"
                   ></Icon>
-                </Box>
+                </Flex>
               ) : (
-                <Box as="button" type="submit">
+                <Flex as="button" type="submit">
                   <Icon
                     as={FaRegHeart}
                     fontSize="1.5rem"
                     color="grey"
                     cursor="pointer"
                   ></Icon>
-                </Box>
+                </Flex>
               )}
               {thread._count.like}
             </Flex>

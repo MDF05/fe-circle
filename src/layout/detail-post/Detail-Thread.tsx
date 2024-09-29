@@ -21,7 +21,8 @@ import ListThreads from "./../../features/base/components/List-Thread";
 import useDetailThreads from "./hooks/use-detail-thread";
 
 export default function DetailThread() {
-  const { thread, onOpen, navigate } = useDetailThreads();
+  const { thread, onOpen, navigate, pathname } = useDetailThreads();
+
   return (
     <Container color="white" p="0 0 50px 0 ">
       <ModalPost></ModalPost>
@@ -58,7 +59,7 @@ export default function DetailThread() {
         </Box>
         <Grid gap={"10px"}>
           <Text>{thread?.text}</Text>
-          {thread?.image && (
+          {thread?.image && !pathname.includes("detail-image") && (
             <Image
               src={`http://localhost:3000/assets/${thread?.image}`}
               alt={`thread-${thread.id}`}

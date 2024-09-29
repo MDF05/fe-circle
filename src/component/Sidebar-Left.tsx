@@ -20,6 +20,8 @@ import { IconType } from "react-icons";
 import { Navigate, Link as RouterLink, useNavigate } from "react-router-dom";
 import LogoCircle from "./Logo-Circle";
 import ButtonPost from "./Button-Post";
+import { useDispatch } from "react-redux";
+import { removeUser } from "../stores/auth-slice";
 
 interface LinkItemProps {
   name: string;
@@ -78,10 +80,13 @@ const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
 };
 
 const SidebarContent = ({ ...rest }) => {
-  const Navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   function logOut() {
+    dispatch(removeUser());
     Cookies.remove("token");
     window.location.reload();
+    return navigate("/login");
   }
 
   return (

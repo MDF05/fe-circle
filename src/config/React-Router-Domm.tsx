@@ -29,7 +29,7 @@ export default function AppRouter() {
           element: <DetailThread />,
         },
         {
-          path: "profile",
+          path: "profile/:id",
           element: <ProfileView />,
         },
         {
@@ -45,7 +45,7 @@ export default function AppRouter() {
           element: <Follow />,
         },
         {
-          path: "detail-image",
+          path: "detail-image/:id",
           element: <DetailImagePage />,
         },
       ],

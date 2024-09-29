@@ -6,7 +6,6 @@ import ProfileComponent from "../features/profile/components/Profile-Component";
 import cover from "../../assets/image/cover.png";
 import DevelopmentInfo from "./Develop-By";
 import { useAppSelector } from "../hooks/use-store";
-import ProfileConstUserEntity from "../entities/profile-entity-constraints-user";
 
 interface SideBarRightPops {
   page: string;
@@ -14,8 +13,6 @@ interface SideBarRightPops {
 
 export default function SideBarRight({ page }: SideBarRightPops) {
   const user = useAppSelector((state) => state.auth);
-
-  console.log(user);
 
   return (
     <Flex

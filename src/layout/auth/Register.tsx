@@ -50,7 +50,6 @@ export default function Register() {
         "http://localhost:3000/api/v1/register",
         data,
       );
-      console.log(responses.data.success);
       setSuccesMessage(responses.data.message);
       setTimeout(() => Navigate("/login"), 3000);
     } catch (err: unknown) {

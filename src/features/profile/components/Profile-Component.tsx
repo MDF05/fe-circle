@@ -97,7 +97,7 @@ export default function ProfileComponent({
         <Flex gap="10px" flexDirection="column">
           <Text as="h1">{Profile?.fullName}</Text>
           <Text color="grey">{Profile?.username}</Text>
-          <Text>{status}</Text>
+          <Text>{Profile?.bio}</Text>
           <Flex gap="20px">
             <Flex as="span" gap="5px">
               <Text as="span">{Profile?._count.following}</Text>

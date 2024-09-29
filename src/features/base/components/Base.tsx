@@ -45,13 +45,17 @@ export default function Base(): ReactElement {
         >
           <Box
             display="flex"
-            gap="20px"
+            gap="10px"
             alignItems="center"
             width={"Calc(100% - 150px)"}
           >
             <Image
               src={user.profile.image as string}
               alt="user-profile"
+              width={"50px"}
+              height={"50px"}
+              objectFit={"cover"}
+              rounded="full"
             ></Image>
             <Input
               color={"white"}

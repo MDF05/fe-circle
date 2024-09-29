@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { ResponseUserDTO } from "../../dto/user-dto";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../stores/auth-slice";
+import { removeUser, setUser } from "../../stores/auth-slice";
 import { useNavigate } from "react-router-dom";
 
 const ListLoginInput: FormInputTypes[] = [
@@ -46,6 +46,7 @@ export default function Login() {
     const { user, token } = response.data.data;
     Cookies.remove("token");
     Cookies.set("token", token);
+    dispatch(removeUser());
     dispatch(setUser(user));
 
     if (response.data.success) Navigate("/");
