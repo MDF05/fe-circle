@@ -53,7 +53,7 @@ export default function Base(): ReactElement {
               src={user.profile.image as string}
               alt="user-profile"
               width={"50px"}
-              height={"50px"}
+              height={"45px"}
               objectFit={"cover"}
               rounded="full"
             ></Image>

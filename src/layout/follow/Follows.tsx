@@ -1,5 +1,5 @@
-import FollowComponent from "../../component/Follow";
+import FollowsFeatures from "../../features/follow/component/Follows";
 
 export default function Follow() {
-  return <FollowComponent page="follows"></FollowComponent>;
+  return <FollowsFeatures location="follows"></FollowsFeatures>;
 }

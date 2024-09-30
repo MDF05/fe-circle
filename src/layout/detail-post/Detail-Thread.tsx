@@ -21,7 +21,15 @@ import ListThreads from "./../../features/base/components/List-Thread";
 import useDetailThreads from "./hooks/use-detail-thread";
 
 export default function DetailThread() {
-  const { thread, onOpen, navigate, pathname } = useDetailThreads();
+  const {
+    thread,
+    onOpen,
+    navigate,
+    pathname,
+    register,
+    handleReplies,
+    handleSubmit,
+  } = useDetailThreads();
 
   return (
     <Container color="white" p="0 0 50px 0 ">
@@ -95,7 +103,11 @@ export default function DetailThread() {
         </Flex>
       </Flex>
       <Box borderBottom="1px solid grey" p="20px">
-        <Flex width="100%" as={"form"}>
+        <Flex
+          width="100%"
+          as={"form"}
+          onSubmit={handleSubmit((e) => handleReplies(e))}
+        >
           <Box display="flex" justifyContent="space-between" width="100%">
             <Box display="flex" gap="20px" alignItems="center" w={"100%"}>
               <Image src={avatarImage}></Image>
@@ -106,6 +118,7 @@ export default function DetailThread() {
                 _focusVisible={{ border: "none" }}
                 overflow={"hidden"}
                 w="100%"
+                {...register("text")}
               ></Input>
             </Box>
             <Box display="flex" alignItems="center" gap="20px">

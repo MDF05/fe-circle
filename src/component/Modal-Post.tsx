@@ -67,6 +67,9 @@ export default function ModalPost() {
               <Image
                 src={user.profile.image as string}
                 alt="user-profile"
+                width={"50px"}
+                height={"45px"}
+                rounded={"full"}
               ></Image>
             </FormLabel>
             <Textarea
