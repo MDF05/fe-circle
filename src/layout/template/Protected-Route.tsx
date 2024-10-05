@@ -13,9 +13,9 @@ import { setUser } from "../../stores/auth-slice";
 
 function TemplateLayout() {
   const location = useLocation().pathname.replace("/", "");
-  const [token, setToken] = useState(Cookie.get("token"));
+  const [token] = useState(Cookie.get("token"));
   // const token = Cookie.get("token");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useAppSelector((state) => state.auth);
 
   // useEffect(() => {
