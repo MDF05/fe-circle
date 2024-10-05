@@ -1,22 +1,15 @@
 import { Flex } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { apiV1 } from "./../../../lib/api-v1";
-import FollowComponent from "../../../component/Follow";
+import FollowComponent from "./Follow";
+import { useListFollows } from "../hooks/use-list-follow";
 
-export default function FollowsFeatures({ location }: { location: string }) {
-  const [profiles, setProfiles] = useState<any[]>([]);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const res = await apiV1.get("/profile");
-        setProfiles(res.data.data);
-      } catch (err) {
-        setProfiles([]);
-        console.log(err);
-      }
-    })();
-  }, []);
+export default function FollowsFeatures({
+  location,
+  limit,
+}: {
+  location: string;
+  limit?: string;
+}) {
+  const { profiles } = useListFollows(limit);
 
   return (
     <Flex

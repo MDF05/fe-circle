@@ -1,9 +1,17 @@
-import { Box, Flex, Icon, Input, InputGroup, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  Icon,
+  Input,
+  InputGroup,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdPersonSearch } from "react-icons/md";
 import { apiV1 } from "../../lib/api-v1";
-import FollowComponent from "../../component/Follow";
+import FollowComponent from "../../features/follow/component/Follow";
 
 export default function Search() {
   const [profiles, setProfiles] = useState<any[]>([]);
@@ -20,6 +28,7 @@ export default function Search() {
       setProfiles(res.data.data);
       setSearch(event.search);
     } catch (err) {
+      setSearch(event.search);
       setProfiles([]);
     }
   }
@@ -64,11 +73,13 @@ export default function Search() {
         {profiles.length > 0
           ? profiles.map((profile) => {
               return (
-                <FollowComponent
-                  key={profile.id}
-                  profile={profile}
-                  location={"search"}
-                ></FollowComponent>
+                <Grid width={"100%"} height={"calc(100vh - 70px)"} pt={"20px"}>
+                  <FollowComponent
+                    key={profile.id}
+                    profile={profile}
+                    location={"search"}
+                  ></FollowComponent>
+                </Grid>
               );
             })
           : search && (

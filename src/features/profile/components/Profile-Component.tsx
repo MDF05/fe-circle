@@ -8,11 +8,14 @@ import { EditProfileContext } from "../../../context/Modal-Edit-Profile";
 import { useAppSelector } from "../../../hooks/use-store";
 import { useForm } from "react-hook-form";
 import { apiV1 } from "../../../lib/api-v1";
+import cookies from "js-cookie";
 
 export default function ProfileComponent({
   page,
   borderProfile,
   Profile,
+  following,
+  follower,
   ...rest
 }: ProfileComponentProps) {
   const { onOpen } = useContext(EditProfileContext);
@@ -23,21 +26,24 @@ export default function ProfileComponent({
     formState: { isSubmitted },
   } = useForm();
   const [follow, setFollow] = useState("");
+  const token: string | undefined = cookies.get("token");
 
   useEffect(() => {
     (async function () {
       try {
-        if (Profile) {
-          const res = await apiV1.get(`/follow/${Profile?.id}`);
+        if (Profile?.id && page !== "my-profile") {
+          const res = await apiV1.get(`/follow/${Profile?.id}`, {
+            headers: { Authorization: "Bearer " + token },
+          });
           setFollow(res.data.data.id);
-        }
-      } catch (err) {
+        } else return;
+      } catch (err: unknown) {
         setFollow("");
       }
     })();
   }, [Profile, isSubmitted]);
 
-  async function handleFollow(event: any) {
+  async function handleFollow() {
     try {
       const res = await apiV1.post(`/follow/${Profile?.id}`, {});
       setFollow(res.data.data.id);
@@ -46,9 +52,9 @@ export default function ProfileComponent({
     }
   }
 
-  async function handleReset(event: any) {
+  async function handleReset() {
     try {
-      const res = await apiV1.delete(`/follow/${follow}`);
+      await apiV1.delete(`/follow/${follow}`);
       setFollow("");
     } catch (err) {
       setFollow("");
@@ -107,8 +113,8 @@ export default function ProfileComponent({
           height="80px"
           align="center"
           as={"form"}
-          onSubmit={handleSubmit((event) => handleFollow(event))}
-          onReset={handleSubmit((event) => handleReset(event))}
+          onSubmit={handleSubmit(() => handleFollow())}
+          onReset={handleSubmit(() => handleReset())}
         >
           <Image
             src={Profile?.image as string}
@@ -163,18 +169,34 @@ export default function ProfileComponent({
           <Text color="grey">{Profile?.username}</Text>
           <Text>{Profile?.bio}</Text>
           <Flex gap="20px">
-            <Flex as="span" gap="5px">
-              <Text as="span">{Profile?._count.following}</Text>
+            <ChakraLink
+              to={`/following/${Profile?.username}`}
+              state={{
+                profileId: Profile?.id,
+                profileUsername: Profile?.username,
+              }}
+              display={"flex"}
+              gap="5px"
+            >
+              <Text as="span">{following || Profile?._count.following}</Text>
               <Text as="span" color="grey">
                 Following
               </Text>
-            </Flex>
-            <Flex as="span" gap="5px">
-              <Text as="span">{Profile?._count.follower}</Text>
+            </ChakraLink>
+            <ChakraLink
+              to={`/follower/${Profile?.username}`}
+              display={"flex"}
+              gap="5px"
+              state={{
+                profileId: Profile?.id,
+                profileUsername: Profile?.username,
+              }}
+            >
+              <Text as="span">{follower || Profile?._count.follower}</Text>
               <Text as="span" color="grey">
                 Followers
               </Text>
-            </Flex>
+            </ChakraLink>
           </Flex>
         </Flex>
       </Box>

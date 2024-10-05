@@ -5,11 +5,12 @@ import ListImageComponent from "../../features/profile/components/List-Image-Com
 import { useLocation } from "react-router-dom";
 import { apiV1 } from "../../lib/api-v1";
 import ListThreads from "../../features/base/components/List-Thread";
+import ProfileConstUserEntity from "../../entities/profile-entity-constraints-user";
 
 export default function ProfileView() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
   const { state } = useLocation();
-  const [profile, setProfile] = useState<any>();
+  const [profile, setProfile] = useState<ProfileConstUserEntity>();
 
   useEffect(() => {
     (async function () {
@@ -52,7 +53,7 @@ export default function ProfileView() {
       </Box>
       <Box color="white" mt={"10px"}>
         {postOrMedia ? (
-          <ListImageComponent threads={profile.thread} />
+          <ListImageComponent threads={profile?.thread} />
         ) : (
           profile?.thread && <ListThreads threads={profile.thread} />
         )}

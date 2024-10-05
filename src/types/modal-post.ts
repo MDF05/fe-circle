@@ -6,6 +6,6 @@ export interface ModalHookForm {
 }
 
 export default interface ModalPostProps {
-    Profile?: ProfileConstUserEntity
+    Profile: ProfileConstUserEntity
 
 }

@@ -18,18 +18,18 @@ function TemplateLayout() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.auth);
 
-  useEffect(() => {
-    setToken(Cookie.get("token"));
-    const validateToken = apiV1.post("validate-token", {
-      token: token,
-    });
+  // useEffect(() => {
+  //   setToken(Cookie.get("token"));
+  //   const validateToken = apiV1.post("validate-token", {
+  //     token: token,
+  //   });
 
-    validateToken.then((res: any) => {
-      const user = res.data.data;
+  //   validateToken.then((res: any) => {
+  //     const user = res.data.data;
 
-      dispatch(setUser(user));
-    });
-  }, []);
+  //     dispatch(setUser(user));
+  //   });
+  // }, []);
 
   if (!token || !user.id) {
     return <Navigate to={"/login"}></Navigate>;

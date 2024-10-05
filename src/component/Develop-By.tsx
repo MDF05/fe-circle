@@ -1,4 +1,4 @@
-import { Flex, Icon, Image, Text, Box } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import mainLogo from "../../assets/image/main-logo.png";
 import github from "../../assets/image/github.png";
 import instagram from "../../assets/image/instagram.png";

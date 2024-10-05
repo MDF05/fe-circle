@@ -12,7 +12,7 @@ import { LuImagePlus } from "react-icons/lu";
 import ModalPost from "../../../component/Modal-Post";
 import { ReactElement } from "react";
 import ListThreads from "./List-Thread";
-import useBase from "../hook/base-hook";
+import useBase from "../hook/use-base";
 
 export default function Base(): ReactElement {
   const { threads, handleSubmit, register, errors, user, onSubmit, onOpen } =

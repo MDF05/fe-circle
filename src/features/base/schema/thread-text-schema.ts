@@ -1,8 +1,8 @@
 import z from "zod"
 
-export const threadSchema = z.object({
+export const threadTextForm = z.object({
     text: z.string().min(1)
 })
 
 
-export type ThreadSchema = z.infer<typeof threadSchema>
+export type ThreadTextForm = z.infer<typeof threadTextForm>

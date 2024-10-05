@@ -13,6 +13,8 @@ import Login from "../layout/auth/Login";
 import Register from "../layout/auth/Register";
 import ForgotPassword from "../layout/auth/Forgot-Password";
 import ResetPassword from "../layout/auth/Reset-password";
+import ListFollowing from "../layout/follow/List-Following";
+import ListFollower from "../layout/follow/List-Follower";
 
 export default function AppRouter() {
   const router = createBrowserRouter([
@@ -47,6 +49,14 @@ export default function AppRouter() {
         {
           path: "detail-image/:id",
           element: <DetailImagePage />,
+        },
+        {
+          path: "following/:id",
+          element: <ListFollowing />,
+        },
+        {
+          path: "follower/:id",
+          element: <ListFollower />,
         },
       ],
     },

@@ -32,7 +32,12 @@ function AuthForm({
   const textForm = generateTextForm(page);
 
   return (
-    <Flex h="100vh" alignItems="center">
+    <Flex
+      h="100vh"
+      alignItems="center"
+      paddingBottom={"50px"}
+      overflowY={"auto"}
+    >
       {succesMessage &&
         toast.success(succesMessage, {
           position: "top-center",
@@ -108,6 +113,29 @@ function AuthForm({
               >
                 {page}
               </Button>
+
+              {(page == "login" || page == "register") && (
+                <Box
+                  as="form"
+                  width={"100%"}
+                  action="http://localhost:3000/api/v1/google"
+                  method="GET"
+                >
+                  <Text textAlign={"center"} mb={"15px"}>
+                    or{" "}
+                  </Text>
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    textTransform="capitalize"
+                    color="white"
+                    bg="brand.color"
+                    width={"100%"}
+                  >
+                    Google
+                  </Button>
+                </Box>
+              )}
 
               {page == "login" && (
                 <ChakraLink

@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { threadSchema } from './../schema/thread-text-schema';
-import ThreadTextTypes from './../types/thread-text';
+import { threadTextForm } from '../schema/thread-text-schema';
+import ThreadTextTypes from '../types/thread-text';
 import axios from "axios";
 import { apiV1 } from "../../../lib/api-v1";
 
 
 export default function useFormModalPostText() {
-    const { register, handleSubmit, formState: { errors, isValid }, setError, reset } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadSchema) });
+    const { register, handleSubmit, formState: { errors, isValid }, setError, reset } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadTextForm) });
 
     const onSubmit: any = async (e: ThreadTextTypes) => {
         try {

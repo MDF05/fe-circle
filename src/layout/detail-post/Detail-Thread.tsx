@@ -9,8 +9,7 @@ import {
   Grid,
   Input,
 } from "@chakra-ui/react";
-import avatarImage from "../../../assets/image/avatar.png";
-import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaArrowLeftLong, FaRegHeart } from "react-icons/fa6";
 import { TbMessage2 } from "react-icons/tb";
 import { FaHeart } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
@@ -19,6 +18,10 @@ import detailDatePost from "../../utils/detail-date-post";
 import ModalPost from "../../component/Modal-Post";
 import ListThreads from "./../../features/base/components/List-Thread";
 import useDetailThreads from "./hooks/use-detail-thread";
+import { useEffect, useState } from "react";
+import { apiV1 } from "../../lib/api-v1";
+import Cookies from "js-cookie";
+import { useForm } from "react-hook-form";
 
 export default function DetailThread() {
   const {
@@ -29,7 +32,60 @@ export default function DetailThread() {
     register,
     handleReplies,
     handleSubmit,
+    user,
   } = useDetailThreads();
+
+  const { handleSubmit: handleSubmitLike } = useForm();
+  const [like, setLike] = useState<string | null>(null);
+  const [countLike, setCountLike] = useState<number>(0);
+  const token = Cookies.get("token");
+
+  useEffect(() => {
+    (async function setData() {
+      try {
+        if (thread?.id) {
+          if (thread) setCountLike(thread?._count.like);
+          console.log(countLike);
+          const response = await apiV1.get(`/like/${thread?.id}`, {
+            headers: {
+              Authorization: `Bearer ` + token,
+            },
+          });
+          setLike(response.data.data.id);
+        }
+      } catch (err) {
+        setLike(null);
+      }
+    })();
+  }, [thread?.id]);
+
+  async function handleLike() {
+    try {
+      const res = await apiV1.post(`/like/${thread?.id}`, {
+        headers: {
+          Authorization: `Bearer ` + token,
+        },
+      });
+      setLike(res.data.data.id);
+      setCountLike(countLike + 1);
+    } catch (err) {
+      setLike(null);
+    }
+  }
+
+  async function handleResetLike() {
+    try {
+      await apiV1.delete(`/like/${like}`, {
+        headers: {
+          Authorization: `Bearer ` + token,
+        },
+      });
+      setCountLike(countLike - 1);
+      setLike(null);
+    } catch (err) {
+      setLike(like);
+    }
+  }
 
   return (
     <Container color="white" p="0 0 50px 0 ">
@@ -80,16 +136,34 @@ export default function DetailThread() {
           <Flex>● </Flex>
           <Flex>{detailDatePost(thread?.createdAt as string)[1]}</Flex>
         </Box>
-        <Flex gap="20px" color="grey">
+        <Flex
+          gap="20px"
+          color="grey"
+          as="form"
+          onSubmit={handleSubmitLike(() => handleLike())}
+          onReset={handleSubmitLike(() => handleResetLike())}
+        >
           <Flex gap="5px">
-            <Icon
-              as={FaHeart}
-              fontSize="1.5rem"
-              color="red"
-              cursor="pointer"
-            ></Icon>
-            {/* <Icon as={FaRegHeart} fontSize="1.5rem" color="grey" cursor="pointer"></Icon> */}
-            <Text>{thread?._count.like}</Text>
+            {!like ? (
+              <Box as="button" type={"submit"}>
+                <Icon
+                  as={FaRegHeart}
+                  fontSize="1.5rem"
+                  color="grey"
+                  cursor="pointer"
+                ></Icon>
+              </Box>
+            ) : (
+              <Box as="button" type={"reset"}>
+                <Icon
+                  as={FaHeart}
+                  fontSize="1.5rem"
+                  color="red"
+                  cursor="pointer"
+                ></Icon>
+              </Box>
+            )}
+            <Text>{countLike}</Text>
           </Flex>
           <Flex gap="5px">
             <Icon
@@ -110,7 +184,16 @@ export default function DetailThread() {
         >
           <Box display="flex" justifyContent="space-between" width="100%">
             <Box display="flex" gap="20px" alignItems="center" w={"100%"}>
-              <Image src={avatarImage}></Image>
+              {user.profile.image && (
+                <Image
+                  src={user.profile.image}
+                  alt="user-profile"
+                  width={"50px"}
+                  height={"45px"}
+                  objectFit={"cover"}
+                  rounded="full"
+                ></Image>
+              )}
               <Input
                 color="grey"
                 border={"none"}

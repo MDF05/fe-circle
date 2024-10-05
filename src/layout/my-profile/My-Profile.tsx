@@ -7,12 +7,14 @@ import { apiV1 } from "../../lib/api-v1";
 import ListThreads from "../../features/base/components/List-Thread";
 import { EditProfileContext } from "../../context/Modal-Edit-Profile";
 import { useAppSelector } from "../../hooks/use-store";
+import ProfileConstUserEntity from "../../entities/profile-entity-constraints-user";
+import threadsEntity from "../../entities/thread-entity";
 
 export default function MyProfile() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
   const { isOpen } = useContext(EditProfileContext);
-  const [threads, setThreads] = useState<any>();
-  const [profile, setProfile] = useState<any>();
+  const [threads, setThreads] = useState<threadsEntity[]>();
+  const [profile, setProfile] = useState<ProfileConstUserEntity>();
   const user = useAppSelector((state) => state.auth);
 
   useEffect(() => {
@@ -31,7 +33,6 @@ export default function MyProfile() {
         page="my-profile"
         borderProfile="profile.rightSide"
         Profile={profile}
-        // background="transparent"
       ></ProfileComponent>
       <Box
         borderBottom="border.grey"

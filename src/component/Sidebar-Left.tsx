@@ -5,10 +5,10 @@ import {
   Box,
   CloseButton,
   Flex,
-  FlexProps,
   Icon,
   Link,
   Button,
+  Text,
 } from "@chakra-ui/react";
 
 import { TbUserSearch } from "react-icons/tb";
@@ -16,26 +16,14 @@ import { FaRegHeart, FaRegCircleUser } from "react-icons/fa6";
 import { CiLogout } from "react-icons/ci";
 import { RiHome7Fill } from "react-icons/ri";
 
-import { IconType } from "react-icons";
-import { Navigate, Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import LogoCircle from "./Logo-Circle";
 import ButtonPost from "./Button-Post";
 import { useDispatch } from "react-redux";
 import { removeUser } from "../stores/auth-slice";
+import { LinkItemProps, NavItemProps } from "../types/sidebar-left-types";
 
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  path: string;
-}
-
-interface NavItemProps extends FlexProps {
-  icon: IconType;
-  path: string;
-  children: React.ReactNode;
-}
-
-const LinkItems: Array<LinkItemProps> = [
+export const LinkItems: Array<LinkItemProps> = [
   { name: "Home", icon: RiHome7Fill, path: "/" },
   { name: "Search", icon: TbUserSearch, path: "/search" },
   { name: "Follow", icon: FaRegHeart, path: "/follow" },
@@ -80,13 +68,14 @@ const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
 };
 
 const SidebarContent = ({ ...rest }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   function logOut() {
-    dispatch(removeUser());
     Cookies.remove("token");
+    dispatch(removeUser());
     window.location.reload();
-    return navigate("/login");
+    return navigate("/");
   }
 
   return (
@@ -124,10 +113,10 @@ const SidebarContent = ({ ...rest }) => {
         colorScheme="transparent"
         onClick={logOut}
       >
-        <Box as="span">
+        <Text>
           <CiLogout></CiLogout>
-        </Box>
-        <Box as="span">Logout</Box>
+        </Text>
+        <Text>Logout</Text>
       </Button>
     </Flex>
   );

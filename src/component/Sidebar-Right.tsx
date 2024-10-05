@@ -2,15 +2,12 @@ import { Flex } from "@chakra-ui/react";
 
 import ProfileComponent from "../features/profile/components/Profile-Component";
 import DevelopmentInfo from "./Develop-By";
-import { useAppSelector } from "../hooks/use-store";
-import FollowsFeatures from "../features/follow/component/Follows";
-
-interface SideBarRightPops {
-  page: string;
-}
+import FollowsFeatures from "../features/follow/component/List-Follows";
+import { SideBarRightPops } from "../types/sidebar-right-types";
+import sidebarRightHook from "../hooks/sidebar-right-hooks";
 
 export default function SideBarRight({ page }: SideBarRightPops) {
-  const user = useAppSelector((state) => state.auth);
+  const { profile, followFollower } = sidebarRightHook();
 
   return (
     <Flex
@@ -23,14 +20,16 @@ export default function SideBarRight({ page }: SideBarRightPops) {
       {page != "my-profile" && (
         <ProfileComponent
           page="my-profile"
-          Profile={user.profile}
+          Profile={profile}
           borderProfile="profile.rightSide"
           background="brand.backgroundYoung"
+          follower={`${followFollower.follower}`}
+          following={`${followFollower.following}`}
         ></ProfileComponent>
       )}
 
       {page != "follow" && (
-        <FollowsFeatures location="sidebar"></FollowsFeatures>
+        <FollowsFeatures location="sidebar" limit="3"></FollowsFeatures>
       )}
 
       <DevelopmentInfo></DevelopmentInfo>

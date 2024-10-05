@@ -1,7 +1,11 @@
 import { Box, Grid, Image } from "@chakra-ui/react";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 
-export default function ListImageComponent({ threads }: { threads?: any }) {
+export default function ListImageComponent({
+  threads,
+}: {
+  threads?: any;
+}): React.ReactElement {
   const filterImage = Array.from(threads).filter(
     (th: any) => th.image !== null,
   );

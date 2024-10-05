@@ -1,4 +1,4 @@
-import FollowsFeatures from "../../features/follow/component/Follows";
+import FollowsFeatures from "../../features/follow/component/List-Follows";
 
 export default function Follow() {
   return <FollowsFeatures location="follows"></FollowsFeatures>;

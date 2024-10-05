@@ -1,11 +1,11 @@
 export default interface ProfileConstUserEntity {
-    id: String
-    username: String
-    fullName: String
-    bio?: String
-    cover?: String
-    image?: String
-    userId: String
+    id: string
+    username: string
+    fullName: string
+    bio?: string
+    cover?: string
+    image?: string
+    userId: string
     thread: []
     followerId?: string
     followingId?: string

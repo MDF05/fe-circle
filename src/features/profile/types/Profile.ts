@@ -4,5 +4,7 @@ import ProfileConstUserEntity from "../../../entities/profile-entity-constraints
 export default interface ProfileComponentProps extends BoxProps {
     page: string;
     borderProfile: string;
-    Profile?: ProfileConstUserEntity
+    Profile?: ProfileConstUserEntity,
+    following?: string,
+    follower?: string
 }

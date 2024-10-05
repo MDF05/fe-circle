@@ -1,4 +1,4 @@
-export default function convertDateAge(date: string) {
+export default function calcAgePost(date: string) {
     const postDate = new Date(date);
     const today = new Date();
     const diffTime = today.getTime() - postDate.getTime();

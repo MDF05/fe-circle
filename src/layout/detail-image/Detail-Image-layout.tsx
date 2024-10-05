@@ -4,12 +4,13 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DetailThread from "./../detail-post/Detail-Thread";
 import ChakraLink from "./../../component/Chakra-Link-Router";
+import threadsEntity from "../../entities/thread-entity";
 
 export default function DetailImagePage() {
   const [fullScreenImage, setFullScreenImage] = useState<boolean>(false);
   const { state } = useLocation();
   const Navigate = useNavigate();
-  let thread: any = Array.from(state.thread);
+  let thread: threadsEntity[] = Array.from(state.thread);
   let nextIndex: number = thread.indexOf(state.thisThread) + 1;
 
   if (nextIndex == thread.length) nextIndex = 0;
@@ -49,23 +50,25 @@ export default function DetailImagePage() {
             bg={"white"}
             color="black"
           ></Icon>
-          <ChakraLink
-            to={`/detail-image/${thread[nextIndex].id}`}
-            state={{
-              id: thread[nextIndex].id,
-              thisThread: thread[nextIndex],
-              thread,
-            }}
-          >
-            <Icon
-              as={IoIosArrowDropright}
-              fontSize={"30px"}
-              rounded={"full"}
-              boxShadow={"0px 0px 4px 1px black"}
-              bg={"white"}
-              color="black"
-            ></Icon>
-          </ChakraLink>
+          {thread.length > 0 && (
+            <ChakraLink
+              to={`/detail-image/${thread[nextIndex]?.id}`}
+              state={{
+                id: thread[nextIndex]?.id,
+                thisThread: thread[nextIndex],
+                thread,
+              }}
+            >
+              <Icon
+                as={IoIosArrowDropright}
+                fontSize={"30px"}
+                rounded={"full"}
+                boxShadow={"0px 0px 4px 1px black"}
+                bg={"white"}
+                color="black"
+              ></Icon>
+            </ChakraLink>
+          )}
         </Flex>
         <Image
           src={`http://localhost:3000/assets/${state.thisThread.image}`}

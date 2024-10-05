@@ -5,6 +5,7 @@ import { useAppSelector } from "./use-store";
 import { ModalContext } from "../context/Modal-Post-Context";
 import { useLocation } from "react-router-dom";
 import { apiV1 } from "../lib/api-v1";
+import Cookies from "js-cookie"
 
 export default function modalPostHook() {
     const { isOpen, onClose } = useContext(ModalContext);
@@ -13,6 +14,7 @@ export default function modalPostHook() {
     let user = useAppSelector((state) => state.auth);
     const watchFile = watch(["image"]);
     const { state } = useLocation();
+    const token = Cookies.get("token")
 
     useEffect(() => {
         if (watchFile[0]) {
@@ -33,7 +35,7 @@ export default function modalPostHook() {
         const api: string = "http://localhost:3000/api/v1/thread";
         if (state?.id) formData.append("threadId", state.id);
 
-        const response = await apiV1.post<null, any, FormData>(api, formData);
+        const response = await apiV1.post<null, any, FormData>(api, formData, { headers: { Authorization: "Bearer " + token } });
         reset()
         onClose();
     }

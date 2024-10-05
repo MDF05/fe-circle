@@ -10,6 +10,7 @@ import { ResponseUserDTO } from "../../dto/user-dto";
 import { useDispatch } from "react-redux";
 import { removeUser, setUser } from "../../stores/auth-slice";
 import { useNavigate } from "react-router-dom";
+import { setFollowFollower } from "../../stores/follow-follower-slice";
 
 const ListLoginInput: FormInputTypes[] = [
   {
@@ -35,21 +36,24 @@ export default function Login() {
   const Navigate = useNavigate();
 
   async function submitData(data: LoginTypes): Promise<void> {
-    const response = await axios.post<null, ResponseUserDTO, LoginTypes>(
-      "http://localhost:3000/api/v1/login",
-      {
-        email: data.email,
-        password: data.password,
-      },
-    );
+    try {
+      const response = await axios.post<null, ResponseUserDTO, LoginTypes>(
+        "http://localhost:3000/api/v1/login",
+        {
+          email: data.email,
+          password: data.password,
+        },
+      );
 
-    const { user, token } = response.data.data;
-    Cookies.remove("token");
-    Cookies.set("token", token);
-    dispatch(removeUser());
-    dispatch(setUser(user));
+      const { user, token } = response.data.data;
+      Cookies.set("token", token, { expires: 1 });
+      dispatch(setUser(user));
+      dispatch(setFollowFollower(user.profile._count));
 
-    if (response.data.success) Navigate("/");
+      if (response.data.success) Navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (

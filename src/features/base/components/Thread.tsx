@@ -1,47 +1,16 @@
 import { Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import threadsEntity from "../../../entities/thread-entity";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { TbMessage2 } from "react-icons/tb";
-import convertDateAge from "../../../utils/convert-date";
-import { useForm } from "react-hook-form";
-import { apiV1 } from "../../../lib/api-v1";
+import calcAgePost from "../../../utils/convert-date";
+import useThread from "../hook/use-thread";
 
 export function Thread({ thread }: { thread: threadsEntity }): ReactNode {
-  const { handleSubmit } = useForm();
-  const [like, setLike] = useState<string>("");
+  const { handleLike, handleResetLike, handleSubmit, countLike, likeId } =
+    useThread(thread);
 
-  useEffect(() => {
-    (async function setData() {
-      try {
-        const response = await apiV1.get(`/like/${thread.id}`);
-        setLike(response.data.data.id);
-      } catch (err) {
-        setLike("");
-      }
-    })();
-  }, [like]);
-
-  async function handleLike() {
-    if (like == "") {
-      try {
-        const res = await apiV1.post(`/like/${thread.id}`);
-        setLike(res.data.data.id);
-      } catch (err) {
-        setLike("");
-      }
-    } else {
-      try {
-        const res = await apiV1.delete(`/like/${like}`);
-        setLike("");
-      } catch (err) {
-        setLike("");
-      }
-    }
-  }
-
-  const agePost = convertDateAge(thread.createdAt);
   return (
     <Box
       px="20px"
@@ -73,12 +42,17 @@ export function Thread({ thread }: { thread: threadsEntity }): ReactNode {
             <Text>{thread.profile.fullName} </Text>
             <Text color="grey"> @{thread.profile.username} </Text>
             <Text color="grey"> • </Text>
-            <Text color="grey"> {agePost}</Text>
+            <Text color="grey"> {calcAgePost(thread.createdAt)}</Text>
           </Flex>
           <Flex gap={"20px"} flexDir={"column"}>
             <Text>{thread.text}</Text>
             {thread.image && (
-              <Image src={`http://localhost:3000/assets/${thread.image}`} />
+              <ChakraLink
+                to={`/detail-image/${thread.id}`}
+                state={{ id: thread.id, thisThread: thread, thread: [] }}
+              >
+                <Image src={`http://localhost:3000/assets/${thread.image}`} />
+              </ChakraLink>
             )}
           </Flex>
           <Flex gap="20px" color={"grey"}>
@@ -87,9 +61,10 @@ export function Thread({ thread }: { thread: threadsEntity }): ReactNode {
               alignItems={"center"}
               gap={"5px"}
               onSubmit={handleSubmit(() => handleLike())}
+              onReset={handleSubmit(() => handleResetLike())}
             >
-              {like !== "" ? (
-                <Flex as="button" type="submit">
+              {likeId !== null ? (
+                <Flex as="button" type="reset">
                   <Icon
                     as={FaHeart}
                     fontSize="1.5rem"
@@ -107,7 +82,7 @@ export function Thread({ thread }: { thread: threadsEntity }): ReactNode {
                   ></Icon>
                 </Flex>
               )}
-              {thread._count.like}
+              {countLike}
             </Flex>
             <Flex alignItems={"center"} gap={"5px"}>
               <ChakraLink
