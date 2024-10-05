@@ -18,7 +18,7 @@ export default function Search() {
   const {
     handleSubmit,
     register,
-    formState: { isSubmitted },
+    formState: {},
   } = useForm();
   const [search, setSearch] = useState<any>(undefined);
 

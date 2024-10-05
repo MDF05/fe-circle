@@ -35,7 +35,7 @@ export default function modalPostHook() {
         const api: string = "http://localhost:3000/api/v1/thread";
         if (state?.id) formData.append("threadId", state.id);
 
-        const response = await apiV1.post<null, any, FormData>(api, formData, { headers: { Authorization: "Bearer " + token } });
+        await apiV1.post<null, any, FormData>(api, formData, { headers: { Authorization: "Bearer " + token } });
         reset()
         onClose();
     }

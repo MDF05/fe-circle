@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EditProfileContext } from './../../../context/Modal-Edit-Profile';
-import ProfileConstUserEntity from './../../../entities/profile-entity-constraints-user';
 import { apiV1 } from './../../../lib/api-v1';
 
 export default function useEditProfile(Profile: any) {
