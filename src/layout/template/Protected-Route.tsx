@@ -6,10 +6,10 @@ import ModalEditProvileProvider from "../../context/Modal-Edit-Profile";
 import ModalThreadProvider from "../../context/Modal-Post-Context";
 import Cookie from "js-cookie";
 import { useAppSelector } from "../../hooks/use-store";
-import { apiV1 } from "../../lib/api-v1";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../stores/auth-slice";
+// import { apiV1 } from "../../lib/api-v1";
+import { useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { setUser } from "../../stores/auth-slice";
 
 function TemplateLayout() {
   const location = useLocation().pathname.replace("/", "");
