@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { ResponseUserDTO } from "../../dto/user-dto";
 import { useDispatch } from "react-redux";
-import { removeUser, setUser } from "../../stores/auth-slice";
+import { setUser } from "../../stores/auth-slice";
 import { useNavigate } from "react-router-dom";
 import { setFollowFollower } from "../../stores/follow-follower-slice";
 

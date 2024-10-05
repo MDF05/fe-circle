@@ -9,7 +9,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
-import { ResponseUserDTO, UserDTO } from "../../dto/user-dto";
+import { ResponseUserDTO } from "../../dto/user-dto";
 import { useNavigate } from "react-router-dom";
 
 const ListRegisterInput: FormInputTypes[] = [
