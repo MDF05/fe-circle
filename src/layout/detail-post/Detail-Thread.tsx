@@ -45,7 +45,6 @@ export default function DetailThread() {
       try {
         if (thread?.id) {
           if (thread) setCountLike(thread?._count.like);
-          console.log(countLike);
           const response = await apiV1.get(`/like/${thread?.id}`, {
             headers: {
               Authorization: `Bearer ` + token,

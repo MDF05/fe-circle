@@ -71,7 +71,7 @@ export default function DetailImagePage() {
           )}
         </Flex>
         <Image
-          src={`http://localhost:4000/assets/${state.thisThread.image}`}
+          src={`${state.thisThread.image}`}
           width={fullScreenImage ? "80%" : "100%"}
           onClick={() => setFullScreenImage(!fullScreenImage)}
         ></Image>

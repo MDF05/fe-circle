@@ -51,7 +51,7 @@ export function Thread({ thread }: { thread: threadsEntity }): ReactNode {
                 to={`/detail-image/${thread.id}`}
                 state={{ id: thread.id, thisThread: thread, thread: [] }}
               >
-                <Image src={`https://be-circle-one.vercel.app/assets/${thread.image}`}  width={"100%"}/>
+                <Image src={`${thread.image}`}  width={"100%"}/>
               </ChakraLink>
             )}
           </Flex>

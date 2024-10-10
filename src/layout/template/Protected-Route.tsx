@@ -17,6 +17,7 @@ function TemplateLayout() {
   // const token = Cookie.get("token");
   // const dispatch = useDispatch();
   const user = useAppSelector((state) => state.auth);
+  console.log(import.meta.env.VITE_BACKEND_API)
 
   // useEffect(() => {
   //   setToken(Cookie.get("token"));

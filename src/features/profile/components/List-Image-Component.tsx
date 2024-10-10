@@ -27,7 +27,7 @@ export default function ListImageComponent({
             <Image
               width={"100%"}
               height={"200px"}
-              src={`https://be-circle-one.vercel.app/assets/${th.image}`}
+              src={`${th.image}`}
             ></Image>
           </ChakraLink>
         ))}

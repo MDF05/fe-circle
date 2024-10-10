@@ -21,7 +21,6 @@ export default function ListFollowComponent({
   } = useForm();
   const dispatch = useAppDispatch();
   const ff = useAppSelector((state) => state.followFollower);
-  console.log(profile);
 
   useEffect(() => {
     (async function () {

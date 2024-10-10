@@ -8,7 +8,6 @@ import sidebarRightHook from "../hooks/sidebar-right-hooks";
 
 export default function SideBarRight({ page }: SideBarRightPops) {
   const { profile, followFollower } = sidebarRightHook();
-  console.log(profile)
 
   return (
     <Flex

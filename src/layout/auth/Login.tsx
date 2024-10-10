@@ -18,7 +18,7 @@ import { useState } from "react";
 const ListLoginInput: FormInputTypes[] = [
   {
     typeInput: "text",
-    placeHolder: "email ",
+    placeHolder: "email or username",
     inputName: "email",
   },
   {
