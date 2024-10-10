@@ -9,14 +9,13 @@ import Cookies from 'js-cookie';
 export default function useBase() {
     const [threads, setThreads] = useState<threadsEntity[]>([]);
     const { isOpen, onOpen } = useContext(ModalContext);
-    const { register, onSubmit, handleSubmit, errors, isValid } = useFormPostText();
+    const { register, onSubmit, handleSubmit, errors, isValid,loading } = useFormPostText();
     const user = useAppSelector((state) => state.auth);
-    const token = Cookies.get("token")
 
     useEffect(() => {
         (async function () {
             try {
-                const threadsData = await apiV1.get("/thread", { headers: { Authorization: "Bearer " + token } });
+                const threadsData = await apiV1.get("/thread", { headers: { Authorization: "Bearer " + Cookies.get("token") } });
                 setThreads(threadsData.data.data)
 
             } catch (err) {
@@ -36,6 +35,7 @@ export default function useBase() {
         user,
         onSubmit,
         onOpen,
+        loading
     };
 
 }

@@ -15,8 +15,10 @@ import ListThreads from "./List-Thread";
 import useBase from "../hook/use-base";
 
 export default function Base(): ReactElement {
-  const { threads, handleSubmit, register, errors, user, onSubmit, onOpen } =
+  const { threads, handleSubmit, register, errors, user, onSubmit, onOpen, loading} =
     useBase();
+
+
 
   return (
     <Box position="relative">
@@ -84,13 +86,15 @@ export default function Base(): ReactElement {
               h="40px"
               color="white"
               type="submit"
+              isLoading={loading}
             >
               Post
             </Button>
           </Box>
         </FormControl>
       </Box>
-      <ListThreads threads={threads}></ListThreads>
+      {threads && (<ListThreads threads={threads}></ListThreads>)}
+      
     </Box>
   );
 }

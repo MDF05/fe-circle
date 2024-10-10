@@ -125,7 +125,7 @@ export default function DetailThread() {
           <Text>{thread?.text}</Text>
           {thread?.image && !pathname.includes("detail-image") && (
             <Image
-              src={`http://localhost:3000/assets/${thread?.image}`}
+              src={`http://localhost:4000/assets/${thread?.image}`}
               alt={`thread-${thread.id}`}
               maxW={"100%"}
             ></Image>

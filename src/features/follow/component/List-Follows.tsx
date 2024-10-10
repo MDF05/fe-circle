@@ -22,7 +22,7 @@ export default function FollowsFeatures({
       rounded={"10px"}
     >
       <Flex padding={"10px"}> Suggested For You </Flex>
-      {profiles.map((profile) => {
+      {profiles?.map((profile) => {
         return (
           <FollowComponent
             location={location}

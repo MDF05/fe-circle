@@ -17,8 +17,8 @@ export default interface AuthFormProps {
     datas: FormInputTypes[],
     errors: FieldErrors<Errors> | any,
     succesMessage?: string,
-    errorMessage?: string
-
+    errorMessage?: string,
+    isLoading : boolean
 }
 
 

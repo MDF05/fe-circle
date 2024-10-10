@@ -4,25 +4,34 @@ import { threadTextForm } from '../schema/thread-text-schema';
 import ThreadTextTypes from '../types/thread-text';
 import axios from "axios";
 import { apiV1 } from "../../../lib/api-v1";
+import Cookies from "js-cookie"
+import { useState } from "react";
 
 
 export default function useFormModalPostText() {
     const { register, handleSubmit, formState: { errors, isValid }, setError, reset } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadTextForm) });
+    const [loading, setLoading] = useState<boolean>(false)
 
     const onSubmit: any = async (e: ThreadTextTypes) => {
+        setLoading(true)
         try {
-            const response = await apiV1.post("/thread", { ...e })
+            const res = await apiV1.post("/thread", {...e}, {headers : {
+                Authorization : `Bearer ${Cookies.get("token")}`
+            }})
+            
             reset()
-            return response
+            return res
         } catch (err: unknown) {
             if (err instanceof axios.AxiosError) {
                 setError("text", { type: "manual", message: err.response?.data.message });
             }
+        }finally {
+            setLoading(false)
         }
     }
 
 
-    return { register, handleSubmit, onSubmit, errors, reset, isValid }
+    return { register, handleSubmit, onSubmit, errors, reset, isValid,loading }
 
 
 }

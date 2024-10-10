@@ -7,13 +7,16 @@ import "./assets/css/fonts.css";
 import "./assets/css/scrollbar.css";
 import { store } from "./stores/store.ts";
 import "../src/lib/api-v1.ts";
+import { ToastContainer } from "react-toastify";
+import React from "react";
 
 createRoot(document.getElementById("root")!).render(
-  // ! <React.StrictMode> twice re rendered
+  <React.StrictMode> 
   <Provider store={store}>
     <ChakraProvider theme={ThemeConfig}>
+    <ToastContainer position="top-center"  autoClose={2000} draggable style={{width : "80%"}} />
       <AppRouter></AppRouter>
     </ChakraProvider>
   </Provider>,
-  // </React.StrictMode>,
+  </React.StrictMode>,
 );

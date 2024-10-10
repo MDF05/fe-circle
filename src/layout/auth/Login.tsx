@@ -5,16 +5,19 @@ import LoginTypes from "../../features/auth/types/login-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../features/auth/schema/login-schema";
 import Cookies from "js-cookie";
-import axios from "axios";
+import  { AxiosError } from "axios";
 import { ResponseUserDTO } from "../../dto/user-dto";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../stores/auth-slice";
 import { useNavigate } from "react-router-dom";
 import { setFollowFollower } from "../../stores/follow-follower-slice";
+import { toast } from "react-toastify";
+import { apiV1 } from "../../lib/api-v1";
+import { useState } from "react";
 
 const ListLoginInput: FormInputTypes[] = [
   {
-    typeInput: "email",
+    typeInput: "text",
     placeHolder: "email ",
     inputName: "email",
   },
@@ -29,16 +32,19 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm<LoginTypes>({ resolver: zodResolver(loginSchema) });
+  const [loading, setLoading] = useState<boolean>(false)
 
   const dispatch = useDispatch();
   const Navigate = useNavigate();
 
   async function submitData(data: LoginTypes): Promise<void> {
+    setLoading(true)
     try {
-      const response = await axios.post<null, ResponseUserDTO, LoginTypes>(
-        "http://localhost:3000/api/v1/login",
+      if(isLoading) toast.loading("loading.....")
+      const response = await apiV1.post<null, ResponseUserDTO, LoginTypes>(
+        "login",
         {
           email: data.email,
           password: data.password,
@@ -51,8 +57,11 @@ export default function Login() {
       dispatch(setFollowFollower(user.profile._count));
 
       if (response.data.success) Navigate("/");
-    } catch (err) {
-      console.log(err);
+    } catch (err : unknown) {
+      if(err instanceof AxiosError) toast.error(err?.response?.data.message)
+      else toast.error("undifined error")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -64,6 +73,7 @@ export default function Login() {
       hookForm={register}
       errors={errors}
       datas={ListLoginInput}
+      isLoading={loading}
     ></AuthForm>
   );
 }

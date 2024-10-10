@@ -26,8 +26,7 @@ export default function Register() {
     handleSubmit,
     register,
     submitData,
-    errorMessage,
-    succesMessage,
+    loading
   } = useRegisterHooks();
 
   return (
@@ -38,8 +37,7 @@ export default function Register() {
       hookForm={register}
       errors={errors}
       datas={ListRegisterInput}
-      succesMessage={succesMessage}
-      errorMessage={errorMessage}
+      isLoading={loading}
     ></AuthForm>
   );
 }

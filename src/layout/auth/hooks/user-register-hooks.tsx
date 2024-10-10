@@ -4,10 +4,12 @@ import {
   RegisterSchema,
   registerSchema,
 } from "../../../features/auth/schema/register-schema";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ResponseUserDTO } from "../../../dto/user-dto";
-import axios, { AxiosError } from "axios";
+import  { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { apiV1 } from "../../../lib/api-v1";
+import { useState } from "react";
 
 export default function useRegisterHooks() {
   const {
@@ -15,27 +17,27 @@ export default function useRegisterHooks() {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema) });
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const [succesMessage, setSuccesMessage] = useState<string | undefined>(
-    undefined,
-  );
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined,
-  );
   const Navigate = useNavigate();
 
   async function submitData(data: RegisterSchema): Promise<void> {
+    setLoading(true)
+
     try {
-      const responses = await axios.post<null, ResponseUserDTO, RegisterSchema>(
-        "http://localhost:3000/api/v1/register",
+      const responses = await apiV1.post<null, ResponseUserDTO, RegisterSchema>(
+        "/register",
         data,
       );
-      setSuccesMessage(responses.data.message);
+
+      toast.success(responses.data.message)
       setTimeout(() => Navigate("/login"), 3000);
     } catch (err: unknown) {
       if (err instanceof AxiosError)
-        setErrorMessage(err.response?.data.message);
-      else setErrorMessage("unknown error");
+        toast.error(err.response?.data.message);
+      else toast.error("unknown error");
+    } finally  {
+      setLoading(false)
     }
   }
 
@@ -45,7 +47,6 @@ export default function useRegisterHooks() {
     errors,
     useForm,
     submitData,
-    errorMessage,
-    succesMessage,
+    loading
   };
 }
