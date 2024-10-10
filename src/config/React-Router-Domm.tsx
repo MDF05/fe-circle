@@ -11,7 +11,7 @@ import Follow from "../layout/follow/Follows";
 import DetailImagePage from "../layout/detail-image/Detail-Image-layout";
 import Login from "../layout/auth/Login";
 import Register from "../layout/auth/Register";
-import ForgotPassword from "../layout/auth/Forgot-Password";
+import ForgotPassword from "../layout/auth/Forgot-password";
 import ResetPassword from "../layout/auth/Reset-password";
 import ListFollowing from "../layout/follow/List-Following";
 import ListFollower from "../layout/follow/List-Follower";

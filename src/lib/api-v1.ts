@@ -5,7 +5,7 @@ const token = "Bearer " + Cookie.get("token")
 
 export const apiV1 = axios.create(
     {
-        baseURL : "https://be-circle-one.vercel.app/api/v1",
+        baseURL : baseURL,
         headers: {
             Authorization: token
         }
