@@ -29,6 +29,8 @@ export default function useFollow(profile: ProfileEntity) {
                     following: ff.following + 1,
                 }),
             );
+
+            
         } catch (err) {
             setFollowId("");
         }
