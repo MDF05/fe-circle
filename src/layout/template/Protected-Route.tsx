@@ -1,40 +1,18 @@
 import { Box, Grid, useDisclosure } from "@chakra-ui/react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import SideBarLeft from "../../component/Sidebar-Left";
 import SideBarRight from "../../component/Sidebar-Right";
 import ModalEditProvileProvider from "../../context/Modal-Edit-Profile";
 import ModalThreadProvider from "../../context/Modal-Post-Context";
-import Cookie from "js-cookie";
-import { useAppSelector } from "../../hooks/use-store";
-// import { apiV1 } from "../../lib/api-v1";
-import { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { setUser } from "../../stores/auth-slice";
+import useTemplate from "./hooks/use-template";
 
-function TemplateLayout() {
-  const location = useLocation().pathname.replace("/", "");
-  const [token] = useState(Cookie.get("token"));
-  // const token = Cookie.get("token");
-  // const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.auth);
-  console.log(import.meta.env.VITE_BACKEND_API)
 
-  // useEffect(() => {
-  //   setToken(Cookie.get("token"));
-  //   const validateToken = apiV1.post("validate-token", {
-  //     token: token,
-  //   });
+  function TemplateLayout() {
+      const {token, user, location} = useTemplate()
 
-  //   validateToken.then((res: any) => {
-  //     const user = res.data.data;
 
-  //     dispatch(setUser(user));
-  //   });
-  // }, []);
+    if (!token || Object.getOwnPropertyNames(user).length == 0) return <Navigate to={"/login"}></Navigate>
 
-  if (!token || !user.id) {
-    return <Navigate to={"/login"}></Navigate>;
-  }
   return (
     <ModalThreadProvider stateClosure={useDisclosure()}>
       <ModalEditProvileProvider stateClosure={useDisclosure()}>

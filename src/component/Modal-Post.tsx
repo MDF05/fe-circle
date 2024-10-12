@@ -29,6 +29,7 @@ export default function ModalPost() {
     initialRef,
     finalRef,
     user,
+    loading
   } = modalPostHook();
 
   return (
@@ -120,6 +121,7 @@ export default function ModalPost() {
             background="brand.color"
             mr={3}
             rounded={"full"}
+            isLoading={loading}
           >
             Post
           </Button>

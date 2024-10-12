@@ -53,6 +53,8 @@ export default function Login() {
 
       const { user, token } = response.data.data;
       Cookies.set("token", token, { expires: 1 });
+
+      localStorage.setItem("user",JSON.stringify(user))
       dispatch(setUser(user));
       dispatch(setFollowFollower(user.profile._count));
 

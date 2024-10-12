@@ -11,6 +11,7 @@ export default function modalPostHook() {
     const { isOpen, onClose } = useContext(ModalContext);
     const { register, handleSubmit, watch, reset } = useForm<ModalHookForm>();
     const [prevImage, setPrevImage] = useState<string | undefined>(undefined);
+    const [loading, setLoading] = useState<boolean>(false)
     let user = useAppSelector((state) => state.auth);
     const watchFile = watch(["image"]);
     const { state } = useLocation();
@@ -26,7 +27,9 @@ export default function modalPostHook() {
     }, [watchFile[0]]);
 
     async function submitEvent(event: ModalHookForm) {
-        const image: File = event.image[0];
+        setLoading(true)
+        try {
+            const image: File = event.image[0];
         const text: string = event.text;
         const formData = new FormData();
         formData.append("text", text);
@@ -37,6 +40,11 @@ export default function modalPostHook() {
         await apiV1.post<null, any, FormData>("/thread",formData, { headers: { Authorization: "Bearer " + token } });
         reset()
         onClose();
+        }catch(err) {
+            return err
+        }finally {
+            setLoading(false)
+        }
     }
 
     const initialRef = React.useRef(null);
@@ -54,5 +62,6 @@ export default function modalPostHook() {
         finalRef,
         user,
         watch,
+        loading,
     }
 }
