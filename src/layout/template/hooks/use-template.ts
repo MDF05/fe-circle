@@ -6,6 +6,7 @@ import { useTemplateReturn } from "../types/use-template-types";
 import { UserDTO } from "../../../dto/user-dto";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setFollowFollower } from "../../../stores/follow-follower-slice";
+import { followingFollowerDTO } from "../../../dto/follow-follower-dto";
 
 
 export default function useTemplate():useTemplateReturn {
@@ -17,10 +18,12 @@ export default function useTemplate():useTemplateReturn {
  
  
  const localUser: string | null = localStorage.getItem("user")
- const follow : any = localStorage.getItem("followFollower")
- if(Object.getOwnPropertyNames(user).length == 0 && localUser) {
+ const follow : string | null = localStorage.getItem("followFollower")
+
+ if(Object.getOwnPropertyNames(user).length == 0 && localUser && follow) {
   const user:UserDTO = JSON.parse(localUser)
-  const ff = JSON.parse(follow)
+  console.log(follow)
+  const ff:followingFollowerDTO = JSON.parse(follow)
    dispatch(setUser(user))
    dispatch(setFollowFollower({follower : ff.follower, following : ff.following}))
  }
