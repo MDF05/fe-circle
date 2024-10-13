@@ -45,6 +45,7 @@ export default function ListFollowComponent({
           following: ff.following + 1,
         }),
       );
+      localStorage.setItem("followFollower", JSON.stringify({follower : ff.follower, following : ff.following + 1 }) )
     } catch (err) {
       setFollow("");
     }
@@ -60,6 +61,7 @@ export default function ListFollowComponent({
           following: ff.following - 1,
         }),
       );
+      localStorage.setItem("followFollower", JSON.stringify({follower : ff.follower, following : ff.following - 1 }) )
     } catch (err) {
       setFollow("");
     }

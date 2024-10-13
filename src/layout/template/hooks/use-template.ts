@@ -16,11 +16,13 @@ export default function useTemplate():useTemplateReturn {
  
  
  
- let localUser: string | null = localStorage.getItem("user")
+ const localUser: string | null = localStorage.getItem("user")
+ const follow : any = localStorage.getItem("followFollower")
  if(Object.getOwnPropertyNames(user).length == 0 && localUser) {
-   const user:UserDTO = JSON.parse(localUser)
+  const user:UserDTO = JSON.parse(localUser)
+  const ff = JSON.parse(follow)
    dispatch(setUser(user))
-   dispatch(setFollowFollower({follower : user.profile._count.follower, following : user.profile._count.following}))
+   dispatch(setFollowFollower({follower : ff.follower, following : ff.following}))
  }
 
  return {location, token, user}

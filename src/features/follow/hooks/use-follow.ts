@@ -30,6 +30,7 @@ export default function useFollow(profile: ProfileEntity) {
                 }),
             );
 
+            localStorage.setItem("followFollower", JSON.stringify({follower : ff.follower, following : ff.following + 1 }) )
             
         } catch (err) {
             setFollowId("");
@@ -46,6 +47,7 @@ export default function useFollow(profile: ProfileEntity) {
                     following: ff.following - 1,
                 }),
             );
+            localStorage.setItem("followFollower", JSON.stringify({follower : ff.follower, following : ff.following - 1 }) )
         } catch (err) {
             setFollowId("");
         }
