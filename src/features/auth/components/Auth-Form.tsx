@@ -1,15 +1,4 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  Input,
-  Container,
-  Center,
-  Flex,
-  Button,
-  Text,
-  Box,
-  Grid,
-} from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, Input, Container, Center, Flex, Button, Text, Box, Grid } from "@chakra-ui/react";
 import LogoCircle from "../../../component/Logo-Circle";
 
 import AuthFormProps from "../types/Auth-From-Props";
@@ -18,76 +7,33 @@ import ListInputFromTypes from "../../../types/form-input-type";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import "react-toastify/dist/ReactToastify.css";
 
-function AuthForm({
-  page,
-  handleSubmit,
-  hookForm,
-  submitData,
-  errors,
-  datas,
-  isLoading, 
-}: AuthFormProps) {
+function AuthForm({ page, handleSubmit, hookForm, submitData, errors, datas, isLoading }: AuthFormProps) {
   const textForm = generateTextForm(page);
 
   return (
-    <Flex
-      h="100vh"
-      alignItems="center"
-      paddingBottom={"50px"}
-      overflowY={"auto"}
-    >
+    <Flex h="100vh" alignItems="center" paddingBottom={"50px"} overflowY={"auto"}>
       <Container maxW="container.lg">
         <Center>
           <Flex direction="column" w={{ base: "100%", md: "60%", lg: "50%" }}>
             <LogoCircle fontSize="5rem"></LogoCircle>
-            <Text
-              color="white"
-              fontSize="4xl"
-              mb="10px"
-              textTransform="capitalize"
-              mt={"0px"}
-            >
+            <Text color="white" fontSize="4xl" mb="10px" textTransform="capitalize" mt={"0px"}>
               {textForm}
             </Text>
-            <Grid
-              as="form"
-              onSubmit={handleSubmit((data: object) => submitData(data))}
-              gap="20px"
-              color="white"
-            >
+            <Grid as="form" onSubmit={handleSubmit((data: object) => submitData(data))} gap="20px" color="white">
               {datas.map((data: ListInputFromTypes, index: number) => {
-                let inputName = data.inputName;
+                const inputName = data.inputName;
                 return (
-                  <FormControl
-                    color="white"
-                    key={index}
-                    isInvalid={errors[inputName] !== undefined}
-                  >
-                    <Input
-                      type={data.typeInput}
-                      placeholder={data.placeHolder}
-                      {...hookForm(inputName)}
-                    />
-                    {errors[inputName] && (
-                      <FormErrorMessage>
-                        {errors[inputName].message}
-                      </FormErrorMessage>
-                    )}
+                  <FormControl color="white" key={index} isInvalid={errors[inputName] !== undefined}>
+                    <Input type={data.typeInput} placeholder={data.placeHolder} {...hookForm(inputName)} />
+                    {errors[inputName] && <FormErrorMessage>{errors[inputName].message}</FormErrorMessage>}
                   </FormControl>
                 );
               })}
-              <Button
-                type="submit"
-                variant="solid"
-                textTransform="capitalize"
-                color="white"
-                bg="brand.color"
-                isLoading={isLoading}
-              >
+              <Button type="submit" variant="solid" textTransform="capitalize" color="white" bg="brand.color" isLoading={isLoading}>
                 {page}
               </Button>
 
-              {(page == "login" || page == "register") && (
+              {/* {(page == "login" || page == "register") && (
                 <Box
                   as="form"
                   width={"100%"}
@@ -108,14 +54,10 @@ function AuthForm({
                     Google
                   </Button>
                 </Box>
-              )}
+              )} */}
 
               {page == "login" && (
-                <ChakraLink
-                  to="/forgot-password"
-                  color={"brand.color"}
-                  textAlign={"end"}
-                >
+                <ChakraLink to="/forgot-password" color={"brand.color"} textAlign={"end"}>
                   Forgot Password ?
                 </ChakraLink>
               )}

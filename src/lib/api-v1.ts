@@ -1,14 +1,15 @@
-import axios from "axios"
-import Cookie from "js-cookie"
-const baseURL = import.meta.env.VITE_BACKEND_API
-const token = "Bearer " + Cookie.get("token")
+import axios from "axios";
+import Cookie from "js-cookie";
+const baseURL = import.meta.env.VITE_BACKEND_API;
 
+export const apiV1 = axios.create({
+  baseURL,
+});
 
-export const apiV1 = axios.create(
-    {
-        baseURL,
-        headers: {
-            Authorization: token
-        }
-    }
-)
+apiV1.interceptors.request.use((config) => {
+  const token = Cookie.get("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});

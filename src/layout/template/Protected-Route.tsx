@@ -6,12 +6,12 @@ import ModalEditProvileProvider from "../../context/Modal-Edit-Profile";
 import ModalThreadProvider from "../../context/Modal-Post-Context";
 import useTemplate from "./hooks/use-template";
 
+function TemplateLayout() {
+  const { token, location } = useTemplate();
 
-  function TemplateLayout() {
-      const {token, user, location} = useTemplate()
-
-
-    if (!token || Object.getOwnPropertyNames(user).length == 0) return <Navigate to={"/login"}></Navigate>
+  if (!token) {
+    return <Navigate to={"/login"}></Navigate>;
+  }
 
   return (
     <ModalThreadProvider stateClosure={useDisclosure()}>

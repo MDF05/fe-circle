@@ -5,21 +5,15 @@ import ProfileComponentProps from "../types/Profile";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { EditProfileContext } from "../../../context/Modal-Edit-Profile";
-import { useAppSelector } from "../../../hooks/use-store";
 import { useForm } from "react-hook-form";
 import { apiV1 } from "../../../lib/api-v1";
 import cookies from "js-cookie";
+import avatarImage from "../../../../assets/image/avatar.png";
+import cover from "../../../../assets/image/cover.png";
+import { useAppSelector } from "../../../hooks/use-store";
 
-export default function ProfileComponent({
-  page,
-  borderProfile,
-  Profile,
-  following,
-  follower,
-  ...rest
-}: ProfileComponentProps) {
+export default function ProfileComponent({ page, borderProfile, Profile, following, follower, ...rest }: ProfileComponentProps) {
   const { onOpen } = useContext(EditProfileContext);
-  const user = useAppSelector((state) => state.auth);
   const {
     handleSubmit,
     register,
@@ -27,6 +21,7 @@ export default function ProfileComponent({
   } = useForm();
   const [follow, setFollow] = useState("");
   const token: string | undefined = cookies.get("token");
+  const user = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     (async function () {
@@ -39,9 +34,10 @@ export default function ProfileComponent({
         } else return;
       } catch (err: unknown) {
         setFollow("");
+        return err;
       }
     })();
-  }, [Profile, isSubmitted]);
+  }, [isSubmitted]);
 
   async function handleFollow() {
     try {
@@ -49,6 +45,7 @@ export default function ProfileComponent({
       setFollow(res.data.data.id);
     } catch (err) {
       setFollow("");
+      return err;
     }
   }
 
@@ -58,6 +55,7 @@ export default function ProfileComponent({
       setFollow("");
     } catch (err) {
       setFollow("");
+      return err;
     }
   }
 
@@ -68,25 +66,14 @@ export default function ProfileComponent({
     } else {
       Navigate("/my-profile");
       setTimeout(() => {
-        const ButtonEditProfile = document.querySelector<HTMLButtonElement>(
-          ".modal-edit-profile",
-        );
+        const ButtonEditProfile = document.querySelector<HTMLButtonElement>(".modal-edit-profile");
         ButtonEditProfile?.click();
       }, 100);
     }
   }
 
-
   return (
-    <Flex
-      gap="20px"
-      backdropBlur="20px"
-      backdropFilter="blur(20px)"
-      flexDirection="column"
-      padding="20px"
-      color="white"
-      {...rest}
-    >
+    <Flex gap="20px" backdropBlur="20px" backdropFilter="blur(20px)" flexDirection="column" padding="20px" color="white" {...rest}>
       <Text>
         {page == "my-profile" ? (
           "My Profile"
@@ -101,12 +88,7 @@ export default function ProfileComponent({
       </Text>
       <Box>
         <Box height="100px" display="flex" rounded="10px">
-          <Image
-            src={Profile?.cover as string}
-            width="100%"
-            height={"100px"}
-            rounded={"20px"}
-          ></Image>
+          <Image src={user.profile?.cover ?? cover} width="100%" height={"100px"} rounded={"20px"}></Image>
         </Box>
         <Flex
           position="relative"
@@ -118,7 +100,7 @@ export default function ProfileComponent({
           onReset={handleSubmit(() => handleReset())}
         >
           <Image
-            src={Profile?.image as string}
+            src={user.profile?.image ?? avatarImage}
             position="absolute"
             left="10px"
             top="-25px"
@@ -130,34 +112,18 @@ export default function ProfileComponent({
           ></Image>
 
           {page == "my-profile" || user.id == Profile?.userId ? (
-            <Button
-              className="modal-edit-profile"
-              variant="outline"
-              colorScheme="white"
-              rounded="full"
-              onClick={handleClick}
-            >
+            <Button className="modal-edit-profile" variant="outline" colorScheme="white" rounded="full" onClick={handleClick}>
               Edit Profile
             </Button>
           ) : (
             <Box>
               {follow == "" ? (
-                <Button
-                  type="submit"
-                  variant="outline"
-                  colorScheme="white"
-                  rounded="full"
-                >
+                <Button type="submit" variant="outline" colorScheme="white" rounded="full">
                   <Input type="text" hidden {...register("follow")} />
                   Follow
                 </Button>
               ) : (
-                <Button
-                  type="reset"
-                  variant="outline"
-                  colorScheme="white"
-                  rounded="full"
-                >
+                <Button type="reset" variant="outline" colorScheme="white" rounded="full">
                   <Input type="text" hidden {...register("unFollow")} />
                   Following
                 </Button>
@@ -166,34 +132,34 @@ export default function ProfileComponent({
           )}
         </Flex>
         <Flex gap="10px" flexDirection="column">
-          <Text as="h1">{Profile?.fullName}</Text>
-          <Text color="grey">{Profile?.username}</Text>
-          <Text>{Profile?.bio}</Text>
+          <Text as="h1">{user.profile?.fullName}</Text>
+          <Text color="grey">{user.profile?.username}</Text>
+          <Text>{user.profile?.bio}</Text>
           <Flex gap="20px">
             <ChakraLink
-              to={`/following/${Profile?.username}`}
+              to={`/following/${user.profile?.username}`}
               state={{
-                profileId: Profile?.id,
-                profileUsername: Profile?.username,
+                profileId: user.profile?.id,
+                profileUsername: user.profile?.username,
               }}
               display={"flex"}
               gap="5px"
             >
-              <Text as="span">{following || Profile?._count.following}</Text>
+              <Text as="span">{following || user.profile?._count.following}</Text>
               <Text as="span" color="grey">
                 Following
               </Text>
             </ChakraLink>
             <ChakraLink
-              to={`/follower/${Profile?.username}`}
+              to={`/follower/${user.profile?.username}`}
               display={"flex"}
               gap="5px"
               state={{
-                profileId: Profile?.id,
-                profileUsername: Profile?.username,
+                profileId: user.profile?.id,
+                profileUsername: user.profile?.username,
               }}
             >
-              <Text as="span">{follower || Profile?._count.follower}</Text>
+              <Text as="span">{follower || user.profile?._count.follower}</Text>
               <Text as="span" color="grey">
                 Followers
               </Text>

@@ -1,15 +1,7 @@
 "use client";
 import Cookies from "js-cookie";
 
-import {
-  Box,
-  CloseButton,
-  Flex,
-  Icon,
-  Link,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Box, CloseButton, Flex, Icon, Link, Button, Text } from "@chakra-ui/react";
 
 import { TbUserSearch } from "react-icons/tb";
 import { FaRegHeart, FaRegCircleUser } from "react-icons/fa6";
@@ -32,12 +24,7 @@ export const LinkItems: Array<LinkItemProps> = [
 
 const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
   return (
-    <Link
-      as={RouterLink}
-      to={path}
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-    >
+    <Link as={RouterLink} to={path} style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
       <Flex
         align="center"
         p="4"
@@ -74,8 +61,7 @@ const SidebarContent = ({ ...rest }) => {
   function logOut() {
     Cookies.remove("token");
     dispatch(removeUser());
-    window.location.reload();
-    return navigate("/");
+    return navigate("/login");
   }
 
   return (
@@ -104,19 +90,11 @@ const SidebarContent = ({ ...rest }) => {
         ))}
         <ButtonPost />
       </Flex>
-      <Button
-        alignItems="center"
-        gap="10px"
-        mx="8"
-        bottom="20px"
-        position="absolute"
-        colorScheme="transparent"
-        onClick={logOut}
-      >
-        <Text>
+      <Button alignItems="center" gap="10px" mx="8" bottom="20px" position="absolute" colorScheme="transparent" onClick={logOut}>
+        <Text color={"white"}>
           <CiLogout></CiLogout>
         </Text>
-        <Text>Logout</Text>
+        <Text color={"white"}>Logout</Text>
       </Button>
     </Flex>
   );
