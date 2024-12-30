@@ -10,13 +10,7 @@ export default function SideBarRight({ page }: SideBarRightPops) {
   const { profile, followFollower } = sidebarRightHook();
 
   return (
-    <Flex
-      color="white"
-      fontFamily="body"
-      padding="20px"
-      flexDirection="column"
-      gap="20px"
-    >
+    <Flex color="white" fontFamily="body" padding="20px" flexDirection="column" gap="20px">
       {page != "my-profile" && (
         <ProfileComponent
           page="my-profile"
@@ -28,9 +22,7 @@ export default function SideBarRight({ page }: SideBarRightPops) {
         ></ProfileComponent>
       )}
 
-      {page != "follow" && (
-        <FollowsFeatures location="sidebar" limit="3"></FollowsFeatures>
-      )}
+      {page != "follow" && <FollowsFeatures location="sidebar" limit="3"></FollowsFeatures>}
 
       <DevelopmentInfo></DevelopmentInfo>
     </Flex>

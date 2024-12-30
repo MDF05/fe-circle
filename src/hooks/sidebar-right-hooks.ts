@@ -16,13 +16,14 @@ export default function useSidebarRightHook() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getProfileById(user?.profile?.id, setProfile);
+    if (user.profile) getProfileById(user?.profile?.id, setProfile);
+    console.log(profile);
     (async function () {
       const data = await dispatch(asyncAuth(`${token}`)).unwrap();
       const res = data.data.data.profile._count;
       dispatch(setFollowFollower({ follower: res.follower, following: res.following }));
     })();
-  }, [isOpen]);
+  }, [isOpen, token]);
 
   return {
     profile,
