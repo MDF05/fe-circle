@@ -2,6 +2,7 @@ import ProfileEntity from "../entities/profile-entity";
 
 export interface ThreadDTO {
   id: string;
+  replies?: ThreadDTO[];
   text: string;
   image: string | null;
   profileId: string;

@@ -8,7 +8,7 @@ import ListThreads from "./../../features/base/components/List-Thread";
 import useDetailThreads from "./hooks/use-detail-thread";
 import avatarImage from "../../../assets/image/avatar.png";
 import ButtonLike from "../../features/base/components/Button-Like";
-import threadsEntity from "../../entities/thread-entity";
+import { ThreadDTO } from "../../dto/thread-DTO";
 
 export default function DetailThread() {
   const { thread, onOpen, navigate, pathname, register, handleReplies, handleSubmit, user } = useDetailThreads();
@@ -40,7 +40,7 @@ export default function DetailThread() {
           <Flex>● </Flex>
           <Flex>{detailDatePost(thread?.createdAt as string)[1]}</Flex>
         </Box>
-        {thread && <ButtonLike thread={thread ?? ({} as threadsEntity)}></ButtonLike>}
+        {thread && <ButtonLike thread={thread ?? ({} as ThreadDTO)}></ButtonLike>}
       </Flex>
       <Box borderBottom="1px solid grey" p="20px">
         <Flex width="100%" as={"form"} onSubmit={handleSubmit((e) => handleReplies(e))}>
