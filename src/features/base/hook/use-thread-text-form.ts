@@ -6,6 +6,8 @@ import axios from "axios";
 import { apiV1 } from "../../../lib/api-v1";
 import Cookies from "js-cookie";
 import { useState } from "react";
+import { useAppDispatch } from "../../../hooks/use-store";
+import { getThreadAsync } from "../../../stores/threads/thread-async";
 
 export default function useFormModalPostText() {
   const {
@@ -16,6 +18,7 @@ export default function useFormModalPostText() {
     reset,
   } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadTextForm) });
   const [loading, setLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   const onSubmit: any = async (e: ThreadTextTypes) => {
     setLoading(true);
@@ -37,6 +40,7 @@ export default function useFormModalPostText() {
         setError("text", { type: "manual", message: err.response?.data.message });
       }
     } finally {
+      dispatch(getThreadAsync());
       setLoading(false);
     }
   };

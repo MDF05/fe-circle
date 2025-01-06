@@ -3,9 +3,9 @@ import ChakraLink from "../../../component/Chakra-Link-Router";
 import { TbMessage2 } from "react-icons/tb";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import useThread from "../hook/use-thread";
-import threadsEntity from "../../../entities/thread-entity";
+import { ThreadDTO } from "../../../dto/thread-DTO";
 
-export default function ButtonLike({ thread }: { thread: threadsEntity }) {
+export default function ButtonLike({ thread }: { thread: ThreadDTO }) {
   const { handleLike, handleResetLike, handleSubmit, countLike, likeId, pathname } = useThread(thread);
 
   return (

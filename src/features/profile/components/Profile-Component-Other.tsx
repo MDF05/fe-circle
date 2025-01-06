@@ -12,7 +12,7 @@ import avatarImage from "../../../../assets/image/avatar.png";
 import cover from "../../../../assets/image/cover.png";
 import { useAppSelector } from "../../../hooks/use-store";
 
-export default function ProfileComponent({ page, borderProfile, Profile, following, follower, ...rest }: ProfileComponentProps) {
+export default function ProfileComponentOther({ page, borderProfile, Profile, following, follower, ...rest }: ProfileComponentProps) {
   const { onOpen } = useContext(EditProfileContext);
   const {
     handleSubmit,
@@ -37,7 +37,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
         return err;
       }
     })();
-  }, [Profile?.id, isSubmitted, page, token]);
+  }, [Profile?.id, isSubmitted, token]);
 
   async function handleFollow() {
     try {
@@ -88,7 +88,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
       </Text>
       <Box>
         <Box height="100px" display="flex" rounded="10px">
-          <Image src={Profile?.cover || (user.profile?.cover ?? cover)} width="100%" height={"100px"} rounded={"20px"}></Image>
+          <Image src={Profile?.cover ?? cover} width="100%" height={"100px"} rounded={"20px"}></Image>
         </Box>
         <Flex
           position="relative"
@@ -100,7 +100,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
           onReset={handleSubmit(() => handleReset())}
         >
           <Image
-            src={Profile?.image || (user?.profile?.image ?? avatarImage)}
+            src={Profile?.image ?? avatarImage}
             position="absolute"
             left="10px"
             top="-25px"
@@ -132,9 +132,9 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
           )}
         </Flex>
         <Flex gap="10px" flexDirection="column">
-          <Text as="h1">{Profile?.fullName ?? user.profile?.fullName}</Text>
-          <Text color="grey">@{Profile?.username ?? user.profile?.username}</Text>
-          <Text>{Profile?.bio ?? user?.profile?.bio}</Text>
+          <Text as="h1">{Profile?.fullName}</Text>
+          <Text color="grey">@{Profile?.username}</Text>
+          <Text>{Profile?.bio}</Text>
           <Flex gap="20px">
             <ChakraLink
               to={`/following/${user.profile?.username}`}
@@ -145,7 +145,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
               display={"flex"}
               gap="5px"
             >
-              <Text as="span">{following || user.profile?._count.following}</Text>
+              <Text as="span">{following || Profile?._count.following}</Text>
               <Text as="span" color="grey">
                 Following
               </Text>
@@ -159,7 +159,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
                 profileUsername: user.profile?.username,
               }}
             >
-              <Text as="span">{follower || user.profile?._count.follower}</Text>
+              <Text as="span">{follower || Profile?._count.follower}</Text>
               <Text as="span" color="grey">
                 Followers
               </Text>

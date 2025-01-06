@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ModalHookForm } from "../types/modal-post";
-import { useAppSelector } from "./use-store";
+import { useAppDispatch, useAppSelector } from "./use-store";
 import { ModalContext } from "../context/Modal-Post-Context";
 import { useLocation } from "react-router-dom";
 import { apiV1 } from "../lib/api-v1";
 import Cookies from "js-cookie";
+import { getThreadAsync } from "../stores/threads/thread-async";
 
 export default function useModalPostHook() {
   const { isOpen, onClose } = useContext(ModalContext);
@@ -16,6 +17,7 @@ export default function useModalPostHook() {
   const watchFile = watch(["image"]);
   const { state } = useLocation();
   const token = Cookies.get("token");
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (watchFile[0]) {
@@ -40,6 +42,7 @@ export default function useModalPostHook() {
       await apiV1.post<null, any, FormData>("/thread", formData, { headers: { Authorization: "Bearer " + token } });
       reset();
       onClose();
+      await dispatch(getThreadAsync());
     } catch (err) {
       return err;
     } finally {

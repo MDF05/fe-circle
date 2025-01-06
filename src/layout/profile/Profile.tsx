@@ -6,57 +6,38 @@ import { useLocation } from "react-router-dom";
 import { apiV1 } from "../../lib/api-v1";
 import ListThreads from "../../features/base/components/List-Thread";
 import ProfileConstUserEntity from "../../entities/profile-entity-constraints-user";
+import { useAppDispatch, useAppSelector } from "../../hooks/use-store";
+import { getProfileByIdAsync } from "../../stores/profile/profile-async";
+import ProfileComponentOther from "../../features/profile/components/Profile-Component-Other";
 
 export default function ProfileView() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
   const { state } = useLocation();
-  const [profile, setProfile] = useState<ProfileConstUserEntity>();
+  const profileState = useAppSelector((state) => state.profile);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async function () {
-      const res = await apiV1.get(`/profile/${state.profileId}`);
-      setProfile(res.data.data);
+      await dispatch(getProfileByIdAsync(state.profileId));
     })();
-  }, []);
+  }, [state]);
 
   return (
     <Container p="0">
-      <ProfileComponent
-        page="profile"
-        borderProfile="profile.baseProfile"
-        background="transparent"
-        Profile={profile}
-      ></ProfileComponent>
-      <Box
-        borderBottom="border.grey"
-        display="grid"
-        gridTemplateColumns="repeat(2,50%)"
-      >
-        <Button
-          colorScheme="white"
-          background="transparent"
-          onClick={() => setPostOrMedia(!postOrMedia)}
-          rounded="none"
-          borderBottom={postOrMedia ? "notActive" : "active.color"}
-        >
+      {profileState.profile && (
+        <ProfileComponentOther page="profile" borderProfile="profile.baseProfile" background="transparent" Profile={profileState.profile}></ProfileComponentOther>
+      )}
+      <Box borderBottom="border.grey" display="grid" gridTemplateColumns="repeat(2,50%)">
+        <Button colorScheme="white" background="transparent" onClick={() => setPostOrMedia(!postOrMedia)} rounded="none" borderBottom={postOrMedia ? "notActive" : "active.color"}>
           All Post
         </Button>
-        <Button
-          colorScheme="white"
-          background="transparent"
-          onClick={() => setPostOrMedia(!postOrMedia)}
-          borderBottom={postOrMedia ? "active.color" : "notActive"}
-          rounded="none"
-        >
+        <Button colorScheme="white" background="transparent" onClick={() => setPostOrMedia(!postOrMedia)} borderBottom={postOrMedia ? "active.color" : "notActive"} rounded="none">
           Media
         </Button>
       </Box>
       <Box color="white" mt={"10px"}>
-        {postOrMedia ? (
-          <ListImageComponent threads={profile?.thread} />
-        ) : (
-          profile?.thread && <ListThreads threads={profile.thread} />
-        )}
+        {postOrMedia ? <ListImageComponent threads={profileState?.profile?.thread} /> : <ListThreads threads={profileState?.profile?.thread} />}
       </Box>
     </Container>
   );

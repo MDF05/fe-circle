@@ -8,7 +8,7 @@ import useBase from "../hook/use-base";
 import avatarImage from "../../../../assets/image/avatar.png";
 
 export default function Base(): ReactElement {
-  const { threads, handleSubmit, register, errors, user, onSubmit, onOpen, loading } = useBase();
+  const { handleSubmit, register, errors, user, onSubmit, onOpen, loading, threads } = useBase();
 
   return (
     <Box position="relative">
@@ -33,7 +33,7 @@ export default function Base(): ReactElement {
           </Box>
         </FormControl>
       </Box>
-      {threads && <ListThreads threads={threads}></ListThreads>}
+      {<ListThreads threads={threads}></ListThreads>}
     </Box>
   );
 }

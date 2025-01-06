@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
-import threadsEntity from "../../../entities/thread-entity";
 import postLikeByThreadId from "../../../lib/post-like-by-thread-id";
 import removeLikeByLikeId from "../../../lib/remove-like-by-like-id";
 import { useEffect, useState } from "react";
 import getLikeByThreadId from "../../../lib/get-like-by-thread-id";
 import { useLocation } from "react-router-dom";
+import { ThreadDTO } from "../../../dto/thread-DTO";
 
-export default function useThread(thread: threadsEntity) {
+export default function useThread(thread: ThreadDTO) {
   const { handleSubmit } = useForm();
   const [likeId, setLikeId] = useState<string | null>(null);
   const [countLike, setCountLike] = useState<number>(thread?._count?.like);

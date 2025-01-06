@@ -80,15 +80,7 @@ export default function AppRouter() {
     {
       path: "*",
       element: (
-        <Text
-          as={"h1"}
-          color={"white"}
-          height={"100vh"}
-          w={"100vw"}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
+        <Text as={"h1"} color={"white"} height={"100vh"} w={"100vw"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
           Page not found
         </Text>
       ),

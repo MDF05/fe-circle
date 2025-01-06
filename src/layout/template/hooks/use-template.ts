@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../../hooks/use-store";
 import Cookies from "js-cookie";
 import { asyncAuth } from "../../../stores/auth/auth-async";
 import { useEffect } from "react";
+import { getThreadAsync } from "./../../../stores/threads/thread-async";
 
 export default function useTemplate() {
   const location: string = useLocation().pathname.replace("/", "");
@@ -12,6 +13,7 @@ export default function useTemplate() {
   useEffect(() => {
     (async function () {
       await dispatch(asyncAuth(`${token}`)).unwrap();
+      await dispatch(getThreadAsync());
     })();
   }, []);
 
