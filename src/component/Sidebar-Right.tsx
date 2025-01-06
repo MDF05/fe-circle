@@ -7,18 +7,18 @@ import { SideBarRightPops } from "../types/sidebar-right-types";
 import sidebarRightHook from "../hooks/sidebar-right-hooks";
 
 export default function SideBarRight({ page }: SideBarRightPops) {
-  const { profile, followFollower } = sidebarRightHook();
+  const { user } = sidebarRightHook();
 
   return (
     <Flex color="white" fontFamily="body" padding="20px" flexDirection="column" gap="20px">
       {page != "my-profile" && (
         <ProfileComponent
           page="my-profile"
-          Profile={profile}
+          Profile={user.profile}
           borderProfile="profile.rightSide"
           background="brand.backgroundYoung"
-          follower={`${followFollower.follower}`}
-          following={`${followFollower.following}`}
+          // follower={`${followFollower.follower}`}
+          // following={`${followFollower.following}`}
         ></ProfileComponent>
       )}
 

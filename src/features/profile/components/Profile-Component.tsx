@@ -100,7 +100,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
           onReset={handleSubmit(() => handleReset())}
         >
           <Image
-            src={user.profile?.image ?? avatarImage}
+            src={user?.profile?.image ?? avatarImage}
             position="absolute"
             left="10px"
             top="-25px"
@@ -111,7 +111,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
             border={borderProfile}
           ></Image>
 
-          {page == "my-profile" || user.id == Profile?.userId ? (
+          {page == "my-profile" || user?.id == Profile?.userId ? (
             <Button className="modal-edit-profile" variant="outline" colorScheme="white" rounded="full" onClick={handleClick}>
               Edit Profile
             </Button>
