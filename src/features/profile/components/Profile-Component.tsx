@@ -37,7 +37,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
         return err;
       }
     })();
-  }, [isSubmitted]);
+  }, [Profile?.id, isSubmitted, page, token]);
 
   async function handleFollow() {
     try {
