@@ -10,37 +10,42 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppSelector } from "../../../hooks/use-store";
 
 export default function useDetailThreads() {
-    const { onOpen, isOpen } = useContext(ModalContext);
-    const { state, pathname } = useLocation();
-    const [thread, setThread] = useState<threadsEntity>();
-    const { register, handleSubmit, formState: { isValid }, reset } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadTextForm) })
-    const navigate = useNavigate()
-    const user = useAppSelector(state => state.auth)
+  const { onOpen, isOpen } = useContext(ModalContext);
+  const { state, pathname } = useLocation();
+  const [thread, setThread] = useState<threadsEntity>();
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+    reset,
+  } = useForm<ThreadTextTypes>({ resolver: zodResolver(threadTextForm) });
+  const navigate = useNavigate();
+  const user = useAppSelector((state) => state.auth);
 
-    useEffect(() => {
-        (async function () {
-            const response = await apiV1.get(`thread/${state.id}`)
-            setThread(response.data.data);
-        }())
-    }, [isOpen, state, isValid])
+  useEffect(() => {
+    (async function () {
+      const response = await apiV1.get(`thread/${state.id}`);
+      setThread(response.data.data);
+    })();
+  }, [isOpen, state, isValid]);
 
-    async function handleReplies(event: any) {
-        try {
-            await apiV1.post("/thread", { ...event, threadId: state.id })
-            reset()
-        } catch (err) { }
+  async function handleReplies(event: any) {
+    try {
+      await apiV1.post("/thread", { ...event, threadId: state.id });
+      reset();
+    } catch (err) {
+      return err;
     }
+  }
 
-
-    return {
-        thread,
-        onOpen,
-        navigate,
-        pathname,
-        handleSubmit,
-        handleReplies,
-        register,
-        user,
-    }
-
+  return {
+    thread,
+    onOpen,
+    navigate,
+    pathname,
+    handleSubmit,
+    handleReplies,
+    register,
+    user,
+  };
 }
