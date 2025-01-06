@@ -1,11 +1,8 @@
 import { Box, Button, Container } from "@chakra-ui/react";
-import ProfileComponent from "../../features/profile/components/Profile-Component";
 import { useEffect, useState } from "react";
 import ListImageComponent from "../../features/profile/components/List-Image-Component";
 import { useLocation } from "react-router-dom";
-import { apiV1 } from "../../lib/api-v1";
 import ListThreads from "../../features/base/components/List-Thread";
-import ProfileConstUserEntity from "../../entities/profile-entity-constraints-user";
 import { useAppDispatch, useAppSelector } from "../../hooks/use-store";
 import { getProfileByIdAsync } from "../../stores/profile/profile-async";
 import ProfileComponentOther from "../../features/profile/components/Profile-Component-Other";
