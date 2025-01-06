@@ -11,16 +11,7 @@ export default function SideBarRight({ page }: SideBarRightPops) {
 
   return (
     <Flex color="white" fontFamily="body" padding="20px" flexDirection="column" gap="20px">
-      {page != "my-profile" && (
-        <ProfileComponent
-          page="my-profile"
-          Profile={user.profile}
-          borderProfile="profile.rightSide"
-          background="brand.backgroundYoung"
-          // follower={`${followFollower.follower}`}
-          // following={`${followFollower.following}`}
-        ></ProfileComponent>
-      )}
+      {page != "my-profile" && <ProfileComponent page="my-profile" Profile={user.profile} borderProfile="profile.rightSide" background="brand.backgroundYoung"></ProfileComponent>}
 
       {page != "follow" && <FollowsFeatures location="sidebar" limit="3"></FollowsFeatures>}
 
