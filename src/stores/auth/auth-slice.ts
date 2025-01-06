@@ -1,6 +1,6 @@
-import { UserDTO } from "../dto/user-dto";
+import { UserDTO } from "../../dto/user-dto";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { asyncAuth } from "./auth-async";
+import { asyncAuth, loginAsync } from "./auth-async";
 
 const initialState: UserDTO = {} as UserDTO;
 
@@ -30,8 +30,13 @@ const authSlice = createSlice({
       state.socialConnectiion = action.payload.data.data.socialConnectiion;
       state.role = action.payload.data.data.role;
     });
-    builder.addCase(asyncAuth.rejected, () => {});
-    builder.addCase(asyncAuth.pending, () => {});
+    builder.addCase(loginAsync.fulfilled, (state, action) => {
+      state.profile = action.payload.data.user.profile;
+      state.id = action.payload.data.user.id;
+      state.email = action.payload.data.user.email;
+      state.socialConnectiion = action.payload.data.user.socialConnectiion;
+      state.role = action.payload.data.user.role;
+    });
   },
 });
 

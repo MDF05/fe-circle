@@ -16,14 +16,14 @@ function TemplateLayout() {
   return (
     <ModalThreadProvider stateClosure={useDisclosure()}>
       <ModalEditProvileProvider stateClosure={useDisclosure()}>
-        <Grid gridTemplateColumns={{ base: "100%", lg: "20% 45% 35%" }}>
-          <Box display={{ base: "none", lg: "inherit" }}>
+        <Grid gridTemplateColumns={{ base: "100%", lg: "17% 48% 35%" }}>
+          <Box display={{ base: "flex" }} w={"100%"}>
             <SideBarLeft />
           </Box>
           <Box height="100vh" overflow="auto">
             <Outlet></Outlet>
           </Box>
-          <Box height="100vh" overflow="auto" borderLeft="border.grey" display={{ base: "none", lg: "inherit" }}>
+          <Box height="100vh" overflow="auto" borderLeft="border.grey" display={{ base: "none", md: "inherit", lg: "inherit" }}>
             <SideBarRight page={location}></SideBarRight>
           </Box>
         </Grid>

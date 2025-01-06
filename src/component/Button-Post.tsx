@@ -10,7 +10,7 @@ export default function ButtonPost() {
   const location = useLocation();
 
   return (
-    <Box py="10px" px="25px">
+    <Box py="10px" px="25px" display={{ base: "none", lg: "inherit" }}>
       <Button
         display="flex"
         className="button-post"

@@ -14,21 +14,36 @@ interface ResponseUserDTO {
   };
 }
 
-interface CheckTokenDTO {
-  data: {
-    message: string;
-    success: boolean;
-    status: number;
-    data: {
-      profile: ProfileConstUserEntity;
-      id: string;
-      fullName: string;
-      email: string;
-      password: string;
-      socialConnectiion: boolean;
-      role: string;
-    };
+export interface LoginDTO {
+  token: string;
+  user: {
+    profile: ProfileConstUserEntity;
+    id: string;
+    fullName: string;
+    email: string;
+    password: string;
+    socialConnectiion: boolean;
+    role: string;
   };
+}
+
+export interface CheckToken {
+  message: string;
+  success: boolean;
+  status: number;
+  data: {
+    profile: ProfileConstUserEntity;
+    id: string;
+    fullName: string;
+    email: string;
+    password: string;
+    socialConnectiion: boolean;
+    role: string;
+  };
+}
+
+interface CheckTokenDTO {
+  data: CheckToken;
 }
 
 export type { ResponseUserDTO, UserDTO, CheckTokenDTO };

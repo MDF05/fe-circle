@@ -21,11 +21,11 @@ export const LinkItems: Array<LinkItemProps> = [
 
 const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
   return (
-    <Link as={RouterLink} to={path} style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
+    <Link as={RouterLink} to={path} style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }} w={"full"} display={"grid"} gap={"20px"} justifyContent={"space-round"}>
       <Flex
         align="center"
         p="4"
-        mx="4"
+        mx={{ base: 0, lg: 4 }}
         borderRadius="lg"
         role="group"
         cursor="pointer"
@@ -37,7 +37,7 @@ const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
       >
         {icon && (
           <Icon
-            mr="4"
+            mr={{ base: 0, lg: 4 }}
             fontSize="16"
             _groupHover={{
               color: "white",
@@ -56,28 +56,27 @@ const SidebarContent = ({ ...rest }) => {
     <Flex
       transition="3s ease"
       borderRight="1px"
-      bg="brand.background"
       color="white"
       borderRightColor="grey"
       width="100%"
-      h="full"
-      justifyContent="center"
-      alignItems="center"
+      h="100%"
+      justifyContent={{ base: "center", lg: "start" }}
+      alignItems={{ base: "center", lg: "start" }}
       flexDirection="row"
       {...rest}
     >
-      <Flex flexDirection={{ base: "row", lg: "column" }}>
-        <Flex h="20" alignItems="center" mx={{ base: "0", lg: "8" }} justifyContent="space-between">
+      <Flex flexDirection={{ base: "row", lg: "column" }} w={{ base: "100%", lg: "90%" }}>
+        <Flex h="100%" alignItems="center" mx={{ base: "0", lg: "1" }} justifyContent="space-between" boxSizing="border-box">
           <LogoCircle fontSize="3rem" textTransform="lowercase" display={{ base: "none", lg: "inherit" }}></LogoCircle>
         </Flex>
         {LinkItems.map((link) => (
-          <NavItem key={link.name} icon={link.icon} path={link.path}>
+          <NavItem key={link.name} icon={link.icon} path={link.path} w={{ base: "full" }} justifyContent={{ base: "center", lg: "start" }}>
             <Text display={{ base: "none", lg: "inherit" }}>{link.name}</Text>
           </NavItem>
         ))}
         <ButtonPost />
+        <ButtonLogout display={{ base: "none", lg: "inherit" }}></ButtonLogout>
       </Flex>
-      <ButtonLogout display={{ base: "none", lg: "inherit" }}></ButtonLogout>
     </Flex>
   );
 };
@@ -85,7 +84,7 @@ const SidebarContent = ({ ...rest }) => {
 const SideBarLeft = () => {
   return (
     <Box h={{ base: "60px", lg: "100vh" }} w="100%" position="relative">
-      <SidebarContent display={{ base: "no  ne", md: "block" }} />
+      <SidebarContent />
     </Box>
   );
 };

@@ -1,7 +1,7 @@
 import { Button, ButtonProps, Text } from "@chakra-ui/react";
 import { CiLogout } from "react-icons/ci";
 import { useAppDispatch } from "../hooks/use-store";
-import { removeUser } from "../stores/auth-slice";
+import { removeUser } from "../stores/auth/auth-slice";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 

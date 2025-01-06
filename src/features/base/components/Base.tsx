@@ -6,7 +6,6 @@ import { ReactElement } from "react";
 import ListThreads from "./List-Thread";
 import useBase from "../hook/use-base";
 import avatarImage from "../../../../assets/image/avatar.png";
-import SideBarLeft from "../../../component/Sidebar-Left";
 
 export default function Base(): ReactElement {
   const { threads, handleSubmit, register, errors, user, onSubmit, onOpen, loading } = useBase();
@@ -14,9 +13,7 @@ export default function Base(): ReactElement {
   return (
     <Box position="relative">
       <ModalPost></ModalPost>
-      <Box display={{ base: "flex", lg: "none" }}>
-        <SideBarLeft></SideBarLeft>
-      </Box>
+
       <Box>
         <Text as="h1" color="white" height="50px" display="flex" alignItems="end" px="10px" fontWeight="bold">
           Home

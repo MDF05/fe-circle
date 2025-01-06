@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/use-store";
 import Cookies from "js-cookie";
 import { setFollowFollower } from "../../../stores/follow-follower-slice";
-import { asyncAuth } from "../../../stores/auth-async";
+import { asyncAuth } from "../../../stores/auth/auth-async";
 import { useEffect } from "react";
 
 export default function useTemplate() {

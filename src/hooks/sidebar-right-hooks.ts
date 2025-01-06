@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "./use-store";
 import ProfileConstUserEntity from "../entities/profile-entity-constraints-user";
 import { EditProfileContext } from "../context/Modal-Edit-Profile";
 import { getProfileById } from "../lib/get-profile-by-id";
-import { asyncAuth } from "../stores/auth-async";
+import { asyncAuth } from "../stores/auth/auth-async";
 import { setFollowFollower } from "../stores/follow-follower-slice";
 import cookies from "js-cookie";
 
