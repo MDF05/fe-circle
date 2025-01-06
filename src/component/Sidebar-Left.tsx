@@ -1,19 +1,16 @@
 "use client";
-import Cookies from "js-cookie";
 
-import { Box, CloseButton, Flex, Icon, Link, Button, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Link, Text } from "@chakra-ui/react";
 
 import { TbUserSearch } from "react-icons/tb";
 import { FaRegHeart, FaRegCircleUser } from "react-icons/fa6";
-import { CiLogout } from "react-icons/ci";
 import { RiHome7Fill } from "react-icons/ri";
 
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import LogoCircle from "./Logo-Circle";
 import ButtonPost from "./Button-Post";
-import { useDispatch } from "react-redux";
-import { removeUser } from "../stores/auth-slice";
 import { LinkItemProps, NavItemProps } from "../types/sidebar-left-types";
+import ButtonLogout from "./Button-Logout";
 
 export const LinkItems: Array<LinkItemProps> = [
   { name: "Home", icon: RiHome7Fill, path: "/" },
@@ -55,15 +52,6 @@ const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
 };
 
 const SidebarContent = ({ ...rest }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  function logOut() {
-    Cookies.remove("token");
-    dispatch(removeUser());
-    return navigate("/login");
-  }
-
   return (
     <Flex
       transition="3s ease"
@@ -78,31 +66,25 @@ const SidebarContent = ({ ...rest }) => {
       flexDirection="row"
       {...rest}
     >
-      <Flex flexDirection="column">
-        <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-          <LogoCircle fontSize="3rem" textTransform="lowercase"></LogoCircle>
-          <CloseButton display={{ base: "flex", md: "none" }} />
+      <Flex flexDirection={{ base: "row", lg: "column" }}>
+        <Flex h="20" alignItems="center" mx={{ base: "0", lg: "8" }} justifyContent="space-between">
+          <LogoCircle fontSize="3rem" textTransform="lowercase" display={{ base: "none", lg: "inherit" }}></LogoCircle>
         </Flex>
         {LinkItems.map((link) => (
           <NavItem key={link.name} icon={link.icon} path={link.path}>
-            {link.name}
+            <Text display={{ base: "none", lg: "inherit" }}>{link.name}</Text>
           </NavItem>
         ))}
         <ButtonPost />
       </Flex>
-      <Button alignItems="center" gap="10px" mx="8" bottom="20px" position="absolute" colorScheme="transparent" onClick={logOut}>
-        <Text color={"white"}>
-          <CiLogout></CiLogout>
-        </Text>
-        <Text color={"white"}>Logout</Text>
-      </Button>
+      <ButtonLogout display={{ base: "none", lg: "inherit" }}></ButtonLogout>
     </Flex>
   );
 };
 
 const SideBarLeft = () => {
   return (
-    <Box h="100vh" w="100%" position="relative">
+    <Box h={{ base: "60px", lg: "100vh" }} w="100%" position="relative">
       <SidebarContent display={{ base: "no  ne", md: "block" }} />
     </Box>
   );

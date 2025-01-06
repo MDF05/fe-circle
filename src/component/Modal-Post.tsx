@@ -28,7 +28,7 @@ export default function ModalPost() {
       <ModalContent
         background="brand.background"
         minW="45vw"
-        left="-100px"
+        left={{ base: "0px", lg: "-100px" }}
         minH="70vh"
         overflow="auto"
         rounded={"15px"}
