@@ -12,7 +12,7 @@ import avatarImage from "../../../../assets/image/avatar.png";
 import cover from "../../../../assets/image/cover.png";
 import { useAppSelector } from "../../../hooks/use-store";
 
-export default function ProfileComponentOther({ page, borderProfile, Profile, following, follower, ...rest }: ProfileComponentProps) {
+export default function ProfileComponentOther({ page, borderProfile, Profile, ...rest }: ProfileComponentProps) {
   const { onOpen } = useContext(EditProfileContext);
   const {
     handleSubmit,
@@ -145,7 +145,7 @@ export default function ProfileComponentOther({ page, borderProfile, Profile, fo
               display={"flex"}
               gap="5px"
             >
-              <Text as="span">{following || Profile?._count.following}</Text>
+              <Text as="span">{Profile?._count.following}</Text>
               <Text as="span" color="grey">
                 Following
               </Text>
@@ -159,7 +159,7 @@ export default function ProfileComponentOther({ page, borderProfile, Profile, fo
                 profileUsername: user.profile?.username,
               }}
             >
-              <Text as="span">{follower || Profile?._count.follower}</Text>
+              <Text as="span">{Profile?._count.follower}</Text>
               <Text as="span" color="grey">
                 Followers
               </Text>
