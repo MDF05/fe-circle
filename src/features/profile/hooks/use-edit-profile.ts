@@ -41,19 +41,21 @@ export default function useEditProfile(Profile: ProfileConstUserEntity) {
   }, [watchImage, reset]);
 
   async function submitProfile(event: any) {
+    console.log(event.image);
     try {
       const formData = new FormData();
       formData.append("fullName", event.fullName);
       formData.append("bio", event.bio);
       formData.append("username", event.username);
-      if (typeof event.image !== "string") formData.append("image", event.image[0]);
-      if (typeof event.cover !== "string") formData.append("cover", event.cover[0]);
+      if (typeof event.image !== "string" && event.image !== null) formData.append("image", event.image[0]);
+      if (typeof event.cover !== "string" && event.image !== null) formData.append("cover", event.cover[0]);
 
       await apiV1.put("/profile", formData);
       await dispatch(getProfileByIdAsync(Profile.id));
 
       onClose();
     } catch (err) {
+      console.log(err);
       console.error("Error saving profile: ", err);
     }
   }

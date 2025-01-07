@@ -4,6 +4,7 @@ import { useAppDispatch } from "../hooks/use-store";
 import { removeUser } from "../stores/auth/auth-slice";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { removeProfile } from "../stores/profile/profile-slice";
 
 interface ButtonLogoutProps extends ButtonProps {
   children?: React.ReactNode;
@@ -18,6 +19,7 @@ export default function ButtonLogout(props: ButtonLogoutProps) {
   function logOut() {
     Cookies.remove("token");
     dispatch(removeUser());
+    dispatch(removeProfile());
     return navigate("/login");
   }
 

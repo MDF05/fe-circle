@@ -12,7 +12,12 @@ const initialState = {} as ProfileInitiate;
 const PRofileReducer = createSlice({
   name: "profile",
   initialState,
-  reducers: {},
+  reducers: {
+    removeProfile: (state) => {
+      state.profile = {} as ProfileConstUserEntity;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getProfileByIdAsync.fulfilled, (state, action) => {
       state.profile = action.payload.data;
@@ -26,5 +31,7 @@ const PRofileReducer = createSlice({
     });
   },
 });
+
+export const { removeProfile } = PRofileReducer.actions;
 
 export default PRofileReducer.reducer;
