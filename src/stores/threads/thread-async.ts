@@ -9,7 +9,6 @@ export const getThreadAsync = createAsyncThunk<ResponseDTO<ThreadDTO[]>, void>("
 
     return thunkApi.fulfillWithValue(response.data);
   } catch (err) {
-    console.log(err);
     return thunkApi.rejectWithValue(err);
   }
 });

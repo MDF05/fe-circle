@@ -5,9 +5,7 @@ import LoginTypes from "../../features/auth/types/login-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../features/auth/schema/login-schema";
 import Cookies from "js-cookie";
-import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useState } from "react";
 import { loginAsync } from "../../stores/auth/auth-async";
 import { useAppDispatch } from "../../hooks/use-store";
@@ -36,7 +34,7 @@ export default function Login() {
   const dispatch = useAppDispatch();
   const Navigate = useNavigate();
 
-  async function submitData(data: LoginTypes): Promise<void> {
+  async function submitData(data: LoginTypes) {
     setLoading(true);
     try {
       const response = await dispatch(loginAsync(data)).unwrap();
@@ -48,9 +46,8 @@ export default function Login() {
         setTimeout(() => {
           Navigate("/");
         }, 2000);
-    } catch (err: unknown) {
-      if (err instanceof AxiosError) toast.error(err?.response?.data.message);
-      else toast.error("undifined error");
+    } catch (err) {
+      return err;
     } finally {
       setLoading(false);
     }
