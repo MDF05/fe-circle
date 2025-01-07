@@ -22,7 +22,7 @@ export default function MyProfile() {
     <Container p="0">
       <ModalEditProfile Profile={user.profile} />
 
-      <ProfileComponent page="my-profile" borderProfile="profile.rightSide" Profile={user.profile}></ProfileComponent>
+      <ProfileComponent page="my-profile" borderProfile="profile.rightSide"></ProfileComponent>
       <Box borderBottom="border.grey" display="grid" gridTemplateColumns="repeat(2,50%)">
         <Button colorScheme="white" background="transparent" onClick={() => setPostOrMedia(!postOrMedia)} rounded="none" borderBottom={postOrMedia ? "notActive" : "active.color"}>
           All Post

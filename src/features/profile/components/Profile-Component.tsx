@@ -12,7 +12,7 @@ import avatarImage from "../../../../assets/image/avatar.png";
 import cover from "../../../../assets/image/cover.png";
 import { useAppSelector } from "../../../hooks/use-store";
 
-export default function ProfileComponent({ page, borderProfile, Profile, following, follower, ...rest }: ProfileComponentProps) {
+export default function ProfileComponent({ page, borderProfile, following, follower, ...rest }: ProfileComponentProps) {
   const { onOpen } = useContext(EditProfileContext);
   const {
     handleSubmit,
@@ -22,6 +22,7 @@ export default function ProfileComponent({ page, borderProfile, Profile, followi
   const [follow, setFollow] = useState("");
   const token: string | undefined = cookies.get("token");
   const user = useAppSelector((state) => state.auth);
+  const Profile = useAppSelector((state) => state.profile)?.profile;
 
   useEffect(() => {
     (async function () {

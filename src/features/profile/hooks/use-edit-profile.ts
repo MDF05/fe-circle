@@ -1,64 +1,62 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { EditProfileContext } from './../../../context/Modal-Edit-Profile';
-import { apiV1 } from './../../../lib/api-v1';
+import { EditProfileContext } from "./../../../context/Modal-Edit-Profile";
+import { apiV1 } from "./../../../lib/api-v1";
+import ProfileConstUserEntity from "../../../entities/profile-entity-constraints-user";
+import { useAppDispatch } from "../../../hooks/use-store";
+import { getProfileByIdAsync } from "../../../stores/profile/profile-async";
 
-export default function useEditProfile(Profile: any) {
-    const { isOpen, onClose } = useContext(EditProfileContext);
-    const {
-        register,
-        handleSubmit,
-        watch,
-        reset,
-        formState: { },
-    } = useForm({
-        defaultValues: {
-            fullName: Profile?.fullName,
-            bio: Profile?.bio,
-            username: Profile?.username,
-            image: Profile?.image,
-            cover: Profile?.cover,
-        },
-    });
+export default function useEditProfile(Profile: ProfileConstUserEntity) {
+  const { isOpen, onClose } = useContext(EditProfileContext);
+  const { register, handleSubmit, watch, reset, setValue } = useForm();
+  const dispatch = useAppDispatch();
 
-    const [image, setImage] = useState<string | undefined>();
-    const [cover, setCover] = useState<string | undefined>();
+  useEffect(() => {
+    setValue("fullName", Profile?.fullName);
+    setValue("image", Profile?.image);
+    setValue("cover", Profile?.cover);
+    setValue("bio", Profile?.bio);
+    setValue("image", Profile?.image);
+    setValue("username", Profile?.username);
+  }, [Profile]);
 
-    const watchImage = watch(["image", "cover"]);
+  const [image, setImage] = useState<string | undefined>();
+  const [cover, setCover] = useState<string | undefined>();
 
-    useEffect(() => {
-        if (watchImage[0] && typeof watchImage[0] !== "string") {
-            const image: any = watchImage[0][0];
-            image && setImage(URL.createObjectURL(image));
-        } else {
-            setImage(undefined);
-        }
-        if (watchImage[1] && typeof watchImage[1] !== "string") {
-            const cover: any = watchImage[1][0];
-            cover && setCover(URL.createObjectURL(cover));
-        } else {
-            setCover(undefined);
-        }
-    }, [watchImage[0], watchImage[1], reset]);
+  const watchImage = watch(["image", "cover"]);
 
-    async function submitProfile(event: any) {
-        try {
-            const formData = new FormData();
-            formData.append("fullName", event.fullName);
-            formData.append("bio", event.bio);
-            formData.append("username", event.username);
-            typeof event.image !== "string" &&
-                formData.append("image", event.image[0]);
-            typeof event.cover !== "string" &&
-                formData.append("cover", event.cover[0]);
-
-            await apiV1.put("/profile", formData);
-            onClose();
-        } catch (err) {
-            console.error("Error saving profile: ", err);
-        }
+  useEffect(() => {
+    if (watchImage[0] && typeof watchImage[0] !== "string") {
+      const image = watchImage[0][0];
+      if (image) setImage(URL.createObjectURL(image));
+    } else {
+      setImage(undefined);
     }
+    if (watchImage[1] && typeof watchImage[1] !== "string") {
+      const cover = watchImage[1][0];
+      if (cover) setCover(URL.createObjectURL(cover));
+    } else {
+      setCover(undefined);
+    }
+  }, [watchImage, reset]);
 
+  async function submitProfile(event: any) {
+    try {
+      const formData = new FormData();
+      formData.append("fullName", event.fullName);
+      formData.append("bio", event.bio);
+      formData.append("username", event.username);
+      if (typeof event.image !== "string") formData.append("image", event.image[0]);
+      if (typeof event.cover !== "string") formData.append("cover", event.cover[0]);
 
-    return { submitProfile, image, cover, register, handleSubmit, isOpen, onClose, reset }
-} 
+      await apiV1.put("/profile", formData);
+      await dispatch(getProfileByIdAsync(Profile.id));
+
+      onClose();
+    } catch (err) {
+      console.error("Error saving profile: ", err);
+    }
+  }
+
+  return { submitProfile, image, cover, register, handleSubmit, isOpen, onClose, reset };
+}

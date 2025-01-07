@@ -16,7 +16,6 @@ const ThreadReducer = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getThreadAsync.fulfilled, (state, action) => {
-        console.log("asu");
         state.threads = action.payload.data;
         state.loading = false;
       })
