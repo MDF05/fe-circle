@@ -41,7 +41,6 @@ export default function useEditProfile(Profile: ProfileConstUserEntity) {
   }, [watchImage, reset]);
 
   async function submitProfile(event: any) {
-    console.log(event.image);
     try {
       const formData = new FormData();
       formData.append("fullName", event.fullName);

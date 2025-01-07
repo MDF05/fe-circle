@@ -6,6 +6,7 @@ import ListThreads from "../../features/base/components/List-Thread";
 import { useAppDispatch, useAppSelector } from "../../hooks/use-store";
 import { getProfileByIdAsync } from "../../stores/profile/profile-async";
 import ProfileComponentOther from "../../features/profile/components/Profile-Component-Other";
+import { getThreadAsyncByUserLogin } from "../../stores/thread-profile/thread-profile-async";
 
 export default function ProfileView() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
@@ -17,6 +18,7 @@ export default function ProfileView() {
   useEffect(() => {
     (async function () {
       await dispatch(getProfileByIdAsync(state.profileId));
+      await dispatch(getThreadAsyncByUserLogin(profileState.profile.id));
     })();
   }, [state]);
 

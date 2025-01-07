@@ -15,8 +15,11 @@ export default function MyProfile() {
   const threads = useAppSelector((state) => state.threadProfile);
 
   useEffect(() => {
-    if (user?.id) dispatch(getThreadAsyncByUserLogin(user.id));
-  }, [user.id]);
+    (async function () {
+      if (user?.id) dispatch(getThreadAsyncByUserLogin(user.id));
+      await dispatch(getThreadAsyncByUserLogin(user.profile.id));
+    })();
+  }, [user]);
 
   return (
     <Container p="0">
@@ -32,7 +35,7 @@ export default function MyProfile() {
         </Button>
       </Box>
       <Box color="white" mt={"10px"}>
-        {postOrMedia ? <ListImageComponent threads={threads.threads} /> : threads && <ListThreads threads={threads.threads} />}
+        {postOrMedia ? <ListImageComponent threads={threads.threads} /> : threads && <ListThreads threads={threads?.threads} />}
       </Box>
     </Container>
   );
