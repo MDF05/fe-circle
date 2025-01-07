@@ -11,12 +11,13 @@ import { ToastContainer } from "react-toastify";
 import React from "react";
 
 createRoot(document.getElementById("root")!).render(
-  <React.StrictMode> 
-  <Provider store={store}>
-    <ChakraProvider theme={ThemeConfig}>
-    <ToastContainer position="top-center"  autoClose={2000} draggable style={{width : "80%"}} />
-      <AppRouter></AppRouter>
-    </ChakraProvider>
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <ChakraProvider theme={ThemeConfig}>
+        <ToastContainer position="top-center" autoClose={2000} draggable style={{ width: "80%" }} />
+        <AppRouter></AppRouter>
+      </ChakraProvider>
+    </Provider>
+    ,
   </React.StrictMode>,
 );
