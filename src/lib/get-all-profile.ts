@@ -1,7 +1,7 @@
 import { apiV1 } from "./api-v1";
 import Cookies from "js-cookie";
 
-export default async function getAllProfile(setProfiles: Function, limit?: string,): Promise<void> {
+export default async function getAllProfile(setProfiles: (data : object) => void, limit?: string,): Promise<void> {
     const token: string | undefined = Cookies.get("token")
     if (token) {
         try {
@@ -9,8 +9,10 @@ export default async function getAllProfile(setProfiles: Function, limit?: strin
                 headers: { Authorization: "Bearer " + token },
             });
             setProfiles(res.data.data);
-        } catch (err) {
+        } catch (err : unknown) {
             setProfiles([]);
+            console.log(err)
+            return;
         }
     }
 }

@@ -46,4 +46,15 @@ interface CheckTokenDTO {
   data: CheckToken;
 }
 
+
+export interface UserDto {
+  bio : string,
+cover : null | string;
+fullName : string,
+id : string,
+image: null | string,
+userId : string,
+username : string,
+}
+
 export type { ResponseUserDTO, UserDTO, CheckTokenDTO };

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/use-store";
 import ProfileEntity from "../../../entities/profile-entity";
 import getFollowByProfileId from "../../../lib/get-follow-by-profile-id";
 import { apiV1 } from "../../../lib/api-v1";
-import { setFollowFollower } from "../../../stores/follow-follower-slice";
+import { setFollowFollower } from "../../../stores/follow-follower/follow-follower-slice";
 
 export default function useFollow(profile: ProfileEntity) {
     const [followId, setFollowId] = useState<string>("");

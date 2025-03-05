@@ -1,19 +1,20 @@
-import { Box, Flex, Image, Text, Button, Input } from "@chakra-ui/react";
+import { Box, Flex, Image, Text,   } from "@chakra-ui/react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import ProfileComponentProps from "../types/Profile";
-import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { EditProfileContext } from "../../../context/Modal-Edit-Profile";
+import {  useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { apiV1 } from "../../../lib/api-v1";
 import cookies from "js-cookie";
 import avatarImage from "../../../../assets/image/avatar.png";
 import cover from "../../../../assets/image/cover.png";
-import { useAppSelector } from "../../../hooks/use-store";
+import { useAppDispatch, useAppSelector } from "../../../hooks/use-store";
+import { ButtonProfileSide } from "./Button-Profile-Side";
+import { getFollowerByProfileIdAsync } from "../../../stores/follow-follower/follow-follower-async";
+import { DisplayFollowerCount } from "../Display-Follower-count";
 
-export default function ProfileComponent({ page, borderProfile, following, follower, ...rest }: ProfileComponentProps) {
-  const { onOpen } = useContext(EditProfileContext);
+export default function ProfileComponent({ page, borderProfile, following , ...rest }: ProfileComponentProps) {
+  
   const {
     handleSubmit,
     register,
@@ -23,6 +24,14 @@ export default function ProfileComponent({ page, borderProfile, following, follo
   const token: string | undefined = cookies.get("token");
   const user = useAppSelector((state) => state.auth);
   const Profile = useAppSelector((state) => state.profile)?.profile;
+  const dispatch = useAppDispatch();
+  dispatch(getFollowerByProfileIdAsync(user?.profile?.id))
+
+
+
+
+
+
 
   useEffect(() => {
     (async function () {
@@ -60,18 +69,6 @@ export default function ProfileComponent({ page, borderProfile, following, follo
     }
   }
 
-  const Navigate = useNavigate();
-  function handleClick() {
-    if (location.pathname === "/my-profile") {
-      onOpen();
-    } else {
-      Navigate("/my-profile");
-      setTimeout(() => {
-        const ButtonEditProfile = document.querySelector<HTMLButtonElement>(".modal-edit-profile");
-        ButtonEditProfile?.click();
-      }, 100);
-    }
-  }
 
   return (
     <Flex gap="20px" backdropBlur="20px" backdropFilter="blur(20px)" flexDirection="column" padding="20px" color="white" {...rest}>
@@ -111,26 +108,8 @@ export default function ProfileComponent({ page, borderProfile, following, follo
             objectFit="cover"
             border={borderProfile}
           ></Image>
-
-          {page == "my-profile" || user?.id == Profile?.userId ? (
-            <Button className="modal-edit-profile" variant="outline" colorScheme="white" rounded="full" onClick={handleClick}>
-              Edit Profile
-            </Button>
-          ) : (
-            <Box>
-              {follow == "" ? (
-                <Button type="submit" variant="outline" colorScheme="white" rounded="full">
-                  <Input type="text" hidden {...register("follow")} />
-                  Follow
-                </Button>
-              ) : (
-                <Button type="reset" variant="outline" colorScheme="white" rounded="full">
-                  <Input type="text" hidden {...register("unFollow")} />
-                  Following
-                </Button>
-              )}
-            </Box>
-          )}
+        <ButtonProfileSide page={page} follow={follow} register={register}></ButtonProfileSide>
+          
         </Flex>
         <Flex gap="10px" flexDirection="column">
           <Text as="h1">{Profile?.fullName ?? user.profile?.fullName}</Text>
@@ -151,20 +130,7 @@ export default function ProfileComponent({ page, borderProfile, following, follo
                 Following
               </Text>
             </ChakraLink>
-            <ChakraLink
-              to={`/follower/${user.profile?.username}`}
-              display={"flex"}
-              gap="5px"
-              state={{
-                profileId: user.profile?.id,
-                profileUsername: user.profile?.username,
-              }}
-            >
-              <Text as="span">{follower || user.profile?._count.follower}</Text>
-              <Text as="span" color="grey">
-                Followers
-              </Text>
-            </ChakraLink>
+           <DisplayFollowerCount></DisplayFollowerCount>
           </Flex>
         </Flex>
       </Box>

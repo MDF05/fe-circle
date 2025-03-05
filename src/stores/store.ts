@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./auth/auth-slice";
 import threadReducer from "./threads/thread-slice";
 import threadProfileReducer from "./thread-profile/thread-slice";
-import followFollowerReducer from "./follow-follower-slice";
+import followFollowerReducer from "./follow-follower/follow-follower-slice";
 import profileReducer from "./profile/profile-slice";
 
 export const store = configureStore({

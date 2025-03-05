@@ -4,7 +4,7 @@ import { apiV1 } from "../../../lib/api-v1";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "./../../../hooks/use-store";
-import { setFollowFollower } from "../../../stores/follow-follower-slice";
+import { setFollowFollower } from "../../../stores/follow-follower/follow-follower-slice";
 import ProfileEntity from "../../../entities/profile-entity";
 
 export default function ListFollowComponent({ profile, location }: { profile: ProfileEntity; location: string }) {

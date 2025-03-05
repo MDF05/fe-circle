@@ -1,7 +1,7 @@
 import { apiV1 } from "./api-v1";
 import Cookies from "js-cookie";
 
-export default async function removeLikeByLikeId(likeId: string | null, setCountLike: Function, setLike: Function, countLike: number) {
+export default async function removeLikeByLikeId(likeId: string | null, setCountLike: (coount : number) => void, setLike: (likeId : string | null) => void, countLike: number) {
     const token = Cookies.get("token");
     try {
         await apiV1.delete(`/like/${likeId}`, {
@@ -11,7 +11,9 @@ export default async function removeLikeByLikeId(likeId: string | null, setCount
         });
         setCountLike(countLike - 1);
         setLike(null);
-    } catch (erry) {
+    } catch (err : unknown) {
         setLike(likeId);
+
+        return err;
     }
 }
