@@ -1,7 +1,8 @@
+import ProfileEntity from "../entities/profile-entity";
 import { apiV1 } from "./api-v1";
 import Cookies from "js-cookie";
 
-export default async function getAllProfile(setProfiles: (data : object) => void, limit?: string,): Promise<void> {
+export default async function getAllProfile(setProfiles : React.Dispatch<React.SetStateAction<ProfileEntity[]>>, limit?: string,): Promise<void> {
     const token: string | undefined = Cookies.get("token")
     if (token) {
         try {

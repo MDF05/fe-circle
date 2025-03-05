@@ -3,9 +3,9 @@ import { useAppSelector } from "../../../hooks/use-store";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { EditProfileContext } from "../../../context/Modal-Edit-Profile";
-import { UseFormRegister } from "react-hook-form";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
-export function ButtonProfileSide({page,follow, register} : {page : string, follow : string, register : UseFormRegister<{follow : string; unFollow : string}>}) {
+export function ButtonProfileSide({page,follow, register} : {page : string, follow : string, register : UseFormRegister<FieldValues>}) {
     const user = useAppSelector((state) => state.auth);
     const Profile = useAppSelector((state) => state.profile)?.profile;
     const { onOpen } = useContext(EditProfileContext);

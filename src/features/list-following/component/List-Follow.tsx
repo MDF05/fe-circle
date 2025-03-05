@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { apiV1 } from "../../../lib/api-v1";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "./../../../hooks/use-store";
-import { setFollowFollower } from "../../../stores/follow-follower/follow-follower-slice";
+import {  useAppSelector } from "./../../../hooks/use-store";
 import ProfileEntity from "../../../entities/profile-entity";
 
 export default function ListFollowComponent({ profile, location }: { profile: ProfileEntity; location: string }) {
@@ -13,7 +12,7 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
     handleSubmit,
     formState: { isSubmitted },
   } = useForm();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const ff = useAppSelector((state) => state.followFollower);
 
   useEffect(() => {
@@ -23,8 +22,9 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
           const res = await apiV1.get(`/follow/${profile?.id}`);
           setFollow(res.data.data.id);
         }
-      } catch (err) {
+      } catch (err : unknown ) {
         setFollow("");
+        return err;
       }
     })();
   }, [profile, isSubmitted]);
@@ -33,15 +33,11 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
     try {
       const res = await apiV1.post(`/follow/${profile?.id}`, {});
       setFollow(res.data.data.id);
-      dispatch(
-        setFollowFollower({
-          follower: ff.follower,
-          following: ff.following + 1,
-        }),
-      );
+      
       localStorage.setItem("followFollower", JSON.stringify({ follower: ff.follower, following: ff.following + 1 }));
-    } catch (err) {
+    } catch (err : unknown) {
       setFollow("");
+      return err;
     }
   }
 
@@ -49,15 +45,11 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
     try {
       await apiV1.delete(`/follow/${follow}`);
       setFollow("");
-      dispatch(
-        setFollowFollower({
-          follower: ff.follower,
-          following: ff.following - 1,
-        }),
-      );
+      
       localStorage.setItem("followFollower", JSON.stringify({ follower: ff.follower, following: ff.following - 1 }));
-    } catch (err) {
+    } catch (err : unknown) {
       setFollow("");
+      return err;
     }
   }
 
