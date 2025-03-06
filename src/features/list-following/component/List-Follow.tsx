@@ -3,17 +3,16 @@ import { useEffect, useState } from "react";
 import { apiV1 } from "../../../lib/api-v1";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import { useForm } from "react-hook-form";
-import {  useAppSelector } from "./../../../hooks/use-store";
 import ProfileEntity from "../../../entities/profile-entity";
+import defaultAvatar from "../../../../assets/image/avatar.png"
 
-export default function ListFollowComponent({ profile, location }: { profile: ProfileEntity; location: string }) {
+export default function ListFollowComponent({ profile, location }: { profile: ProfileEntity ; location: string }) {
   const [follow, setFollow] = useState("");
   const {
     handleSubmit,
     formState: { isSubmitted },
   } = useForm();
-  // const dispatch = useAppDispatch();
-  const ff = useAppSelector((state) => state.followFollower);
+
 
   useEffect(() => {
     (async function () {
@@ -34,7 +33,6 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
       const res = await apiV1.post(`/follow/${profile?.id}`, {});
       setFollow(res.data.data.id);
       
-      localStorage.setItem("followFollower", JSON.stringify({ follower: ff.follower, following: ff.following + 1 }));
     } catch (err : unknown) {
       setFollow("");
       return err;
@@ -46,7 +44,6 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
       await apiV1.delete(`/follow/${follow}`);
       setFollow("");
       
-      localStorage.setItem("followFollower", JSON.stringify({ follower: ff.follower, following: ff.following - 1 }));
     } catch (err : unknown) {
       setFollow("");
       return err;
@@ -63,7 +60,7 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
     >
       <Flex>
         <ChakraLink to={`/profile/${profile.id}`} state={{ profileId: profile.id }}>
-          <Image src={profile.image} rounded="full" width="40px" height="40px" objectFit="cover" me="15px"></Image>
+          <Image src={profile?.image || defaultAvatar} rounded="full" width="40px" height="40px" objectFit="cover" me="15px"></Image>
         </ChakraLink>
         <Flex flexDirection="column">
           <Text>{profile.fullName}</Text>

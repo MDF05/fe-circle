@@ -24,7 +24,7 @@ export default function ProfileComponent({ page, borderProfile , ...rest }: Prof
   const [follow, setFollow] = useState("");
   const token: string | undefined = cookies.get("token");
   const user = useAppSelector((state) => state.auth);
-  const Profile = useAppSelector((state) => state.profile)?.profile;
+  // const Profile = useAppSelector((state) => state.profile)?.profile;
   const dispatch = useAppDispatch();
   dispatch(getFollowerByProfileIdAsync(user?.profile?.id))
   dispatch(getFollowingByProfileIdAsync(user?.profile?.id))
@@ -34,8 +34,8 @@ export default function ProfileComponent({ page, borderProfile , ...rest }: Prof
   useEffect(() => {
     (async function () {
       try {
-        if (Profile?.id && page !== "my-profile") {
-          const res = await apiV1.get(`/follow/${Profile?.id}`, {
+        if (user?.profile?.id && page !== "my-profile") {
+          const res = await apiV1.get(`/follow/${user?.profile.id}`, {
             headers: { Authorization: "Bearer " + token },
           });
           setFollow(res?.data?.data?.id);
@@ -45,11 +45,11 @@ export default function ProfileComponent({ page, borderProfile , ...rest }: Prof
         return err;
       }
     })();
-  }, [Profile?.id, isSubmitted, page, token]);
+  }, [user?.profile?.id, isSubmitted, page, token]);
 
   async function handleFollow() {
     try {
-      const res = await apiV1.post(`/follow/${Profile?.id}`, {});
+      const res = await apiV1.post(`/follow/${user?.profile.id}`, {});
       setFollow(res.data.data.id);
     } catch (err) {
       setFollow("");
@@ -84,7 +84,7 @@ export default function ProfileComponent({ page, borderProfile , ...rest }: Prof
       </Text>
       <Box>
         <Box height="100px" display="flex" rounded="10px">
-          <Image src={Profile?.cover || (user.profile?.cover ?? cover)} width="100%" height={"100px"} rounded={"20px"}></Image>
+          <Image src={(user.profile?.cover ?? cover)} width="100%" height={"100px"} rounded={"20px"}></Image>
         </Box>
         <Flex
           position="relative"
@@ -96,7 +96,7 @@ export default function ProfileComponent({ page, borderProfile , ...rest }: Prof
           onReset={handleSubmit(() => handleReset())}
         >
           <Image
-            src={Profile?.image || (user?.profile?.image ?? avatarImage)}
+            src={ (user?.profile?.image ?? avatarImage)}
             position="absolute"
             left="10px"
             top="-25px"
@@ -110,9 +110,9 @@ export default function ProfileComponent({ page, borderProfile , ...rest }: Prof
           
         </Flex>
         <Flex gap="10px" flexDirection="column">
-          <Text as="h1">{Profile?.fullName ?? user.profile?.fullName}</Text>
-          <Text color="grey">@{Profile?.username ?? user.profile?.username}</Text>
-          <Text>{Profile?.bio ?? user?.profile?.bio}</Text>
+          <Text as="h1">{user.profile?.fullName}</Text>
+          <Text color="grey">@{user.profile?.username}</Text>
+          <Text>{user?.profile?.bio}</Text>
           <Flex gap="20px">
            <DisplayFollowingCount></DisplayFollowingCount>
            <DisplayFollowerCount></DisplayFollowerCount>

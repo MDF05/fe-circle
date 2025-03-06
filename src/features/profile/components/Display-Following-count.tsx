@@ -17,7 +17,7 @@ export function DisplayFollowingCount() {
               display={"flex"}
               gap="5px"
             >
-              <Text as="span">{count.following }</Text>
+              <Text as="span">{count.followingCount }</Text>
               <Text as="span" color="grey">
                 Following
               </Text>

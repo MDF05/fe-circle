@@ -1,11 +1,13 @@
 import { Flex, Icon, Text } from "@chakra-ui/react";
 import ListFollowComponent from "./List-Follow";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { FollowingEntity } from "../../../entities/following-entity";
 import useListFollowing from "../hooks/use-list-following";
+import { useAppSelector } from "../../../hooks/use-store";
+import ProfileEntity from "../../../entities/profile-entity";
 
 export default function ListFollowingFeatures() {
-  const { navigate, followList, state } = useListFollowing();
+  const { navigate,  state } = useListFollowing();
+  const following = useAppSelector(state => state.followFollower.following)
 
   return (
     <Flex flexDirection="column" gap="10px" color="white" rounded={"10px"}>
@@ -15,7 +17,7 @@ export default function ListFollowingFeatures() {
             as="button"
             alignItems="center"
             gap="10px"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/")}
           >
             <Icon as={FaArrowLeftLong} />
             <Text textTransform="capitalize">back</Text>
@@ -25,12 +27,12 @@ export default function ListFollowingFeatures() {
           Following of {state.profileUsername}
         </Flex>
       </Flex>
-      {followList.map((profile: FollowingEntity) => {
+      {following?.map((profile) => {
         return (
           <ListFollowComponent
             location="profile"
-            profile={profile.follower}
-            key={profile.id}
+            profile={profile?.follower || {} as ProfileEntity}
+            key={profile.followingId}
           ></ListFollowComponent>
         );
       })}

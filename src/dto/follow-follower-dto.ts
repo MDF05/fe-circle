@@ -1,15 +1,18 @@
-import { UserDTO } from "./user-dto"
+import ProfileEntity from "../entities/profile-entity";
 
-export interface followingFollowerDTO {
-  following : number,
-  follower : number
+export interface FollowerFollowingInitiate {
+  followingCount: number;
+  followerCount: number;
+  loading : boolean;
+  following : FollowerORFollowingDTO[];
+  follower : FollowerORFollowingDTO[];
 }
 
-export interface followerORFollowingDTO {
-followerId: string,
-following: UserDTO
-followingId: string,
-id: string,
+export interface FollowerORFollowingDTO {
+  followingId : string;
+  followerId : string;
+  following? : ProfileEntity;
+  follower? : ProfileEntity;
 }
 
 

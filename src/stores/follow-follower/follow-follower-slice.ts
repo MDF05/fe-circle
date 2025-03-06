@@ -1,48 +1,52 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import FollowFollowerTypes from "../../types/follow-follower-types";
 import { getFollowerByProfileIdAsync, getFollowingByProfileIdAsync } from "./follow-follower-async";
+import {  FollowerFollowingInitiate } from "../../dto/follow-follower-dto"
 
-const initialState: FollowFollowerTypes = {} as FollowFollowerTypes;
+const initialState: FollowerFollowingInitiate = {} as FollowerFollowingInitiate;
 
 const followFollowerslice = createSlice({
   name: "followFollower",
   initialState,
   reducers: {
-    setFollowFollower(state, action: PayloadAction<FollowFollowerTypes>) {
+    setFollowFollower(state, action: PayloadAction<FollowerFollowingInitiate>) {
       return {
         ...state,
-        follower: action.payload.follower,
-        following: action.payload.following,
+        followerCount: action.payload.followerCount,
+        followingCount: action.payload.followingCount,
       };
     },
     addFollower(state) {
-      state.follower = state.follower +  1;
+      state.followerCount = state.followerCount +  1;
       return {
         ...state
       }
     },
     addFollowing(state) {
-      state.following = state.following + 1
+      state.followingCount = state.followingCount + 1
       return state;
     },
     decreaseFollowing(state) {
-      state.following = state.following - 1
+      state.followingCount = state.followingCount - 1
       return state;
     },
     removeFollowFollower() {
-      return {} as FollowFollowerTypes;
+      return {} as FollowerFollowingInitiate;
     },
   },
   extraReducers : (builder) => {
     builder.addCase(getFollowerByProfileIdAsync.fulfilled,(state,action ) => {
-      state.follower = action.payload.data.length
+      state.followerCount = action.payload.data.length
+      state.follower = action.payload.data
+
     }).addCase(getFollowerByProfileIdAsync.pending, (state,) =>{
       state.loading =true
     }).addCase(getFollowerByProfileIdAsync.rejected, (state,) => {
       state.loading = false
     });
     builder.addCase(getFollowingByProfileIdAsync.fulfilled,(state,action ) => {
-      state.following = action.payload.data.length
+      state.followingCount = action.payload.data.length
+      state.following = action.payload.data
+      
     }).addCase(getFollowingByProfileIdAsync.pending, (state,) =>{
       state.loading =true
     }).addCase(getFollowingByProfileIdAsync.rejected, (state,) => {

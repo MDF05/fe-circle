@@ -16,7 +16,7 @@ export function DisplayFollowerCount() {
           profileUsername: user.profile?.username,
         }}
       >
-        <Text as="span">{count.follower || 0}</Text>
+        <Text as="span">{count.followerCount || 0}</Text>
         <Text as="span" color="grey">
           Followers
         </Text>

@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiV1 } from "../../lib/api-v1";
-import { followerORFollowingDTO } from "../../dto/follow-follower-dto";
+import { FollowerORFollowingDTO } from "../../dto/follow-follower-dto";
 import { ResponseDTO } from "../../dto/response-DTO";
 
-export const getFollowerByProfileIdAsync = createAsyncThunk<ResponseDTO<followerORFollowingDTO[]>, string>(
+export const getFollowerByProfileIdAsync = createAsyncThunk<ResponseDTO<FollowerORFollowingDTO[]>, string>(
   "follower/count",
   async (profileId, thunkApi) => {
     try {
-      const response = await apiV1.get<ResponseDTO<followerORFollowingDTO[]>>(`follow/follower/${profileId}`);
+      const response = await apiV1.get<ResponseDTO<FollowerORFollowingDTO[]>>(`follow/follower/${profileId}`);
       return thunkApi.fulfillWithValue(response.data); 
     } catch (err) {
       return thunkApi.rejectWithValue(err);
@@ -15,11 +15,11 @@ export const getFollowerByProfileIdAsync = createAsyncThunk<ResponseDTO<follower
   }
 );
 
-export const getFollowingByProfileIdAsync = createAsyncThunk<ResponseDTO<followerORFollowingDTO[]>, string>(
+export const getFollowingByProfileIdAsync = createAsyncThunk<ResponseDTO<FollowerORFollowingDTO[]>, string>(
   "following/count",
   async (profileId, thunkApi) => {
     try {
-      const response = await apiV1.get<ResponseDTO<followerORFollowingDTO[]>>(`follow/following/${profileId}`);
+      const response = await apiV1.get<ResponseDTO<FollowerORFollowingDTO[]>>(`follow/following/${profileId}`);
       return thunkApi.fulfillWithValue(response.data); 
     } catch (err) {
       return thunkApi.rejectWithValue(err);
