@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {  useAppSelector } from "../../../hooks/use-store";
 import ProfileEntity from "../../../entities/profile-entity";
 import getFollowByProfileId from "../../../lib/get-follow-by-profile-id";
 import { apiV1 } from "../../../lib/api-v1";
+import { useAppDispatch } from "../../../hooks/use-store";
+import { addFollowing, decreaseFollowing } from "../../../stores/follow-follower/follow-follower-slice";
 
 export default function useFollow(profile: ProfileEntity) {
     const [followId, setFollowId] = useState<string>("");
@@ -11,21 +12,19 @@ export default function useFollow(profile: ProfileEntity) {
         handleSubmit,
         formState: { isSubmitted },
     } = useForm();
-    // const dispatch: Function = useAppDispatch();
-    const ff = useAppSelector((state) => state.followFollower);
+    
+    const dispatch = useAppDispatch();
 
+    
     useEffect(() => {
         if (profile) getFollowByProfileId(profile.id, setFollowId);
     }, [profile, isSubmitted]);
-
+    
     async function handleFollow() {
         try {
             const res = await apiV1.post(`/follow/${profile?.id}`, {});
             setFollowId(res.data.data.id);
-            
-
-            localStorage.setItem("followFollower", JSON.stringify({follower : ff.follower, following : ff.following + 1 }) )
-            
+            dispatch(addFollowing())
         } catch (err : unknown) {
             setFollowId("");
             return err;
@@ -36,8 +35,9 @@ export default function useFollow(profile: ProfileEntity) {
         try {
             await apiV1.delete(`/follow/${followId}`);
             setFollowId("");
+
+            dispatch(decreaseFollowing())
            
-            localStorage.setItem("followFollower", JSON.stringify({follower : ff.follower, following : ff.following - 1 }) )
         } catch (err : unknown) {
             setFollowId("");
             return err;

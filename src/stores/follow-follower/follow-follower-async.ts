@@ -14,3 +14,15 @@ export const getFollowerByProfileIdAsync = createAsyncThunk<ResponseDTO<follower
     }
   }
 );
+
+export const getFollowingByProfileIdAsync = createAsyncThunk<ResponseDTO<followerORFollowingDTO[]>, string>(
+  "following/count",
+  async (profileId, thunkApi) => {
+    try {
+      const response = await apiV1.get<ResponseDTO<followerORFollowingDTO[]>>(`follow/following/${profileId}`);
+      return thunkApi.fulfillWithValue(response.data); 
+    } catch (err) {
+      return thunkApi.rejectWithValue(err);
+    }
+  }
+);

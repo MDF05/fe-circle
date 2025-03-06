@@ -10,10 +10,11 @@ import avatarImage from "../../../../assets/image/avatar.png";
 import cover from "../../../../assets/image/cover.png";
 import { useAppDispatch, useAppSelector } from "../../../hooks/use-store";
 import { ButtonProfileSide } from "./Button-Profile-Side";
-import { getFollowerByProfileIdAsync } from "../../../stores/follow-follower/follow-follower-async";
-import { DisplayFollowerCount } from "../Display-Follower-count";
+import { getFollowerByProfileIdAsync, getFollowingByProfileIdAsync } from "../../../stores/follow-follower/follow-follower-async";
+import { DisplayFollowerCount } from "./Display-Follower-count";
+import { DisplayFollowingCount } from "./Display-Following-count";
 
-export default function ProfileComponent({ page, borderProfile, following , ...rest }: ProfileComponentProps) {
+export default function ProfileComponent({ page, borderProfile , ...rest }: ProfileComponentProps) {
   
   const {
     handleSubmit,
@@ -26,7 +27,7 @@ export default function ProfileComponent({ page, borderProfile, following , ...r
   const Profile = useAppSelector((state) => state.profile)?.profile;
   const dispatch = useAppDispatch();
   dispatch(getFollowerByProfileIdAsync(user?.profile?.id))
-
+  dispatch(getFollowingByProfileIdAsync(user?.profile?.id))
 
 
 
@@ -40,7 +41,7 @@ export default function ProfileComponent({ page, borderProfile, following , ...r
           const res = await apiV1.get(`/follow/${Profile?.id}`, {
             headers: { Authorization: "Bearer " + token },
           });
-          setFollow(res.data.data.id);
+          setFollow(res?.data?.data?.id);
         } else return;
       } catch (err: unknown) {
         setFollow("");
@@ -116,20 +117,7 @@ export default function ProfileComponent({ page, borderProfile, following , ...r
           <Text color="grey">@{Profile?.username ?? user.profile?.username}</Text>
           <Text>{Profile?.bio ?? user?.profile?.bio}</Text>
           <Flex gap="20px">
-            <ChakraLink
-              to={`/following/${user.profile?.username}`}
-              state={{
-                profileId: user.profile?.id,
-                profileUsername: user.profile?.username,
-              }}
-              display={"flex"}
-              gap="5px"
-            >
-              <Text as="span">{following || user.profile?._count.following}</Text>
-              <Text as="span" color="grey">
-                Following
-              </Text>
-            </ChakraLink>
+           <DisplayFollowingCount></DisplayFollowingCount>
            <DisplayFollowerCount></DisplayFollowerCount>
           </Flex>
         </Flex>
