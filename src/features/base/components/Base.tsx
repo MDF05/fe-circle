@@ -1,4 +1,4 @@
-import { Box, Text, Image, Button, Icon, Input, FormControl, Flex } from "@chakra-ui/react";
+import { Box, Text, Image, Button, Icon, Input, FormControl } from "@chakra-ui/react";
 
 import { LuImagePlus } from "react-icons/lu";
 import ModalPost from "../../../component/Modal-Post";
