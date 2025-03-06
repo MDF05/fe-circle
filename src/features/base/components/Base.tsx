@@ -1,4 +1,4 @@
-import { Box, Text, Image, Button, Icon, Input, FormControl } from "@chakra-ui/react";
+import { Box, Text, Image, Button, Icon, Input, FormControl, Flex } from "@chakra-ui/react";
 
 import { LuImagePlus } from "react-icons/lu";
 import ModalPost from "../../../component/Modal-Post";
@@ -6,9 +6,17 @@ import { ReactElement } from "react";
 import ListThreads from "./List-Thread";
 import useBase from "../hook/use-base";
 import avatarImage from "../../../../assets/image/avatar.png";
+import { LoadingPage } from "../../../component/Loading-Page";
 
 export default function Base(): ReactElement {
   const { handleSubmit, register, errors, user, onSubmit, onOpen, loading, threads } = useBase();
+
+  if(!threads) {
+    return <Flex height={'100%'} width={"100%"} alignItems={"Center"} justifyContent={"center"}>
+      <LoadingPage></LoadingPage>
+    </Flex>
+
+  }
 
   return (
     <Box position="relative">

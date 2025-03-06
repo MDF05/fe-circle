@@ -9,9 +9,7 @@ export function ButtonProfileSide({page,follow, register} : {page : string, foll
     const user = useAppSelector((state) => state.auth);
     const Profile = useAppSelector((state) => state.profile)?.profile;
     const { onOpen } = useContext(EditProfileContext);
-    const followFollower = useAppSelector((state) => state.followFollower)
 
-    console.log("follow" , followFollower)
 
     
   const Navigate = useNavigate();

@@ -2,7 +2,7 @@ import ProfileEntity from "../entities/profile-entity";
 import { apiV1 } from "./api-v1";
 import Cookies from "js-cookie";
 
-export default async function getAllProfile(setProfiles : React.Dispatch<React.SetStateAction<ProfileEntity[]>>, limit?: string,): Promise<void> {
+export default async function getAllProfile(setProfiles : React.Dispatch<React.SetStateAction<ProfileEntity[]>>, limit?: string,): Promise<void | unknown> {
     const token: string | undefined = Cookies.get("token")
     if (token) {
         try {
@@ -12,8 +12,7 @@ export default async function getAllProfile(setProfiles : React.Dispatch<React.S
             setProfiles(res.data.data);
         } catch (err : unknown) {
             setProfiles([]);
-            console.log(err)
-            return;
+            return err;
         }
     }
 }

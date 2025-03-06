@@ -54,8 +54,7 @@ export default function useEditProfile(Profile: ProfileConstUserEntity) {
 
       onClose();
     } catch (err) {
-      console.log(err);
-      console.error("Error saving profile: ", err);
+      return err;
     }
   }
 

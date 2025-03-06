@@ -31,9 +31,6 @@ export default function ProfileComponent({ page, borderProfile , ...rest }: Prof
 
 
 
-
-
-
   useEffect(() => {
     (async function () {
       try {

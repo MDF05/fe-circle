@@ -81,7 +81,7 @@ export default function ProfileComponentOther({ page, borderProfile, Profile, ..
           <ChakraLink to="/">
             <Flex alignItems="center" gap="10px">
               <FaArrowLeftLong />
-              {page}
+              back
             </Flex>
           </ChakraLink>
         )}

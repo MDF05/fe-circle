@@ -17,14 +17,15 @@ export default function ProfileView() {
 
   useEffect(() => {
     (async function () {
-      await dispatch(getProfileByIdAsync(state.profileId));
-      await dispatch(getThreadAsyncByUserLogin(profileState.profile.id));
+      await dispatch(getProfileByIdAsync(state?.profileId));
+      await dispatch(getThreadAsyncByUserLogin(profileState?.profile?.id));
     })();
   }, [state]);
 
+
   return (
     <Container p="0">
-      {profileState.profile && (
+      {profileState?.profile && (
         <ProfileComponentOther page="profile" borderProfile="profile.baseProfile" background="transparent" Profile={profileState.profile}></ProfileComponentOther>
       )}
       <Box borderBottom="border.grey" display="grid" gridTemplateColumns="repeat(2,50%)">
