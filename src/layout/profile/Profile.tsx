@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/use-store";
 import { getProfileByIdAsync } from "../../stores/profile/profile-async";
 import ProfileComponentOther from "../../features/profile/components/Profile-Component-Other";
 import { getThreadAsyncByUserLogin } from "../../stores/thread-profile/thread-profile-async";
+import { LoadingPage } from "../../component/Loading-Page";
 
 export default function ProfileView() {
   const [postOrMedia, setPostOrMedia] = useState<boolean>(false);
@@ -21,6 +22,8 @@ export default function ProfileView() {
       await dispatch(getThreadAsyncByUserLogin(profileState?.profile?.id));
     })();
   }, [state]);
+
+  if(profileState.loading) return <LoadingPage></LoadingPage>
 
 
   return (

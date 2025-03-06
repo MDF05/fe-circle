@@ -11,12 +11,8 @@ import { LoadingPage } from "../../../component/Loading-Page";
 export default function Base(): ReactElement {
   const { handleSubmit, register, errors, user, onSubmit, onOpen, loading, threads } = useBase();
 
-  if(!threads) {
-    return <Flex height={'100%'} width={"100%"} alignItems={"Center"} justifyContent={"center"}>
-      <LoadingPage></LoadingPage>
-    </Flex>
-
-  }
+  if(!threads) 
+    return <LoadingPage></LoadingPage>
 
   return (
     <Box position="relative">
