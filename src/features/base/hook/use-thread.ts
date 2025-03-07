@@ -11,18 +11,19 @@ export default function useThread(thread: ThreadDTO) {
   const [likeId, setLikeId] = useState<string | null>(null);
   const [countLike, setCountLike] = useState<number>(thread?._count?.like);
   const { pathname } = useLocation();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getLikeByThreadId(thread.id, setLikeId);
   }, [thread]);
 
   async function handleLike() {
-    postLikeByThreadId(thread.id, setCountLike, setLikeId, countLike);
+    postLikeByThreadId(thread.id, setCountLike, setLikeId, countLike,setLoading);
   }
 
   async function handleResetLike() {
-    removeLikeByLikeId(likeId, setCountLike, setLikeId, countLike);
+    removeLikeByLikeId(likeId, setCountLike, setLikeId, countLike, setLoading);
   }
 
-  return { handleSubmit, handleLike, handleResetLike, countLike, likeId, pathname };
+  return { handleSubmit, handleLike, handleResetLike, countLike, likeId, pathname, loading };
 }
