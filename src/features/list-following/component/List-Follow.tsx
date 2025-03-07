@@ -13,7 +13,6 @@ export default function ListFollowComponent({ profile, location }: { profile: Pr
     formState: { isSubmitted },
   } = useForm();
 
-  console.log("asu")
 
 
   useEffect(() => {
