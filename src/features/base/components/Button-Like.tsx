@@ -1,10 +1,9 @@
-import { Flex, Icon, Text } from "@chakra-ui/react";
+import { Flex, Icon, Spinner, Text } from "@chakra-ui/react";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import { TbMessage2 } from "react-icons/tb";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import useThread from "../hook/use-thread";
 import { ThreadDTO } from "../../../dto/thread-DTO";
-import { LoadingPage } from "../../../component/Loading-Page";
 
 export default function ButtonLike({ thread }: { thread: ThreadDTO }) {
   const { handleLike, handleResetLike, handleSubmit, countLike, likeId, pathname,loading } = useThread(thread);
@@ -13,7 +12,13 @@ export default function ButtonLike({ thread }: { thread: ThreadDTO }) {
 
   return (
     <Flex gap="20px" color={"grey"}>
-      {loading ? <LoadingPage></LoadingPage> :
+      {loading ? <Flex ><Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='sm'
+            /></Flex> :
       <Flex as={"form"} alignItems={"center"} gap={"5px"} onSubmit={handleSubmit(() => handleLike())} onReset={handleSubmit(() => handleResetLike())}>
         {likeId !== null ? (
           <Flex as="button" type="reset">
