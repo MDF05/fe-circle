@@ -12,6 +12,7 @@ export default function useFollow(profile: ProfileEntity) {
         handleSubmit,
         formState: { isSubmitted },
     } = useForm();
+    const [loading, setLoading]  = useState<boolean>(false)
     
     const dispatch = useAppDispatch();
 
@@ -21,6 +22,7 @@ export default function useFollow(profile: ProfileEntity) {
     }, [profile, isSubmitted]);
     
     async function handleFollow() {
+        setLoading(true)
         try {
             const res = await apiV1.post(`/follow/${profile?.id}`, {});
             setFollowId(res.data.data.id);
@@ -28,10 +30,13 @@ export default function useFollow(profile: ProfileEntity) {
         } catch (err : unknown) {
             setFollowId("");
             return err;
+        }finally {
+            setLoading(false)
         }
     }
 
     async function handleReset() {
+        setLoading(true)
         try {
             await apiV1.delete(`/follow/${followId}`);
             setFollowId("");
@@ -41,8 +46,10 @@ export default function useFollow(profile: ProfileEntity) {
         } catch (err : unknown) {
             setFollowId("");
             return err;
+        }finally {
+            setLoading(false)
         }
     }
 
-    return { handleReset, handleFollow, handleSubmit, followId }
+    return { handleReset, handleFollow, handleSubmit, followId,loading }
 }

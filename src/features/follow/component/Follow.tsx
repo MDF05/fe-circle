@@ -3,10 +3,10 @@ import ChakraLink from "../../../component/Chakra-Link-Router";
 import FollowComponentProps from "../types/follow-component-types";
 import useFollow from "../hooks/use-follow";
 import avatarDefault from "../../../../assets/image/avatar.png";
+import { LoadingPage } from "../../../component/Loading-Page";
 
 export default function FollowComponent({ profile, location }: FollowComponentProps) {
-  const { handleFollow, handleSubmit, handleReset, followId } = useFollow(profile);
-
+  const { handleFollow, handleSubmit, handleReset, followId, loading } = useFollow(profile);
   return (
     <Flex
       position="relative"
@@ -25,7 +25,7 @@ export default function FollowComponent({ profile, location }: FollowComponentPr
         </Flex>
       </Flex>
       <Flex as={"form"} onSubmit={handleSubmit(() => handleFollow())} onReset={handleSubmit(() => handleReset())}>
-        {followId == "" ? (
+        {loading ? <LoadingPage></LoadingPage> : followId == "" ? (
           <Button variant="outline" type="submit" colorScheme="white" rounded="full">
             follow
           </Button>
