@@ -14,7 +14,14 @@ export default function useThread(thread: ThreadDTO) {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getLikeByThreadId(thread.id, setLikeId);
+    setLoading(true)
+    try {
+      getLikeByThreadId(thread.id, setLikeId);
+    }catch(err : unknown) {
+      console.log(err)
+    }finally {
+      setLoading(false)
+    }
   }, [thread]);
 
   async function handleLike() {

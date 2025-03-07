@@ -9,9 +9,12 @@ import useDetailThreads from "./hooks/use-detail-thread";
 import avatarImage from "../../../assets/image/avatar.png";
 import ButtonLike from "../../features/base/components/Button-Like";
 import { ThreadDTO } from "../../dto/thread-DTO";
+import { LoadingPage } from "../../component/Loading-Page";
 
 export default function DetailThread() {
   const { thread, onOpen, navigate, pathname, register, handleReplies, handleSubmit, user } = useDetailThreads();
+
+  if(thread == undefined) return <LoadingPage></LoadingPage>
 
   return (
     <Container color="white" p="0 0 50px 0 ">
