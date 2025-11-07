@@ -8,10 +8,30 @@ import { ThreadDTO } from "../../../dto/thread-DTO";
 
 export function Thread({ thread }: { thread: ThreadDTO }): ReactNode {
   return (
-    <Box px="20px" py="20px" borderBottom="1px solid grey" color="white" key={thread?.id}>
-      <Box display="grid" gap="20px" boxSizing="border-box" gridTemplateColumns={"40px Calc(100% - 60px)"}>
-        <ChakraLink to={`/profile/${thread?.profile.id}`} rounded={"full"} state={{ profileId: thread?.profile?.id }}>
-          <Image src={thread?.profile.image ?? avatarImage} h={"40px"} w={"40px"} rounded={"full"} />
+    <Box
+      px="20px"
+      py="20px"
+      borderBottom="1px solid grey"
+      color="white"
+      key={thread?.id}
+    >
+      <Box
+        display="grid"
+        gap="20px"
+        boxSizing="border-box"
+        gridTemplateColumns={"40px Calc(100% - 60px)"}
+      >
+        <ChakraLink
+          to={`/profile/${thread?.profile.id}`}
+          rounded={"full"}
+          state={{ profileId: thread?.profile?.id }}
+        >
+          <Image
+            src={thread?.profile.image ?? avatarImage}
+            h={"40px"}
+            w={"40px"}
+            rounded={"full"}
+          />
         </ChakraLink>
         <Box display="flex" flexDirection="column" gap="15px">
           <Flex gap="5px">
@@ -23,7 +43,10 @@ export function Thread({ thread }: { thread: ThreadDTO }): ReactNode {
           <Flex gap={"20px"} flexDir={"column"}>
             <Text>{thread.text}</Text>
             {thread.image && (
-              <ChakraLink to={`/detail-image/${thread.id}`} state={{ id: thread.id, thisThread: thread, thread: [] }}>
+              <ChakraLink
+                to={`/detail-image/${thread.id}`}
+                state={{ id: thread.id, thisThread: thread, thread: [] }}
+              >
                 <Image src={`${thread.image}`} width={"100%"} />
               </ChakraLink>
             )}

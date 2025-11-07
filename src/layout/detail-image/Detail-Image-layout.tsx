@@ -18,7 +18,10 @@ export default function DetailImagePage() {
   return (
     <Grid
       width={"100%"}
-      gridTemplateColumns={fullScreenImage ? "100%" : "60% 40%"}
+      gridTemplateColumns={{
+        lg: fullScreenImage ? "100%" : "60% 40%",
+        base: "100%",
+      }}
       p={"10px 5px"}
       color={"white"}
       position={"fixed"}
@@ -29,11 +32,12 @@ export default function DetailImagePage() {
     >
       <Grid
         p={"0px 10px"}
-        h={"100vh"}
+        h={{ base: fullScreenImage ? "100vh" : "50vh", lg: "100vh" }}
         overflowY={"auto"}
         overflowX={"hidden"}
         position={"relative"}
         justifyItems={"center"}
+        alignItems={"center"}
       >
         <Flex
           position={"sticky"}
@@ -77,7 +81,12 @@ export default function DetailImagePage() {
         ></Image>
       </Grid>
       {!fullScreenImage && (
-        <Grid overflow={"auto"} height={"100vh"} borderLeft={"1px solid grey"}>
+        <Grid
+          overflow={"auto"}
+          height={"100vh"}
+          borderLeft={"1px solid grey"}
+          pb={{ base: "500px", md: "200px", lg: "100px" }}
+        >
           <DetailThread></DetailThread>
         </Grid>
       )}

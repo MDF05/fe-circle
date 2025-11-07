@@ -25,17 +25,42 @@ export default function MyProfile() {
     <Container p="0">
       <ModalEditProfile Profile={user.profile} />
 
-      <ProfileComponent page="my-profile" borderProfile="profile.rightSide"></ProfileComponent>
-      <Box borderBottom="border.grey" display="grid" gridTemplateColumns="repeat(2,50%)">
-        <Button colorScheme="white" background="transparent" onClick={() => setPostOrMedia(!postOrMedia)} rounded="none" borderBottom={postOrMedia ? "notActive" : "active.color"}>
+      <ProfileComponent
+        page="my-profile"
+        borderProfile="profile.rightSide"
+      ></ProfileComponent>
+      <Box
+        borderBottom="border.grey"
+        display="grid"
+        gridTemplateColumns="repeat(2,50%)"
+      >
+        <Button
+          colorScheme="white"
+          background="transparent"
+          onClick={() => setPostOrMedia(!postOrMedia)}
+          rounded="none"
+          borderBottom={postOrMedia ? "notActive" : "active.color"}
+          color={"white"}
+        >
           All Post
         </Button>
-        <Button colorScheme="white" background="transparent" onClick={() => setPostOrMedia(!postOrMedia)} borderBottom={postOrMedia ? "active.color" : "notActive"} rounded="none">
+        <Button
+          colorScheme="white"
+          background="transparent"
+          onClick={() => setPostOrMedia(!postOrMedia)}
+          borderBottom={postOrMedia ? "active.color" : "notActive"}
+          rounded="none"
+          color={"white"}
+        >
           Media
         </Button>
       </Box>
       <Box color="white" mt={"10px"}>
-        {postOrMedia ? <ListImageComponent threads={threads.threads} /> : threads && <ListThreads threads={threads?.threads} />}
+        {postOrMedia ? (
+          <ListImageComponent threads={threads.threads} />
+        ) : (
+          threads && <ListThreads threads={threads?.threads} />
+        )}
       </Box>
     </Container>
   );

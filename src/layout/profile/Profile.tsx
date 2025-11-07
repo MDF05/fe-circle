@@ -23,24 +23,51 @@ export default function ProfileView() {
     })();
   }, [state]);
 
-  if(profileState.loading) return <LoadingPage></LoadingPage>
-
+  if (profileState.loading) return <LoadingPage></LoadingPage>;
 
   return (
     <Container p="0">
       {profileState?.profile && (
-        <ProfileComponentOther page="profile" borderProfile="profile.baseProfile" background="transparent" Profile={profileState.profile}></ProfileComponentOther>
+        <ProfileComponentOther
+          page="profile"
+          borderProfile="profile.baseProfile"
+          background="transparent"
+          Profile={profileState.profile}
+        ></ProfileComponentOther>
       )}
-      <Box borderBottom="border.grey" display="grid" gridTemplateColumns="repeat(2,50%)">
-        <Button colorScheme="white" background="transparent" onClick={() => setPostOrMedia(!postOrMedia)} rounded="none" borderBottom={postOrMedia ? "notActive" : "active.color"}>
+      <Box
+        borderBottom="border.grey"
+        display="grid"
+        gridTemplateColumns="repeat(2,50%)"
+        color={"white"}
+      >
+        <Button
+          colorScheme="white"
+          color={"white"}
+          background="transparent"
+          onClick={() => setPostOrMedia(!postOrMedia)}
+          rounded="none"
+          borderBottom={postOrMedia ? "notActive" : "active.color"}
+        >
           All Post
         </Button>
-        <Button colorScheme="white" background="transparent" onClick={() => setPostOrMedia(!postOrMedia)} borderBottom={postOrMedia ? "active.color" : "notActive"} rounded="none">
+        <Button
+          colorScheme="white"
+          color={"white"}
+          background="transparent"
+          onClick={() => setPostOrMedia(!postOrMedia)}
+          borderBottom={postOrMedia ? "active.color" : "notActive"}
+          rounded="none"
+        >
           Media
         </Button>
       </Box>
       <Box color="white" mt={"10px"}>
-        {postOrMedia ? <ListImageComponent threads={profileState?.profile?.thread} /> : <ListThreads threads={profileState?.profile?.thread} />}
+        {postOrMedia ? (
+          <ListImageComponent threads={profileState?.profile?.thread} />
+        ) : (
+          <ListThreads threads={profileState?.profile?.thread} />
+        )}
       </Box>
     </Container>
   );
