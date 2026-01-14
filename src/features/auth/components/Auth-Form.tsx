@@ -7,7 +7,9 @@ import ListInputFromTypes from "../../../types/form-input-type";
 import ChakraLink from "../../../component/Chakra-Link-Router";
 import "react-toastify/dist/ReactToastify.css";
 
-function AuthForm({ page, handleSubmit, hookForm, submitData, errors, datas, isLoading }: AuthFormProps) {
+import ReCAPTCHA from "react-google-recaptcha";
+
+function AuthForm({ page, handleSubmit, hookForm, submitData, errors, datas, isLoading, setCaptchaToken }: AuthFormProps) {
   const textForm = generateTextForm(page);
 
   return (
@@ -29,6 +31,17 @@ function AuthForm({ page, handleSubmit, hookForm, submitData, errors, datas, isL
                   </FormControl>
                 );
               })}
+
+              {(page === "login" || page === "register") && setCaptchaToken && (
+                <Box mb={4}>
+                  <ReCAPTCHA
+                    sitekey={import.meta.env.VITE_SITE_KEY_RECAPTCHA}
+                    onChange={(token) => setCaptchaToken(token)}
+                    theme="dark"
+                  />
+                </Box>
+              )}
+
               <Button type="submit" variant="solid" textTransform="capitalize" color="white" bg="brand.color" isLoading={isLoading}>
                 {page}
               </Button>

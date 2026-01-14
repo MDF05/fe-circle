@@ -18,7 +18,8 @@ export default interface AuthFormProps {
     errors: FieldErrors<Errors> | any,
     succesMessage?: string,
     errorMessage?: string,
-    isLoading? : boolean
+    isLoading?: boolean
+    setCaptchaToken?: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 

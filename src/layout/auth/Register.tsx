@@ -26,7 +26,8 @@ export default function Register() {
     handleSubmit,
     register,
     submitData,
-    loading
+    loading,
+    setCaptchaToken
   } = useRegisterHooks();
 
   return (
@@ -38,6 +39,7 @@ export default function Register() {
       errors={errors}
       datas={ListRegisterInput}
       isLoading={loading}
+      setCaptchaToken={setCaptchaToken}
     ></AuthForm>
   );
 }

@@ -30,6 +30,7 @@ export default function Login() {
     formState: { errors },
   } = useForm<LoginTypes>({ resolver: zodResolver(loginSchema) });
   const [loading, setLoading] = useState<boolean>(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const dispatch = useAppDispatch();
   const Navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function Login() {
   async function submitData(data: LoginTypes) {
     setLoading(true);
     try {
-      const response = await dispatch(loginAsync(data)).unwrap();
+      const response = await dispatch(loginAsync({ ...data, captchaToken })).unwrap();
       const token = response.data.token;
 
       Cookies.set("token", token, { expires: 1 });
@@ -53,5 +54,5 @@ export default function Login() {
     }
   }
 
-  return <AuthForm page="login" handleSubmit={handleSubmit} submitData={submitData} hookForm={register} errors={errors} datas={ListLoginInput} isLoading={loading}></AuthForm>;
+  return <AuthForm page="login" handleSubmit={handleSubmit} submitData={submitData} hookForm={register} errors={errors} datas={ListLoginInput} isLoading={loading} setCaptchaToken={setCaptchaToken}></AuthForm>;
 }

@@ -4,6 +4,8 @@ import FormInputTypes from "../../types/form-input-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ForgotPasswordTypes from "../../features/auth/types/Forgot-Password-Types";
 import { forgotSchema } from "../../features/auth/schema/forgot-password-schema";
+import { apiV1 } from "../../lib/api-v1";
+import { toast } from "react-toastify";
 
 const listForgotPasswordInput: FormInputTypes[] = [
   {
@@ -20,8 +22,13 @@ export default function ForgotPassword() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(forgotSchema) });
 
-  function submitData(data: ForgotPasswordTypes) {
-    console.log(data);
+  async function submitData(data: ForgotPasswordTypes) {
+    try {
+      await apiV1.post("/forgot-password", data);
+      toast.success("Reset link sent! Check your email.");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
   }
 
   return (

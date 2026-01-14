@@ -1,50 +1,94 @@
-# React + TypeScript + Vite
+# Circle Frontend (Stage 2 Online)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Circle Frontend** repository. This is the web client for the Circle social platform, built with modern web technologies to provide a fast, responsive, and interactive user experience.
 
-Currently, two official plugins are available:
+## 📋 Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This README serves as the central hub for all documentation. Please refer to the specific documents below for detailed information.
 
-## Expanding the ESLint configuration
+### 📚 Core Documentation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **[Architecture](ARCHITECTURE.md)**: Project structure, state management, and component design.
+- **[Style Guide](STYLE_GUIDE.md)**: Coding standards, component naming, and styling conventions.
+- **[Environment Variables](ENVIRONMENT.md)**: Configuration reference for `.env` files.
+- **[Deployment](DEPLOYMENT.md)**: Build instructions, previewing, and Vercel deployment.
+- **[Testing](TESTING.md)**: Linting and testing strategies.
 
-- Configure the top-level `parserOptions` property like this:
+### 🤝 contribution & Community
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **[Contributing](CONTRIBUTING.md)**: Workflow for submitting pull requests.
+- **[Code of Conduct](CODE_OF_CONDUCT.md)**: Community standards and expectations.
+- **[Support](SUPPORT.md)**: How to get help.
+
+### 📢 Project Information
+
+- **[Changelog](CHANGELOG.md)**: History of changes and releases.
+- **[Roadmap](ROADMAP.md)**: Future plans and upcoming features.
+- **[Disclaimer](DISCLAIMER.md)**: Liability and warranty information.
+- **[License](LICENSE)**: Legal usage terms.
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js**: v18+ (Recommended)
+- **npm** or **yarn**
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/your-username/circle-frontend.git
+    cd circle-frontend
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment**
+    Copy `.env.example` to `.env` and fill in the required values (mainly API URL).
+    ```bash
+    cp .env.example .env
+    ```
+    See [ENVIRONMENT.md](ENVIRONMENT.md) for details.
+
+### Development Workflow
+
+Start the development server with hot module replacement (HMR):
+
+```bash
+npm run dev
+```
+The application will usually be available at `http://localhost:5173`.
+
+### Building for Production
+
+To create an optimized production build:
+
+```bash
+npm run build
+```
+This will generate static assets in the `dist/` directory.
+
+To preview the production build locally:
+```bash
+npm run preview
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🛠️ Tech Stack
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Core**: [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/)
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
+- **Styling**: [Chakra UI](https://chakra-ui.com/), [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Forms**: [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/)
+- **Routing**: [React Router](https://reactrouter.com/)
+- **HTTP Client**: [Axios](https://axios-http.com/)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 📄 License
+
+This project is licensed under the **ISC License**. See the [LICENSE](LICENSE) file for details.

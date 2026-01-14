@@ -4,6 +4,9 @@ import FormInputTypes from "../../types/form-input-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ResetPasswordTypes from "../../features/auth/types/Reset-Password-Types";
 import { resetSchema } from "../../features/auth/schema/reset-password-schema";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { apiV1 } from "../../lib/api-v1";
+import { toast } from "react-toastify";
 
 const listResetPassword: FormInputTypes[] = [
   {
@@ -25,8 +28,23 @@ export default function ResetPassword() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(resetSchema) });
 
-  function submitData(data: ResetPasswordTypes) {
-    console.log(data);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const Navigate = useNavigate();
+
+  async function submitData(data: ResetPasswordTypes) {
+    if (!token) {
+      toast.error("Invalid or missing token");
+      return;
+    }
+
+    try {
+      await apiV1.post("/reset-password", { ...data, token });
+      toast.success("Password reset successfully");
+      setTimeout(() => Navigate("/login"), 2000);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
   }
 
   return (

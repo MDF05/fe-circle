@@ -6,7 +6,7 @@ import {
 } from "../../../features/auth/schema/register-schema";
 import { useNavigate } from "react-router-dom";
 import { ResponseUserDTO } from "../../../dto/user-dto";
-import  { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { apiV1 } from "../../../lib/api-v1";
 import { useState } from "react";
@@ -18,6 +18,7 @@ export default function useRegisterHooks() {
     formState: { errors },
   } = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema) });
   const [loading, setLoading] = useState<boolean>(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const Navigate = useNavigate();
 
@@ -25,9 +26,9 @@ export default function useRegisterHooks() {
     setLoading(true)
 
     try {
-      const responses = await apiV1.post<null, ResponseUserDTO, RegisterSchema>(
+      const responses = await apiV1.post<null, ResponseUserDTO, RegisterSchema & { captchaToken?: string | null }>(
         "/register",
-        data,
+        { ...data, captchaToken },
       );
 
       toast.success(responses.data.message)
@@ -36,7 +37,7 @@ export default function useRegisterHooks() {
       if (err instanceof AxiosError)
         toast.error(err.response?.data.message);
       else toast.error("unknown error");
-    } finally  {
+    } finally {
       setLoading(false)
     }
   }
@@ -47,6 +48,7 @@ export default function useRegisterHooks() {
     errors,
     useForm,
     submitData,
-    loading
+    loading,
+    setCaptchaToken
   };
 }

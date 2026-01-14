@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiV1 } from "../../lib/api-v1";
 import { CheckTokenDTO, LoginDTO } from "../../dto/user-dto";
-import { LoginSchema } from "../../features/auth/schema/login-schema";
 import { toast } from "react-toastify";
 import { ResponseDTO } from "../../dto/response-DTO";
 
@@ -15,7 +14,9 @@ export const asyncAuth = createAsyncThunk<CheckTokenDTO, string>("users/fetchByI
   }
 });
 
-export const loginAsync = createAsyncThunk<ResponseDTO<LoginDTO>, LoginSchema>("/login", async (dto, thunkApi) => {
+import LoginTypes from "../../features/auth/types/login-types";
+
+export const loginAsync = createAsyncThunk<ResponseDTO<LoginDTO>, LoginTypes>("/login", async (dto, thunkApi) => {
   try {
     const response = await apiV1.post("/login", dto);
 
