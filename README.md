@@ -40,7 +40,7 @@ This README serves as the central hub for all documentation. Please refer to the
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/your-username/circle-frontend.git
+    git clone https://github.com/MDF05/circle-frontend.git
     cd circle-frontend
     ```
 
